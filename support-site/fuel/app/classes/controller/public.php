@@ -22,10 +22,11 @@ class Controller_Public extends Controller_Template {
     if (Input::method() == 'POST') {
       Log::debug('posted');
       $validation = Validation::forge();
+      $validation->add_callable('Appvalidation');
        
-      $validation->add_field('user_id', 'ユーザID', 'required|match_pattern[#[A-Za-z0-9_]+#]|min_length[4]|max_length[24]');
+      $validation->add_field('user_id', 'ユーザID', 'required|match_pattern[#[A-Za-z0-9_]+#]|min_length[4]|max_length[24]|unique[users.user_id]');
       $validation->add_field('passwd', 'パスワード', 'required|min_length[8]|max_length[24]');
-      $validation->add_field('email', 'メールアドレス', 'required|valid_email');
+      $validation->add_field('email', 'メールアドレス', 'required|valid_email|unique[users.email]');
        
       if (!$validation->run()) {
         Log::debug('validation failed');
@@ -38,6 +39,15 @@ class Controller_Public extends Controller_Template {
         return;
       }
       Log::debug('validation ok');
+
+      $user_values = array(
+        'user_id' => $validation->validated('user_id'),
+        'passwd' => hash('ripemd160', $validation->validated('passwd')),
+        'email' => $validation->validated('email'),
+        'deleted' => 0
+      );
+      $user = new Model_User($user_values);
+      $user->save();
       return Response::redirect('public/complete');
     }
     $data = array();
