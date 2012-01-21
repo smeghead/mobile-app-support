@@ -26,20 +26,21 @@
 
 
   <div data-role="content"> 
-    <img src="/images/icon.png"/>
     <p>
-一番カジュアルな新聞アプリ 無駄新聞です。よくわからない設定項目などは無しで、てっとり早く楽しんで下さい。
-優良ブログの新着記事をいちはやくお届けします。
-無駄新聞は、とても簡単に使える新聞アプリです。
-暇潰しや雑談のタネに使って下さい。
-
-<h4> ニュース記事提供元 </h4>
-<ul>
-<li>らばQ</li>
-<li>痛いニュース(ﾉ∀`)</li>
-<li>GIGAZINE</li>
-</ul>
+      <img src="/images/icon.png"/ align="left" />
+      一番カジュアルな新聞アプリ 無駄新聞です。よくわからない設定項目などは無しで、てっとり早く楽しんで下さい。
+      優良ブログの新着記事をいちはやくお届けします。
+      無駄新聞は、とても簡単に使える新聞アプリです。
+      暇潰しや雑談のタネに使って下さい。
     </p>    
+
+
+    <h4> ニュース記事提供元 </h4>
+    <ul>
+      <li>らばQ</li>
+      <li>痛いニュース(ﾉ∀`)</li>
+      <li>GIGAZINE</li>
+    </ul>
   </div><!-- /content -->
 
   <div data-role="footer">    
@@ -77,7 +78,7 @@
         <li><a href="index.html">無料ですか？</a></li>
       </ul>
       <p>
-      解決方法が無かった場合は、<a href="#inquiry" data-role="button" data-inline="true">問い合わせ</a>からご連絡下さい。
+      解決しない場合は、<a href="#inquiry" data-role="button" data-inline="true">問い合わせ</a>からご連絡下さい。
       </p>
   </div><!-- /content -->
 
@@ -110,19 +111,19 @@
     <form>
       <ul data-role="listview" data-inset="true">
         <li data-role="fieldcontain">
-              <label for="email">メールアドレス:</label>
-              <input type="email" name="email" id="email" value=""  />
+          <label for="email">メールアドレス:</label>
+          <input type="email" name="email" id="email" value=""  />
         </li>
         <li data-role="fieldcontain">
-              <label for="textarea">内容:</label>
-        <textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
+          <label for="textarea">内容:</label>
+          <textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
         </li>
 
         <li class="ui-body ui-body-b">
           <fieldset class="ui-grid-a">
-              <div class="ui-block-a"><button type="submit" data-theme="d">Cancel</button></div>
-              <div class="ui-block-b"><button type="submit" data-theme="a">Submit</button></div>
-            </fieldset>
+            <div class="ui-block-a"><button type="submit" data-theme="d">Cancel</button></div>
+            <div class="ui-block-b"><button type="submit" data-theme="a">Submit</button></div>
+          </fieldset>
         </li>
         
       </ul>
