@@ -24,7 +24,7 @@ class Controller_Public extends Controller_Template {
       $validation = Validation::forge();
       $validation->add_callable('Appvalidation');
        
-      $validation->add_field('user_id', 'ユーザID', 'required|match_pattern[#[A-Za-z0-9_]+#]|min_length[4]|max_length[24]|unique[users.user_id]');
+      $validation->add_field('user_id', 'ユーザID', 'required|match_pattern[#^[A-Za-z0-9_]+$#]|min_length[4]|max_length[24]|unique[users.user_id]');
       $validation->add_field('passwd', 'パスワード', 'required|min_length[8]|max_length[24]');
       $validation->add_field('email', 'メールアドレス', 'required|valid_email|unique[users.email]');
        
@@ -48,6 +48,25 @@ class Controller_Public extends Controller_Template {
       );
       $user = new Model_User($user_values);
       $user->save();
+      #mail
+      $mail_config = \Config::load('mail');
+      Log::debug(var_export($mail_config, true));
+      $header = 'From: ' . $mail_config['basic']['from'] . "\n" .
+        'Bcc: ' . $mail_config['basic']['bcc'] . "\n";
+      $body = $mail_config['register_mail']['body'];
+      $body = str_replace('#user_id', $validation->validated('user_id'), $body);
+      Log::debug('to: ' . $validation->validated('email'));
+      Log::debug('subject: ' . $mail_config['register_mail']['subject']);
+      Log::debug('additional header: ' . $header);
+      Log::debug('body: ' . $body);
+      if (!mb_send_mail(
+          $validation->validated('email'),
+          $mail_config['register_mail']['subject'],
+          $body,
+          $header)) {
+        Log::error('failed to send register mail.');
+        die('failed to send mail.');
+      }
       return Response::redirect('public/complete');
     }
     $data = array();
