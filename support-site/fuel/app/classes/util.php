@@ -1,0 +1,4 @@
+<?php
+function h(str) {
+}
+?>

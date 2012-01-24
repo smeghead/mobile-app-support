@@ -1,7 +1,20 @@
         <div class="well">
           <h5>メニュー</h5>
           <ul>
-            <li><a href=""> アプリ一覧</a></li>
+            <li><a href="/manage/"> アプリ一覧</a></li>
+<?php foreach ($apps as $app) { ?>
+    <li><a href="/manage/app/<?php echo $app['id'] ?>"><?php echo $app['name'] ?></a></li>
+    <ul>
+      <li><a href="/manage/app_site/<?php echo $app['id'] ?>">サポートサイト管理</a></li>
+      <ul>
+        <li><a href="/manage/app_site/<?php echo $app['id'] ?>">ホーム</a></li>
+        <li><a href="/manage/app_site/<?php echo $app['id'] ?>#faq">FAQ管理</a></li>
+        <li><a href="/manage/app_site/<?php echo $app['id'] ?>#inquery">問い合わせ管理</a></li>
+      </ul>
+      <li><a href="/manage/app_notify/<?php echo $app['id'] ?>">ステータス通知</a></li>
+      <li><a href="/manage/app_analysis/<?php echo $app['id'] ?>">統計情報</a></li>
+    </ul>
+<?php } ?>
           </ul>
 <!--
           <ul>

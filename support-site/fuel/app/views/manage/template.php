@@ -5,6 +5,7 @@
     <title><?php echo $title; ?></title>
     <meta name="description" content="">
     <meta name="author" content="">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <?php echo Asset::css('bootstrap.css'); ?>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->

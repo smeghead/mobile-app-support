@@ -38,3 +38,6 @@
     <input type="submit" class="btn primary" value="登録">&nbsp;<button type="reset" class="btn">キャンセル</button>
   </div>
 </form>
+        <footer>
+          <p>&copy; smeghead 2011</p>
+        </footer>
