@@ -7,9 +7,9 @@
     <ul>
       <li><a href="/manage/app_site/<?php echo $app['id'] ?>">サポートサイト管理</a></li>
       <ul>
-        <li><a href="/manage/app_site/<?php echo $app['id'] ?>">ホーム</a></li>
+        <li><a href="/manage/app_site/<?php echo $app['id'] ?>#top">ホーム</a></li>
         <li><a href="/manage/app_site/<?php echo $app['id'] ?>#faq">FAQ管理</a></li>
-        <li><a href="/manage/app_site/<?php echo $app['id'] ?>#inquery">問い合わせ管理</a></li>
+        <li><a href="/manage/app_site/<?php echo $app['id'] ?>#inquiry">問い合わせ管理</a></li>
       </ul>
       <li><a href="/manage/app_notify/<?php echo $app['id'] ?>">ステータス通知</a></li>
       <li><a href="/manage/app_analysis/<?php echo $app['id'] ?>">統計情報</a></li>

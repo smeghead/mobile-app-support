@@ -120,5 +120,23 @@ class Controller_Manage extends Controller_Template {
     $this->template->content = View::forge('manage/add_app', $data);
     return $this->template;
   }
+
+  public function action_app_site($app_id) {
+    $user = Session::get('user');
+    $app = Model_App::find('first',
+      array(
+        'id' => $app_id,
+        'user_id' => $user['id'],
+      )
+    );
+    if (!$app) {
+      return Response::forge(ViewModel::forge('welcome/404'), 404);
+    }
+    $data = array(
+      'app' => $app
+    );
+    $this->template->content = View::forge('manage/app_site', $data);
+    return $this->template;
+  }
 }
 ?>
