@@ -39,40 +39,40 @@
     <a class="btn open_add_category">新規カテゴリの追加</a>
   </div>
   <div id="faqs" class="row">
-    <div class="span6">
+    <div class="span8">
       <ul id="faq-categories span6">
         <li class="faq-category" data-id="1">
-          アプリの動作
+          <span class="category_name">アプリの動作</span>
           <span class="right qa-delete">&nbsp;</span>
           <span class="right qa-edit">&nbsp;</span>
           <br class="close"/>
         </li>
         <li class="faq-element" data-id="2">
-          アプリが起動しない
+          <span class="qa_name" data-a="hogehoge">アプリが起動しない</span>
           <span class="right qa-delete">&nbsp;</span>
           <span class="right qa-edit">&nbsp;</span>
           <br class="close"/>
         </li>
         <li class="faq-element" data-id="3">
-          新着通知時に音がうるさい
+          <span class="qa_name" data-a="hogehoge">新着通知時に音がうるさい</span>
           <span class="right qa-delete">&nbsp;</span>
           <span class="right qa-edit">&nbsp;</span>
           <br class="close"/>
         </li>
         <li class="faq-element" data-id="4">
-          バッテリーを節約したい
+          <span class="qa_name" data-a="hogehoge">バッテリーを節約したい</span>
           <span class="right qa-delete">&nbsp;</span>
           <span class="right qa-edit">&nbsp;</span>
           <br class="close"/>
         </li>
         <li class="faq-category" data-id="5">
-          その他
+          <span class="category_name">その他</span>
           <span class="right qa-delete">&nbsp;</span>
           <span class="right qa-edit">&nbsp;</span>
           <br class="close"/>
         </li>
         <li class="faq-element" data-id="6">
-          無料ですか？
+          <span class="qa_name" data-a="hogehoge">無料ですか？</span>
           <span class="right qa-delete">&nbsp;</span>
           <span class="right qa-edit">&nbsp;</span>
           <br class="close"/>
@@ -81,16 +81,36 @@
     </div>
     <div class="span6">
       <form>
-        <h4>質問</h4>
-                <textarea class="xlarge" id="faq_q" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
-        <h4>回答</h4>
-                <textarea class="xlarge" id="faq_a" name="top_content" rows="8"><?php echo Input::post('top_content') ?></textarea>
+        <div id="form-category" class="qa-edit-form">
+          <h4>カテゴリ名</h4>
+          <input class="xlarge" id="category_name" name="email" size="20" type="text" value="" />
+        </div>
+        <div id="form-qa" class="qa-edit-form">
+          <h4>質問</h4>
+          <textarea class="xlarge" id="faq_q" name="top_content" rows="3"></textarea>
+          <h4>回答</h4>
+          <textarea class="xlarge" id="faq_a" name="top_content" rows="8"></textarea>
+        </div>
       </form>
     </div>
   </div>
   <div class="actions">
     <a class="save_faq btn primary">保存</a>
     <a class="btn" data-controls-modal="modal_add_qa_category" data-backdrop="false" data-keyboard="true">新規カテゴリの追加</a>
+  </div>
+  <div id="modal_delete_confirm" class="modal hide fade">
+            <div class="modal-header">
+              <a href="#" class="close">×</a>
+              <h3><span class="target"></span>の削除</h3>
+            </div>
+            <div class="modal-body">
+              <p class="description"><span class="target"></span>を削除します。よろしいですか？</p>
+            </div>
+            <div class="modal-footer">
+              <a id="btn_delete" class="btn danger delete_qa">削除</a>
+              <a class="btn secondary qa_modal_close">閉じる</a>
+            </div>
+          </div>
   </div>
   <div id="modal_add_qa_category" class="modal hide fade">
             <div class="modal-header">
@@ -139,7 +159,3 @@
     </tr>
   </table>
 </div>
-
-        <footer>
-          <p>&copy; smeghead 2011</p>
-        </footer>

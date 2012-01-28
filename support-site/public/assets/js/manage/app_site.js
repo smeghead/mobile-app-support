@@ -116,7 +116,7 @@ $(function(){
       return;
     }
     var category = $('<li class="faq-category" data-id="' + parseInt(new Date()/1000, 10) + '">' +
-      $('#new_category_name').val() +
+      '<span class="category_name">' + $('#new_category_name').val().trim() + '</span>' +
       '<span class="right qa-delete">&nbsp;</span>' +
       '<span class="right qa-edit">&nbsp;</span>' +
       '<br class="close"/>' +
@@ -126,6 +126,53 @@ $(function(){
   });
   $('.qa_modal_close').click(function(){
     $('#modal_add_qa_category').modal('hide');
+  });
+  //カテゴリの編集
+  $('.faq-category .qa-edit').click(function(){
+    $('div#form-category').show().submit(function(){this.cancel()});
+    $('div#form-qa').hide();
+    var category_name = $('span.category_name', $(this).parent('.faq-category'));
+    $('#category_name').val(category_name.text())
+      .change(function(){category_name.text($(this).val());})
+      .focus();
+  });
+  //カテゴリの削除
+  var target;
+  $('.faq-category .qa-delete').click(function(){
+    target = $(this).parent('li');
+    $('.target', $('#modal_delete_confirm')).text('カテゴリ');
+    $('#modal_delete_confirm').modal({
+      keyboard: true,
+      backdrop: true,
+      show: true
+    });
+  });
+  $('#modal_delete_confirm .delete_qa').click(function(){
+    target.remove();
+    $('#modal_delete_confirm').modal('hide');
+  });
+  $('#modal_delete_confirm .qa_modal_close').click(function(){
+    $('#modal_delete_confirm').modal('hide');
+  });
+  //QAの編集
+  $('.faq-element .qa-edit').click(function(){
+    $('div#form-category').hide();
+    $('div#form-qa').show();
+    var qa_name = $('span.qa_name', $(this).parent('.faq-element'));
+    $('#faq_q').val(qa_name.text())
+      .change(function(){qa_name.text($(this).val());})
+      .focus();
+    $('#faq_a').val(qa_name.data('a'))
+  });
+  //QAの削除
+  $('.faq-element .qa-delete').click(function(){
+    target = $(this).parent('li');
+    $('.target', $('#modal_delete_confirm')).text('QA');
+    $('#modal_delete_confirm').modal({
+      keyboard: true,
+      backdrop: true,
+      show: true
+    });
   });
 });
 // vim: set ts=2 sw=2 sts=2 expandtab fenc=utf-8: 

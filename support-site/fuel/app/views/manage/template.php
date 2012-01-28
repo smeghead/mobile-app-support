@@ -54,7 +54,11 @@
       <div class="content">
         <?php echo $content; ?>
       </div>
+
     </div>
+    <footer>
+      <p>&copy; smeghead 2011</p>
+    </footer>
 
   </body>
 </html>
