@@ -23,10 +23,3 @@
             <p><a class="btn" href="#">View details &raquo;</a></p>
           </div>
         </div>
-
-        <hr>
-
-
-        <footer>
-          <p>&copy; smeghead 2011</p>
-        </footer>

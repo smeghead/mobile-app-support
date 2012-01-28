@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <?php echo Asset::css('bootstrap.css'); ?>
+    <?php echo Asset::css('style.css'); ?>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -31,8 +32,8 @@
           <a class="brand" href="/public"><?php echo $title; ?></a>
           <ul class="nav">
             <li class="active"><a href="/public">Home</a></li>
-            <li><a href="/public/about">About</a></li>
-            <li><a href="/public/contact">Contact</a></li>
+            <li><a href="/public/register">ユーザ登録</a></li>
+            <li><a href="/manage">ログイン</a></li>
           </ul>
         </div>
       </div>
@@ -48,5 +49,8 @@
       </div>
     </div>
 
+    <footer>
+      <p>&copy; smeghead 2011</p>
+    </footer>
   </body>
 </html>

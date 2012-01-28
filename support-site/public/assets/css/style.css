@@ -18,6 +18,7 @@ div#faqs li.faq-element {
 	padding: 5px;
 	cursor: move;
 	border: 1px solid #666699;
+	border-radius: 3px;
 }
 div#faqs li.faq-category {
 	background-color: lightblue;
@@ -40,4 +41,7 @@ div#faqs span.qa-delete {
 }
 div.qa-edit-form {
 	display: none;
+}
+div.banner-menu {
+	text-align: center;
 }

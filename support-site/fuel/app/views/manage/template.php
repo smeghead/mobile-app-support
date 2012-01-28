@@ -40,7 +40,10 @@
             <li class="active"><a href="/manage">アプリ一覧</a></li>
             <li><a href="/manage/settings">設定</a></li>
           </ul>
-          <p class="pull-right">Logged in as <a href="/manage"><?php echo $user_name; ?></a></p>
+          <p class="pull-right">
+            <a href="/manage"><?php echo $user_name; ?></a> さんとしてログインしています。
+            <a href="/manage/logout">ログアウトする</a>
+          </p>
         </div>
       </div>
     </div>

@@ -29,13 +29,7 @@
     <div class="topbar">
       <div class="topbar-inner">
         <div class="container-fluid">
-          <a class="brand" href="#"><?php echo $title; ?></a>
-          <ul class="nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-          <p class="pull-right">Logged in as <a href="#">username</a></p>
+          <a class="brand" href="/public"><?php echo $title; ?></a>
         </div>
       </div>
     </div>

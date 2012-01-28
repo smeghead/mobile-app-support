@@ -1,6 +1,9 @@
 <h1>ユーザ登録</h1>
 
-<p>ユーザ情報を入力して、登録ボタンをクリックして下さい。</p>
+<p>
+  ユーザ情報を入力して、登録ボタンをクリックして下さい。
+  既にユーザ登録が済んでいる場合は、<a href="/manage">ログイン</a>して下さい。
+</p>
 
 <form action="/public/register" method="post">
   <fieldset>
@@ -38,6 +41,3 @@
     <input type="submit" class="btn primary" value="登録">&nbsp;<button type="reset" class="btn">キャンセル</button>
   </div>
 </form>
-        <footer>
-          <p>&copy; smeghead 2011</p>
-        </footer>

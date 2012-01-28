@@ -19,9 +19,9 @@ class Controller_Manage extends Controller_Template {
     if (!$user && !in_array($this->request->action, $this->NO_AUTH_ACTIONS)) {
       return Response::redirect('manage/login');
     }
-    $this->template->title = 'Androidアプリサポート PaRappa';
-    $this->template->user_name = $user->email;
     $user = Session::get('user');
+    $this->template->title = 'Androidアプリサポート PaRappa';
+    $this->template->user_name = $user ? $user->user_id : '';
     $apps = Model_App::find(
       'all',
       array(
@@ -86,6 +86,11 @@ class Controller_Manage extends Controller_Template {
     }
     Log::debug(var_export($data, true));
     return View::forge('manage/login', $data); 
+  }
+
+  public function action_logout() {
+    Session::delete('user');
+    return Response::redirect('public/');
   }
 
   public function action_add_app() {
