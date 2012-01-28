@@ -33,7 +33,6 @@
 })(jQuery);
 
 function setup_tabs(){
-  console.log('cb');
   //display tabs.
   var tabs = ['top', 'faq', 'inquiry'];
   var hash = location.hash;
@@ -43,8 +42,7 @@ function setup_tabs(){
   }
   $(tabs).each(function(){
     var tab = $('#tabs_' + this);
-    var box = $('#' + this);
-    console.log('x :' + this);
+    var box = $('#tab_' + this);
     if (anchor == this) {
       tab.addClass('active');
       box.show();
@@ -53,14 +51,63 @@ function setup_tabs(){
       box.hide();
     }
   });
+  $('html, body').scrollTop(0);
+}
+function setup_faq_draggable(elements) {
+  elements.draggable({
+//    containment: 'parent',
+    axis: 'y',
+    opacity: 0.9,
+    helper: 'clone'
+  })
+  .bind('dragstart', function(event, ui){
+console.log('start', ui.clientY);
+  })
+  .bind('drag', function(event, ui){
+//console.log('drag');
+  })
+  .bind('dragstop', function(event, ui){
+console.log(ui);
+    var end_point = $(ui.target).position().top;
+    var target = null,
+        original = null,
+        original_id = $(event.target).data('id');
+    $('#faqs li').each(function(){
+      if ($(this).css('position') == 'absolute') return;
+//console.log('check', $(this).text().trim());
+console.log($(this).position().top, end_point);
+      if (target == null && $(this).position().top > end_point) {
+        target = $(this);
+        console.log('hit');
+console.log('target', target);
+      }
+      if ($(this).data('id') == original_id) {
+        original = $(this);
+      }
+    });
+    target = target || $('#faqs li').first();
+console.log('original', original);
+    if (original == null) return;
+    var new_element = original.clone();
+    new_element.insertBefore(target);
+    setup_faq_draggable(new_element);
+    original.remove();
+    //$(target).insertBefore($(original).remove());
+//    $('#faqs li').draggable('destroy');
+    //re-setup
+  });
 }
 $(function(){
   $.anchorHandler
     .add(/\#top/, setup_tabs)
     .add(/\#faq/, setup_tabs)
     .add(/\#inquiry/, setup_tabs);
-  console.log('init');
   setup_tabs();
 
+  //setup editor
+  $('#top_content').wysiwyg();
+
+  //setup faq
+  setup_faq_draggable($('#faqs li'));
 });
 // vim: set ts=2 sw=2 sts=2 expandtab fenc=utf-8: 

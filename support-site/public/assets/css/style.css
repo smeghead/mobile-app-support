@@ -1,0 +1,33 @@
+.right {
+	float: right;
+}
+div#faqs ul {
+	list-style: none;
+}
+div#faqs li.faq-category,
+div#faqs li.faq-element {
+	color: #222;
+	margin: 3px;
+	padding: 5px;
+	cursor: move;
+	border: 1px solid #666699;
+}
+div#faqs li.faq-category {
+	background-color: lightblue;
+}
+div#faqs li.faq-element {
+	padding-left: 15px;
+	background-color: white;
+}
+div#faqs span.qa-edit {
+	cursor: pointer;
+	background-image: url(../img/edit.png);
+	background-repeat: none;
+	width: 18px;
+}
+div#faqs span.qa-delete {
+	cursor: pointer;
+	background-image: url(../img/delete.png);
+	background-repeat: none;
+	width: 18px;
+}
