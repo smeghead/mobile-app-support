@@ -99,12 +99,12 @@
             </div>
             <div class="modal-body">
               <p>追加するカテゴリ名を指定して下さい。</p>
-              <form>
+              <form id="form_add_category">
                 <input class="xlarge" id="new_category_name" name="email" size="30" type="text" value="" />
               </form>
             </div>
             <div class="modal-footer">
-              <a class="btn primary add_qa_category">追加</a>
+              <a id="btn_add_category" class="btn primary add_qa_category">追加</a>
               <a class="btn secondary qa_modal_close">閉じる</a>
             </div>
           </div>

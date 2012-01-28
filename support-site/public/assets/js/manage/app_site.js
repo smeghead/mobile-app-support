@@ -107,6 +107,10 @@ $(function(){
       $('#new_category_name').focus();
     });
   });
+  $('#form_add_category').submit(function(){
+    $('#btn_add_category').click();
+    this.cancel();
+  });
   $('.add_qa_category').click(function(){
     if ($('#new_category_name').val().trim().length == 0) {
       return;
