@@ -15,8 +15,7 @@
 
     <fieldset>
       <div class="clearfix <?php if (isset($errors['top_content'])) { echo 'error'; } ?>">
-        <label for="top_content">コンテンツ</label>
-        <div class="input">
+        <div class="">
           <textarea class="xxlarge" id="top_content" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
   <?php if (isset($errors['top_content'])) { ?>
           <span class="help-inline"><?php echo $errors['top_content'] ?></span>
@@ -99,35 +98,33 @@
     <a class="btn" data-controls-modal="modal_add_qa_category" data-backdrop="false" data-keyboard="true">新規カテゴリの追加</a>
   </div>
   <div id="modal_delete_confirm" class="modal hide fade">
-            <div class="modal-header">
-              <a href="#" class="close">×</a>
-              <h3><span class="target"></span>の削除</h3>
-            </div>
-            <div class="modal-body">
-              <p class="description"><span class="target"></span>を削除します。よろしいですか？</p>
-            </div>
-            <div class="modal-footer">
-              <a id="btn_delete" class="btn danger delete_qa">削除</a>
-              <a class="btn secondary qa_modal_close">閉じる</a>
-            </div>
-          </div>
+    <div class="modal-header">
+      <a href="#" class="close">×</a>
+      <h3><span class="target"></span>の削除</h3>
+    </div>
+    <div class="modal-body">
+      <p class="description"><span class="target"></span>を削除します。よろしいですか？</p>
+    </div>
+    <div class="modal-footer">
+      <a id="btn_delete" class="btn danger delete_qa">削除</a>
+      <a class="btn secondary qa_modal_close">閉じる</a>
+    </div>
   </div>
   <div id="modal_add_qa_category" class="modal hide fade">
-            <div class="modal-header">
-              <a href="#" class="close">×</a>
-              <h3>新規カテゴリの追加</h3>
-            </div>
-            <div class="modal-body">
-              <p>追加するカテゴリ名を指定して下さい。</p>
-              <form id="form_add_category">
-                <input class="xlarge" id="new_category_name" name="email" size="30" type="text" value="" />
-              </form>
-            </div>
-            <div class="modal-footer">
-              <a id="btn_add_category" class="btn primary add_qa_category">追加</a>
-              <a class="btn secondary qa_modal_close">閉じる</a>
-            </div>
-          </div>
+    <div class="modal-header">
+      <a href="#" class="close">×</a>
+      <h3>新規カテゴリの追加</h3>
+    </div>
+    <div class="modal-body">
+      <p>追加するカテゴリ名を指定して下さい。</p>
+      <form id="form_add_category">
+        <input class="xlarge" id="new_category_name" name="email" size="30" type="text" value="" />
+      </form>
+    </div>
+    <div class="modal-footer">
+      <a id="btn_add_category" class="btn primary add_qa_category">追加</a>
+      <a class="btn secondary qa_modal_close">閉じる</a>
+    </div>
   </div>
 </div>
 

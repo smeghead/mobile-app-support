@@ -16,7 +16,3 @@
 </table>
 </div>
 <p><a href="/manage/add_app" class="btn primary">アプリを追加する&raquo;</a></p>
-
-        <footer>
-          <p>&copy; smeghead 2011</p>
-        </footer>

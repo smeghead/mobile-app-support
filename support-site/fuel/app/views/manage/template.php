@@ -35,13 +35,12 @@
     <div class="topbar">
       <div class="topbar-inner">
         <div class="container-fluid">
-          <a class="brand" href="#"><?php echo $title; ?></a>
+          <a class="brand" href="/manage"><?php echo $title; ?></a>
           <ul class="nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="active"><a href="/manage">アプリ一覧</a></li>
+            <li><a href="/manage/settings">設定</a></li>
           </ul>
-          <p class="pull-right">Logged in as <a href="#">username</a></p>
+          <p class="pull-right">Logged in as <a href="/manage"><?php echo $user_name; ?></a></p>
         </div>
       </div>
     </div>
