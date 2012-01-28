@@ -10,6 +10,7 @@
     <script type="text/javascript" src="/assets/js/ui.mouse.js"></script>
     <script type="text/javascript" src="/assets/js/ui.draggable.js"></script>
     <script type="text/javascript" src="/assets/js/ui.draggable.ext.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-modal.js"></script>
     <?php echo Asset::css('bootstrap.css'); ?>
     <?php echo Asset::css('style.css'); ?>
 

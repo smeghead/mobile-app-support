@@ -55,46 +55,34 @@ function setup_tabs(){
 }
 function setup_faq_draggable(elements) {
   elements.draggable({
-//    containment: 'parent',
     axis: 'y',
     opacity: 0.9,
     helper: 'clone'
   })
   .bind('dragstart', function(event, ui){
-console.log('start', ui.clientY);
   })
   .bind('drag', function(event, ui){
-//console.log('drag');
   })
   .bind('dragstop', function(event, ui){
-console.log(ui);
     var end_point = $(ui.target).position().top;
     var target = null,
         original = null,
         original_id = $(event.target).data('id');
     $('#faqs li').each(function(){
       if ($(this).css('position') == 'absolute') return;
-//console.log('check', $(this).text().trim());
-console.log($(this).position().top, end_point);
       if (target == null && $(this).position().top > end_point) {
         target = $(this);
-        console.log('hit');
-console.log('target', target);
       }
       if ($(this).data('id') == original_id) {
         original = $(this);
       }
     });
     target = target || $('#faqs li').first();
-console.log('original', original);
     if (original == null) return;
     var new_element = original.clone();
     new_element.insertBefore(target);
     setup_faq_draggable(new_element);
     original.remove();
-    //$(target).insertBefore($(original).remove());
-//    $('#faqs li').draggable('destroy');
-    //re-setup
   });
 }
 $(function(){
@@ -109,5 +97,31 @@ $(function(){
 
   //setup faq
   setup_faq_draggable($('#faqs li'));
+  $('.open_add_category').click(function(){
+    $('#modal_add_qa_category').modal({
+      keyboard: true,
+      backdrop: true,
+      show: true
+    });
+    $('#modal_add_qa_category').bind('shown', function(){
+      $('#new_category_name').focus();
+    });
+  });
+  $('.add_qa_category').click(function(){
+    if ($('#new_category_name').val().trim().length == 0) {
+      return;
+    }
+    var category = $('<li class="faq-category" data-id="' + parseInt(new Date()/1000, 10) + '">' +
+      $('#new_category_name').val() +
+      '<span class="right qa-delete">&nbsp;</span>' +
+      '<span class="right qa-edit">&nbsp;</span>' +
+      '<br class="close"/>' +
+      '</li>');
+    $('#faqs ul').append(category);
+    $('#modal_add_qa_category').modal('hide');
+  });
+  $('.qa_modal_close').click(function(){
+    $('#modal_add_qa_category').modal('hide');
+  });
 });
 // vim: set ts=2 sw=2 sts=2 expandtab fenc=utf-8: 

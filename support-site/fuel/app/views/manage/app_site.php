@@ -36,7 +36,7 @@
 
   <div class="actions">
     <a class="save_faq btn primary">保存</a>
-    <a class="add_category btn">新規カテゴリの追加</a>
+    <a class="btn open_add_category">新規カテゴリの追加</a>
   </div>
   <div id="faqs" class="row">
     <div class="span6">
@@ -80,17 +80,34 @@
       </ul>
     </div>
     <div class="span6">
-<form>
-  <h4>質問</h4>
-          <textarea class="xlarge" id="faq_q" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
-  <h4>回答</h4>
-          <textarea class="xlarge" id="faq_a" name="top_content" rows="8"><?php echo Input::post('top_content') ?></textarea>
-</form>
+      <form>
+        <h4>質問</h4>
+                <textarea class="xlarge" id="faq_q" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
+        <h4>回答</h4>
+                <textarea class="xlarge" id="faq_a" name="top_content" rows="8"><?php echo Input::post('top_content') ?></textarea>
+      </form>
     </div>
   </div>
   <div class="actions">
     <a class="save_faq btn primary">保存</a>
-    <a class="add_category btn">新規カテゴリの追加</a>
+    <a class="btn" data-controls-modal="modal_add_qa_category" data-backdrop="false" data-keyboard="true">新規カテゴリの追加</a>
+  </div>
+  <div id="modal_add_qa_category" class="modal hide fade">
+            <div class="modal-header">
+              <a href="#" class="close">×</a>
+              <h3>新規カテゴリの追加</h3>
+            </div>
+            <div class="modal-body">
+              <p>追加するカテゴリ名を指定して下さい。</p>
+              <form>
+                <input class="xlarge" id="new_category_name" name="email" size="30" type="text" value="" />
+              </form>
+            </div>
+            <div class="modal-footer">
+              <a class="btn primary add_qa_category">追加</a>
+              <a class="btn secondary qa_modal_close">閉じる</a>
+            </div>
+          </div>
   </div>
 </div>
 
