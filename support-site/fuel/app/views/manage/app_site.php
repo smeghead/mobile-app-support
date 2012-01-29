@@ -16,16 +16,14 @@
   <form>
     <p>サポートサイトのトップページを編集することができます。</p>
 
-    <fieldset>
-      <div class="clearfix <?php if (isset($errors['top_content'])) { echo 'error'; } ?>">
-        <div class="">
-          <textarea class="xxlarge" id="top_content" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
-  <?php if (isset($errors['top_content'])) { ?>
-          <span class="help-inline"><?php echo $errors['top_content'] ?></span>
-  <?php } ?>
-        </div>
-      </div><!-- /clearfix -->
-    </fieldset>
+    <div class="row">
+      <div class="span6" style="background-color: red;">
+        <textarea class="xxlarge" id="top_content" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
+      </div>
+      <div class="span6">
+        <iframe src="/" id="top_content_preview"></iframe>
+      </div>
+    </div>
     <div class="actions">
       <input type="submit" class="btn primary" value="登録">
     </div>
