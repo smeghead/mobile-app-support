@@ -57,3 +57,11 @@ div#app_list td.block-link a {
 div#app_list td.center {
 	text-align: center;
 }
+textarea#top_content {
+	width: 320px;
+	height: 320px;
+}
+iframe#top_content_preview {
+	width: 320px;
+	height: 320px;
+}
