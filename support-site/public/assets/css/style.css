@@ -18,7 +18,7 @@ div#faqs li.faq-element {
 	padding: 5px;
 	cursor: move;
 	border: 1px solid #666699;
-	border-radius: 3px;
+	border-radius: 5px;
 }
 div#faqs li.faq-category {
 	background-color: lightblue;
@@ -44,4 +44,7 @@ div.qa-edit-form {
 }
 div.banner-menu {
 	text-align: center;
+}
+div#faqs li.target {
+	margin-top: 10px;
 }
