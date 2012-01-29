@@ -27,13 +27,13 @@ div#faqs li.faq-element {
 	padding-left: 15px;
 	background-color: white;
 }
-div#faqs span.qa-edit {
+span.edit-icon {
 	cursor: pointer;
 	background-image: url(../img/edit.png);
 	background-repeat: none;
 	width: 18px;
 }
-div#faqs span.qa-delete {
+span.delete-icon {
 	cursor: pointer;
 	background-image: url(../img/delete.png);
 	background-repeat: none;
@@ -47,4 +47,10 @@ div.banner-menu {
 }
 div#faqs li.target {
 	margin-top: 10px;
+}
+div#app_list td.block-link a {
+	display: block;
+}
+div#app_list td.center {
+	text-align: center;
 }

@@ -42,38 +42,38 @@
       <ul id="faq-categories span6">
         <li class="faq-category" data-id="1">
           <span class="category_name">アプリの動作</span>
-          <span class="right qa-delete">&nbsp;</span>
-          <span class="right qa-edit">&nbsp;</span>
+          <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>
+          <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>
           <br class="close"/>
         </li>
         <li class="faq-element" data-id="2">
           <span class="qa_name" data-a="hogehoge">アプリが起動しない</span>
-          <span class="right qa-delete">&nbsp;</span>
-          <span class="right qa-edit">&nbsp;</span>
+          <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>
+          <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>
           <br class="close"/>
         </li>
         <li class="faq-element" data-id="3">
           <span class="qa_name" data-a="hogehoge">新着通知時に音がうるさい</span>
-          <span class="right qa-delete">&nbsp;</span>
-          <span class="right qa-edit">&nbsp;</span>
+          <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>
+          <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>
           <br class="close"/>
         </li>
         <li class="faq-element" data-id="4">
           <span class="qa_name" data-a="hogehoge">バッテリーを節約したい</span>
-          <span class="right qa-delete">&nbsp;</span>
-          <span class="right qa-edit">&nbsp;</span>
+          <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>
+          <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>
           <br class="close"/>
         </li>
         <li class="faq-category" data-id="5">
           <span class="category_name">その他</span>
-          <span class="right qa-delete">&nbsp;</span>
-          <span class="right qa-edit">&nbsp;</span>
+          <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>
+          <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>
           <br class="close"/>
         </li>
         <li class="faq-element" data-id="6">
           <span class="qa_name" data-a="hogehoge">無料ですか？</span>
-          <span class="right qa-delete">&nbsp;</span>
-          <span class="right qa-edit">&nbsp;</span>
+          <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>
+          <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>
           <br class="close"/>
         </li>
       </ul>
@@ -82,7 +82,7 @@
       <form>
         <div id="form-category" class="qa-edit-form">
           <h4>カテゴリ名</h4>
-          <input class="xlarge" id="category_name" name="email" size="20" type="text" value="" />
+          <input class="xlarge" id="category_name" name="category_name" size="20" type="text" value="" />
         </div>
         <div id="form-qa" class="qa-edit-form">
           <h4>質問</h4>
