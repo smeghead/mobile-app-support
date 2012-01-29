@@ -45,6 +45,9 @@ div.qa-edit-form {
 div.banner-menu {
 	text-align: center;
 }
+div#faqs li.editting span {
+	font-weight: bold;
+}
 div#faqs li.target {
 	margin-top: 10px;
 }

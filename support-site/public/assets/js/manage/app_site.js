@@ -105,6 +105,7 @@ console.log('set target to ' + self.data('id'));
       to: target
     };
   };
+  return elements;
 }
 $(function(){
   $.anchorHandler
@@ -114,7 +115,15 @@ $(function(){
   setup_tabs();
 
   //setup editor
-  $('#top_content').wysiwyg();
+  $('#top_content').wysiwyg({
+    controls: {
+      html: { visible: true },
+      codesnipet: { visible: false },
+      underline: { visible: false },
+      subscript: { visible: false },
+      superscript: { visible: true }
+    }
+  });
 
   //setup faq
   setup_faq_draggable($('#faqs li'));
@@ -132,28 +141,34 @@ $(function(){
     $('#btn_add_category').click();
     this.cancel();
   });
-  $('.add_qa_category').click(function(){
-    if ($('#new_category_name').val().trim().length == 0) {
-      return;
-    }
-    var category = $('<li class="faq-category" data-id="' + parseInt(new Date()/1000, 10) + '">' +
+  var create_category = function(id, category_name){
+    return $('<li class="faq-category" data-id="' + parseInt(new Date()/1000, 10) + '">' +
       '<span class="category_name">' + $('#new_category_name').val().trim() + '</span>' +
       '<span class="right qa-delete">&nbsp;</span>' +
       '<span class="right qa-edit">&nbsp;</span>' +
       '<br class="close"/>' +
       '</li>');
-    $('#faqs ul').append(category);
+  };
+  $('.add_qa_category').click(function(){
+    if ($('#new_category_name').val().trim().length == 0) {
+      return;
+    }
+    var category = create_category(parseInt(new Date()/1000, 10), $('#new_category_name').val().trim());
+    $('#faqs ul').append(setup_faq_draggable(category));
     $('#modal_add_qa_category').modal('hide');
   });
   $('.qa_modal_close').click(function(){
     $('#modal_add_qa_category').modal('hide');
   });
   //カテゴリの編集
-  $('.faq-category .qa-edit').click(function(){
+  $('.faq-category .qa-edit').live('click', function(){
     $('#category_name').unbind('change');
     $('div#form-category').show().submit(function(){this.cancel()});
     $('div#form-qa').hide();
-    var category_name = $('span.category_name', $(this).parent('.faq-category'));
+    $('.faq-category, .faq-element').removeClass('editting');
+    var li = $(this).parent('.faq-category');
+    li.addClass('editting');
+    var category_name = $('span.category_name', li);
     $('#category_name').val(category_name.text())
       .change(function(){category_name.text($(this).val());})
       .focus();
@@ -176,16 +191,35 @@ $(function(){
   $('#modal_delete_confirm .qa_modal_close').live('click', function(){
     $('#modal_delete_confirm').modal('hide');
   });
+  var create_qa = function(id){
+    return $('<li class="faq-element" data-id="' + id + '">' +
+        '  <span class="qa_name" data-a=""></span>' +
+        '  <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>' +
+        '  <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>' +
+        '  <br class="close"/>' +
+        '</li>');
+  };
+  //QAの追加
+  $('.add-qa').click(function(){
+    console.log('add qa');
+    var qa = create_qa(parseInt(new Date()/1000, 10));
+    $('#faqs ul').append(setup_faq_draggable(qa));
+    $('.qa-edit', qa).click();
+  });
   //QAの編集
   $('.faq-element .qa-edit').live('click', function(){
     $('#faq_q, #faq_a').unbind('change');
     $('div#form-category').hide();
     $('div#form-qa').show();
-    var qa_name = $('span.qa_name', $(this).parent('.faq-element'));
+    $('.faq-category, .faq-element').removeClass('editting');
+    var li = $(this).parent('.faq-element');
+    li.addClass('editting');
+    var qa_name = $('span.qa_name', li);
     $('#faq_q').val(qa_name.text())
       .change(function(){qa_name.text($(this).val());})
       .focus();
     $('#faq_a').val(qa_name.data('a'))
+      .change(function(){qa_name.data('a', $(this).val());});
   });
   //QAの削除
   $('.faq-element .qa-delete').live('click', function(){

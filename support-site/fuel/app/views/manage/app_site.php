@@ -1,5 +1,8 @@
 <link href="/assets/css/jquery.wysiwyg.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/assets/js/jquery.wysiwyg.js"></script>
+<script type="text/javascript" src="/assets/js/controls/wysiwyg.link.js"></script>
+<script type="text/javascript" src="/assets/js/controls/wysiwyg.image.js"></script>
+<script type="text/javascript" src="/assets/js/controls/wysiwyg.table.js"></script>
 <script type="text/javascript" src="/assets/js/manage/app_site.js"></script>
 <h1>サポートサイト管理</h1>
 <ul class="tabs">
@@ -36,9 +39,10 @@
   <div class="actions">
     <a class="save_faq btn primary">保存</a>
     <a class="btn open_add_category">新規カテゴリの追加</a>
+    <a class="btn add-qa">新規QAの追加</a>
   </div>
   <div id="faqs" class="row">
-    <div class="span8">
+    <div class="span6">
       <ul id="faq-categories span6">
         <li class="faq-category" data-id="1">
           <span class="category_name">アプリの動作</span>
@@ -96,6 +100,7 @@
   <div class="actions">
     <a class="save_faq btn primary">保存</a>
     <a class="btn" data-controls-modal="modal_add_qa_category" data-backdrop="false" data-keyboard="true">新規カテゴリの追加</a>
+    <a class="btn add-qa">新規QAの追加</a>
   </div>
   <div id="modal_delete_confirm" class="modal hide fade">
     <div class="modal-header">
