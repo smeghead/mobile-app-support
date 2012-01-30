@@ -4,9 +4,9 @@ class Model_Top_Content extends \Orm\Model
 {
 	protected static $_properties = array(
 		'id',
-		'user_id',
+		'app_id',
 		'content',
-		'enabeld',
+		'enabled',
 		'created_at',
 		'updated_at'
 	);

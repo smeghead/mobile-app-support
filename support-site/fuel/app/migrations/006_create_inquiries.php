@@ -8,7 +8,7 @@ class Create_inquiries
 	{
 		\DBUtil::create_table('inquiries', array(
 			'id' => array('constraint' => 11, 'type' => 'int', 'auto_increment' => true),
-			'user_id' => array('constraint' => 11, 'type' => 'int'),
+			'app_id' => array('constraint' => 11, 'type' => 'int'),
 			'answer_to' => array('constraint' => 11, 'type' => 'int'),
 			'content' => array('type' => 'text'),
 			'status' => array('constraint' => 11, 'type' => 'int'),

@@ -4,7 +4,7 @@ class Model_Faq_Question extends \Orm\Model
 {
 	protected static $_properties = array(
 		'id',
-		'user_id',
+		'app_id',
 		'category_id',
 		'question',
 		'answer',

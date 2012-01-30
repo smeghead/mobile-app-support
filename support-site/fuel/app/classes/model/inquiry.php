@@ -4,7 +4,7 @@ class Model_Inquiry extends \Orm\Model
 {
 	protected static $_properties = array(
 		'id',
-		'user_id',
+		'app_id',
 		'answer_to',
 		'content',
 		'status',

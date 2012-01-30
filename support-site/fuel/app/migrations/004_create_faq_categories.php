@@ -8,7 +8,7 @@ class Create_faq_categories
 	{
 		\DBUtil::create_table('faq_categories', array(
 			'id' => array('constraint' => 11, 'type' => 'int', 'auto_increment' => true),
-			'user_id' => array('constraint' => 11, 'type' => 'int'),
+			'app_id' => array('constraint' => 11, 'type' => 'int'),
 			'name' => array('type' => 'text'),
 			'created_at' => array('constraint' => 11, 'type' => 'int'),
 			'updated_at' => array('constraint' => 11, 'type' => 'int'),

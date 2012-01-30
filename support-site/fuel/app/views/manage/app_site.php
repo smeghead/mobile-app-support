@@ -11,23 +11,31 @@
   <li id="tabs_inquiry"><a href="#inquiry">問い合わせ管理</a></li>
 </ul>
 
+<input class="hide" id="id_input" type="hidden" value="<?php echo $app->id; ?>" />
+<div id="alert-message-success" class="alert-message success hide" data-alert="">
+  <a class="close" href="#">×</a>
+  <p>更新しました。</p>
+</div>
+<div id="alert-message-error" class="alert-message error hide" data-alert="">
+  <a class="close" href="#">×</a>
+  <p>更新に失敗しました。<span id="error-description"></span></p>
+</div>
+
 <!-- ############## top ############## -->
 <div id="tab_top">
-  <form>
-    <p>サポートサイトのトップページを編集することができます。</p>
+  <p>サポートサイトのトップページを編集することができます。</p>
 
-    <div class="row">
-      <div class="span6" style="background-color: red;">
-        <textarea class="xxlarge" id="top_content" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
-      </div>
-      <div class="span6">
-        <iframe src="/" id="top_content_preview"></iframe>
-      </div>
+  <div class="row">
+    <div class="span6" style="background-color: red;">
+      <textarea class="xxlarge" id="top_content" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
     </div>
-    <div class="actions">
-      <input type="submit" class="btn primary" value="登録">
+    <div class="span6">
+      <iframe src="/" id="top_content_preview"></iframe>
     </div>
-  </form>
+  </div>
+  <div class="actions">
+    <input id="top_content_save" type="button" class="btn primary" value="登録">
+  </div>
 </div>
 
 <!-- ############## faq ############## -->

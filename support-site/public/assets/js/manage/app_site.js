@@ -115,14 +115,50 @@ $(function(){
   setup_tabs();
 
   //setup editor
-  $('#top_content').wysiwyg({
-    controls: {
-      html: { visible: true },
-      codesnipet: { visible: false },
-      underline: { visible: false },
-      subscript: { visible: false },
-      superscript: { visible: true }
+  $.ajax({
+    type: 'GET',
+    url: '/api/app_top_content.json/' + $('#id_input').val(), 
+    success: function(data, status){
+      console.log('success', data);
+      $('#top_content').text(data.app_top_content.content);
+      $('#top_content').wysiwyg({
+        controls: {
+          html: { visible: true },
+          codesnipet: { visible: false },
+          underline: { visible: false },
+          subscript: { visible: false },
+          superscript: { visible: true }
+        }
+      });
+    },
+    error: function(xhr, status, c){
+      console.log(xhr.responseText);
+      var data = JSON.parse(xhr.responseText || '{}');
+      $('#error-description').text(data.error);
+      $('#alert-message-error').show();
     }
+  });
+  // トップコンテンツの保存
+  $('#top_content_save').click(function(e){
+    console.log($('#top_content').val());
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: '/api/app_top_content.json/' + $('#id_input').val(), 
+      data: {
+        content: $('#top_content').val()
+      },
+      success: function(data, status){
+        console.log('success', data);
+        $('#alert-message-success').show();
+      },
+      error: function(xhr, status, c){
+        console.log(xhr.responseText);
+        var data = JSON.parse(xhr.responseText || '{}');
+        $('#error-description').text(data.error);
+        $('#alert-message-error').show();
+      }
+    });
   });
 
   //setup faq
