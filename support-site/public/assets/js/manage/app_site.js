@@ -32,6 +32,9 @@
   });
 })(jQuery);
 
+function h(value) {
+  return $('<div/>').text(value || '').html();
+}
 function setup_tabs(){
   //display tabs.
   var tabs = ['top', 'faq', 'inquiry'];
@@ -162,6 +165,28 @@ $(function(){
   });
 
   //setup faq
+  $.ajax({
+    type: 'GET',
+    url: '/api/faq.json/' + $('#id_input').val(), 
+    success: function(data, status){
+      console.log('success', data);
+      var faqs = $('#faqs ul');
+      $(data.faqs).each(function(){
+        console.log(this);
+        if (this.type == 'category') {
+          faqs.append(setup_faq_draggable(create_category(this.id, this.name)));
+        } else {
+          faqs.append(setup_faq_draggable(create_qa(this.id, this.question, this.answer)));
+        }
+      });
+    },
+    error: function(xhr, status, c){
+      console.log(xhr.responseText);
+      var data = JSON.parse(xhr.responseText || '{}');
+      $('#error-description').text(data.error);
+      $('#alert-message-error').show();
+    }
+  });
   setup_faq_draggable($('#faqs li'));
   $('.open_add_category').click(function(){
     $('#modal_add_qa_category').modal({
@@ -178,10 +203,10 @@ $(function(){
     this.cancel();
   });
   var create_category = function(id, category_name){
-    return $('<li class="faq-category" data-id="' + parseInt(new Date()/1000, 10) + '">' +
-      '<span class="category_name">' + $('#new_category_name').val().trim() + '</span>' +
-      '<span class="right qa-delete">&nbsp;</span>' +
-      '<span class="right qa-edit">&nbsp;</span>' +
+    return $('<li class="faq-category" data-id="' + h(id) + '">' +
+      '<span class="category_name">' + h(category_name) + '</span>' +
+      '<span class="right qa-delete delete-icon" title="削除">&nbsp;</span>' +
+      '<span class="right qa-edit edit-icon" title="編集">&nbsp;</span>' +
       '<br class="close"/>' +
       '</li>');
   };
@@ -197,12 +222,12 @@ $(function(){
     $('#modal_add_qa_category').modal('hide');
   });
   //カテゴリの編集
-  $('.faq-category .qa-edit').live('click', function(){
+  $('.faq-category').live('click', function(){
     $('#category_name').unbind('change');
     $('div#form-category').show().submit(function(){this.cancel()});
     $('div#form-qa').hide();
     $('.faq-category, .faq-element').removeClass('editting');
-    var li = $(this).parent('.faq-category');
+    var li = $(this);
     li.addClass('editting');
     var category_name = $('span.category_name', li);
     $('#category_name').val(category_name.text())
@@ -227,9 +252,9 @@ $(function(){
   $('#modal_delete_confirm .qa_modal_close').live('click', function(){
     $('#modal_delete_confirm').modal('hide');
   });
-  var create_qa = function(id){
-    return $('<li class="faq-element" data-id="' + id + '">' +
-        '  <span class="qa_name" data-a=""></span>' +
+  var create_qa = function(id, q, a){
+    return $('<li class="faq-element" data-id="' + h(id) + '">' +
+        '  <span class="qa_name" data-a="' + h(a) + '">' + h(q) + '</span>' +
         '  <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>' +
         '  <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>' +
         '  <br class="close"/>' +
@@ -243,12 +268,12 @@ $(function(){
     $('.qa-edit', qa).click();
   });
   //QAの編集
-  $('.faq-element .qa-edit').live('click', function(){
+  $('.faq-element').live('click', function(){
     $('#faq_q, #faq_a').unbind('change');
     $('div#form-category').hide();
     $('div#form-qa').show();
     $('.faq-category, .faq-element').removeClass('editting');
-    var li = $(this).parent('.faq-element');
+    var li = $(this)
     li.addClass('editting');
     var qa_name = $('span.qa_name', li);
     $('#faq_q').val(qa_name.text())
@@ -265,6 +290,53 @@ $(function(){
       keyboard: true,
       backdrop: true,
       show: true
+    });
+  });
+  //FAQ の更新
+  $('#faq_save').click(function(){
+    var faqs = [];
+    var last_category_id;
+    $('#faqs ul li').each(function(){
+      var li = $(this);
+      if (li.hasClass('faq-category')) {
+        last_category_id = li.data('id');
+        console.log($('span.category_name', li));
+        faqs.push({
+          type: 'category',
+          id: li.data('id'),
+          app_id: $('#id_input').val(),
+          name: $('span.category_name', li).text()
+        });
+      } else {
+        var qa = $('.qa_name', li);
+        faqs.push({
+          type: 'qa',
+          id: li.data('id'),
+          app_id: $('#id_input').val(),
+          category_id: last_category_id,
+          question: qa.text(),
+          answer: qa.data('a')
+        });
+      }
+
+    });
+    console.log(faqs);
+    $.ajax({
+      type: 'POST',
+      url: '/api/faq.json/' + $('#id_input').val(), 
+      data: {
+        json: JSON.stringify(faqs)
+      },
+      success: function(data, status){
+        console.log('success', data);
+        $('#alert-message-success').show();
+      },
+      error: function(xhr, status, c){
+        console.log(xhr.responseText);
+        var data = JSON.parse(xhr.responseText || '{}');
+        $('#error-description').text(data.error);
+        $('#alert-message-error').show();
+      }
     });
   });
 });

@@ -50,42 +50,6 @@
   <div id="faqs" class="row">
     <div class="span6">
       <ul id="faq-categories span6">
-        <li class="faq-category" data-id="1">
-          <span class="category_name">アプリの動作</span>
-          <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>
-          <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>
-          <br class="close"/>
-        </li>
-        <li class="faq-element" data-id="2">
-          <span class="qa_name" data-a="hogehoge">アプリが起動しない</span>
-          <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>
-          <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>
-          <br class="close"/>
-        </li>
-        <li class="faq-element" data-id="3">
-          <span class="qa_name" data-a="hogehoge">新着通知時に音がうるさい</span>
-          <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>
-          <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>
-          <br class="close"/>
-        </li>
-        <li class="faq-element" data-id="4">
-          <span class="qa_name" data-a="hogehoge">バッテリーを節約したい</span>
-          <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>
-          <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>
-          <br class="close"/>
-        </li>
-        <li class="faq-category" data-id="5">
-          <span class="category_name">その他</span>
-          <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>
-          <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>
-          <br class="close"/>
-        </li>
-        <li class="faq-element" data-id="6">
-          <span class="qa_name" data-a="hogehoge">無料ですか？</span>
-          <span class="right qa-delete delete-icon" title="削除">&nbsp;</span>
-          <span class="right qa-edit edit-icon" title="編集">&nbsp;</span>
-          <br class="close"/>
-        </li>
       </ul>
     </div>
     <div class="span6">
@@ -104,7 +68,7 @@
     </div>
   </div>
   <div class="actions">
-    <a class="save_faq btn primary">保存</a>
+    <a id="faq_save" class="save_faq btn primary">保存</a>
     <a class="btn" data-controls-modal="modal_add_qa_category" data-backdrop="false" data-keyboard="true">新規カテゴリの追加</a>
     <a class="btn add-qa">新規QAの追加</a>
   </div>

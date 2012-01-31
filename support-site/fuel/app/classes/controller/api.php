@@ -88,4 +88,97 @@ class Controller_Api extends Controller_Rest {
       'error' => null
     ));
   }
+
+  public function get_faq($app_id) {
+    Log::debug('get_faq called.');
+
+    $user = Session::get('user');
+    $app = Model_App::find('first',
+      array(
+        'id' => $app_id,
+        'user_id' => $user['id'],
+      )
+    );
+    if (!$app) {
+      Log::error('app not found');
+      return $this->response(array('error' => 'app not found'), 404);
+    }
+
+    $faqs = array();
+    $categories = DB::select()->from('faq_categories')->where('app_id', $app_id)->execute();
+    foreach ($categories as $category) {
+      $faqs[] = array(
+        'type' => 'category',
+        'id' => 'category' . $category['id'],
+        'name' => $category['name']
+      );
+      $questions = DB::select()->from('faq_questions')->where('app_id', $app_id)->where('category_id', $category['id'])->execute();
+      foreach ($questions as $q) {
+        $faqs[] = array(
+          'type' => 'question',
+          'id' => 'qa' . $q['id'],
+          'question' => $q['question'],
+          'answer' => $q['answer']
+        );
+      }
+    }
+    $this->response(array('faqs' => $faqs));
+  }
+
+  public function post_faq($app_id) {
+    Log::debug('post_faq called.');
+    Log::debug(Input::post('json'));
+    $faqs = json_decode(Input::post('json'), true);
+    if ($faqs == NULL) {
+      Log::error('failed to retrieve parameter. err_code: ' . json_last_error());
+      $this->response(array('error' => 'failed to retrieve parameter. err_code: ' . json_last_error()), 500);
+    }
+    Log::debug(var_export($faqs, true));
+
+    $user = Session::get('user');
+    $app = Model_App::find('first',
+      array(
+        'id' => $app_id,
+        'user_id' => $user['id'],
+      )
+    );
+    if (!$app) {
+      Log::error('app not found');
+      return $this->response(array('error' => 'app not found'), 404);
+    }
+
+    DB::start_transaction();
+    try {
+      DB::commit_transaction();
+      DB::delete('faq_categories')->where('app_id', $app_id)->execute();
+      DB::delete('faq_questions')->where('app_id', $app_id)->execute();
+
+      $last_category_id;
+      foreach ($faqs as $elem) {
+        if ($elem['type'] == 'category') {
+          list($last_category_id, $affect_rows) = DB::insert('faq_categories')->set(array(
+            'app_id' => $elem['app_id'],
+            'name' => $elem['name']
+          ))->execute();
+          Log::debug('last_inserted_id:::::' . $last_category_id);
+        } else {
+          DB::insert('faq_questions')->set(array(
+            'app_id' => $elem['app_id'],
+            'category_id' => $last_category_id,
+            'question' => $elem['question'],
+            'answer' => $elem['answer']
+          ))->execute();
+        }
+      }
+      return $this->response(array(
+        'error' => null
+      ));
+    } catch (Exception $e) {
+      Log::debug('error: ' + $e->getMessage());
+      DB::rollback_transaction();
+      return $this->response(array(
+        'error' => $e->getMessage()
+      ), 500);
+    }
+  }
 }
