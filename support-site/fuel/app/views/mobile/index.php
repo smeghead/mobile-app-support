@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>無駄新聞 サポート</title>
+  <title><?php echo $app->name; ?> サポート</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"> 
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
   <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
@@ -13,7 +13,7 @@
 
   <div data-role="header">
     <h1>
-      無駄新聞 サポート
+      <?php echo $app->name; ?> サポート
     </h1>
     <div data-role="navbar">
       <ul>
@@ -26,21 +26,7 @@
 
 
   <div data-role="content"> 
-    <p>
-      <img src="/images/icon.png"/ align="left" />
-      一番カジュアルな新聞アプリ 無駄新聞です。よくわからない設定項目などは無しで、てっとり早く楽しんで下さい。
-      優良ブログの新着記事をいちはやくお届けします。
-      無駄新聞は、とても簡単に使える新聞アプリです。
-      暇潰しや雑談のタネに使って下さい。
-    </p>    
-
-
-    <h4> ニュース記事提供元 </h4>
-    <ul>
-      <li>らばQ</li>
-      <li>痛いニュース(ﾉ∀`)</li>
-      <li>GIGAZINE</li>
-    </ul>
+    <?php print $content; ?>
   </div><!-- /content -->
 
   <div data-role="footer">    

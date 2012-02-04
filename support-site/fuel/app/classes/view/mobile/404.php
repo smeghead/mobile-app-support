@@ -6,7 +6,7 @@
  * @package  app
  * @extends  ViewModel
  */
-class View_Welcome_404 extends ViewModel
+class View_Mobile_404 extends ViewModel
 {
 	/**
 	 * Prepare the view data, keeping this in here helps clean up

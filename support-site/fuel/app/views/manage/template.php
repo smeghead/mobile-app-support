@@ -10,7 +10,7 @@
     <script type="text/javascript" src="/assets/js/ui.mouse.js"></script>
     <script type="text/javascript" src="/assets/js/ui.draggable.js"></script>
     <script type="text/javascript" src="/assets/js/ui.draggable.ext.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap-alerts.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-alert.js"></script>
     <script type="text/javascript" src="/assets/js/bootstrap-modal.js"></script>
     <?php echo Asset::css('bootstrap.css'); ?>
     <style type="text/css">
@@ -80,7 +80,7 @@
       </div>
     </div>
     <footer>
-      <p>&copy; smeghead 2011</p>
+      <p>&copy; smeghead 2012</p>
     </footer>
 
   </body>

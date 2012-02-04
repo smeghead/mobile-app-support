@@ -111,10 +111,13 @@ class Controller_Manage extends Controller_Template {
       }
 
       $user = Session::get('user');
+      $code = Model_App::get_uniq_code();
+      Log::debug('code:' . $code);
       $app_value = array(
         'user_id' => $user['id'],
         'name' => $validation->validated('name'),
         'url' => $validation->validated('url'),
+        'code' => $code,
         'deleted' => 0
       );
       Log::debug(var_export($app, true));
@@ -129,10 +132,10 @@ class Controller_Manage extends Controller_Template {
 
   public function action_app($app_id) {
     $user = Session::get('user');
-    $app = Model_App::find('first',
-      array(
-        'id' => $app_id,
-        'user_id' => $user['id'],
+    $app = Model_App::find('first', array('where' => array(
+          'id' => $app_id,
+          'user_id' => $user['id'],
+        )
       )
     );
     if (!$app) {

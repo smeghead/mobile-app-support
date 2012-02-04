@@ -62,7 +62,7 @@
     </div>
 
     <footer>
-      <p>&copy; smeghead 2011</p>
+      <p>&copy; smeghead 2012</p>
     </footer>
   </body>
 </html>

@@ -4,6 +4,17 @@
 <script type="text/javascript" src="/assets/js/controls/wysiwyg.image.js"></script>
 <script type="text/javascript" src="/assets/js/controls/wysiwyg.table.js"></script>
 <script type="text/javascript" src="/assets/js/manage/app_site.js"></script>
+<ul class="breadcrumb">
+  <li>
+    <a href="/manage/">アプリ一覧</a> <span class="divider">/</span>
+  </li>
+  <li>
+    <a href="/manage/app/<?php echo $app->id; ?>"><?php echo $app->name; ?></a> <span class="divider">/</span>
+  </li>
+  <li class="active">
+    <a href="">サポート機能管理</a>
+  </li>
+</ul>
 <h1>サポート機能管理</h1>
 <ul class="nav nav-tabs">
   <li id="tabs_top"><a href="#top">サポートホーム</a></li>
@@ -12,25 +23,25 @@
 </ul>
 
 <input class="hide" id="id_input" type="hidden" value="<?php echo $app->id; ?>" />
-<div id="alert-message-success" class="alert-message success hide" data-alert="">
-  <a class="close" href="#">×</a>
+<div id="alert-message-success" class="alert hide" data-alert="">
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
   <p>更新しました。</p>
 </div>
-<div id="alert-message-error" class="alert-message error hide" data-alert="">
-  <a class="close" href="#">×</a>
+<div id="alert-message-error" class="alert error hide" data-alert="">
+  <a class="close" data-dismiss="alert" href="#">&times;</a>
   <p>更新に失敗しました。<span id="error-description"></span></p>
 </div>
 
 <!-- ############## top ############## -->
 <div id="tab_top">
-  <p>サポートサイトのトップページを編集することができます。</p>
+  <p>サポートのトップページを編集することができます。</p>
 
   <div class="row-fluid">
     <div class="span6">
       <textarea class="xxlarge" id="top_content" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
     </div>
     <div class="span6">
-      <iframe src="/welcome" id="top_content_preview"></iframe>
+      <iframe src="/mobile/index/<?php echo $app->code; ?>" id="top_content_preview"></iframe>
     </div>
   </div>
   <div class="form-actions">
@@ -40,7 +51,7 @@
 
 <!-- ############## faq ############## -->
 <div id="tab_faq">
-  <p>サポートサイトのFAQを管理することができます。</p>
+  <p>サポートのFAQを管理することができます。</p>
 
   <div class="form-actions">
     <a class="save_faq btn btn-primary">保存</a>
@@ -105,7 +116,7 @@
 
 <!-- ############## inquiry ############## -->
 <div id="tab_inquiry">
-  <p>サポートサイトの問い合わせを管理します。</p>
+  <p>サポートの問い合わせ履歴です。</p>
 
   <table class="table">
     <tr>

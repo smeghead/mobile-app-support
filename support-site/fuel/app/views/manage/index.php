@@ -1,4 +1,9 @@
 <script type="text/javascript" src="/assets/js/manage/index.js"></script>
+<ul class="breadcrumb">
+  <li class="active">
+    <a href="/manage/">アプリ一覧</a> <span class="divider">/</span>
+  </li>
+</ul>
 <h1>アプリ一覧</h1>
 <div id="app_list">
 <table class="table">
