@@ -7,6 +7,8 @@
     <meta name="author" content="">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <?php echo Asset::css('bootstrap.css'); ?>
+    <?php echo Asset::css('bootstrap-responsive.css'); ?>
+    <?php echo Asset::css('style.css'); ?>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -21,36 +23,41 @@
     </style>
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
   </head>
 
   <body>
 
-    <div class="topbar">
-      <div class="topbar-inner">
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
         <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
           <a class="brand" href="/public"><?php echo $title; ?></a>
         </div>
       </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="content">
         <h1>ログイン</h1>
-        <form method="post" action="/manage/login">
+        <form method="post" action="/manage/login" class="form-horizontal">
           <fieldset>
-            <div class="clearfix <?php if (isset($errors['user_id'])) { echo 'error'; } ?>">
-              <label for="user_id">ユーザID</label>
-              <div class="input">
+            <div class="control-group <?php if (isset($errors['user_id'])) { echo 'error'; } ?>">
+              <label for="user_id" class="control-label">ユーザID</label>
+              <div class="controls">
                 <input class="xlarge" id="user_id" name="user_id" size="30" type="text" value="<?php echo Input::post('user_id') ?>" />
         <?php if (isset($errors['user_id'])) { ?>
                 <span class="help-inline"><?php echo $errors['user_id'] ?></span>
         <?php } ?>
               </div>
             </div><!-- /clearfix -->
-            <div class="clearfix <?php if (isset($errors['passwd'])) { echo 'error'; } ?>">
-              <label for="passwd">パスワード</label>
-              <div class="input">
+            <div class="control-group <?php if (isset($errors['passwd'])) { echo 'error'; } ?>">
+              <label for="passwd" class="control-label">パスワード</label>
+              <div class="controls">
                 <input class="xlarge" id="passwd" name="passwd" size="30" type="password" value="<?php echo Input::post('passwd') ?>" />
         <?php if (isset($errors['passwd'])) { ?>
                 <span class="help-inline"><?php echo $errors['passwd'] ?></span>
@@ -59,12 +66,15 @@
             </div><!-- /clearfix -->
           </fieldset>
 
-          <div class="actions">
-            <input type="submit" class="btn primary" value="ログイン">
+          <div class="form-actions">
+            <input type="submit" class="btn btn-primary" value="ログイン">
           </div>
         </form>
       </div>
     </div>
+    <footer>
+      <p>&copy; smeghead 2011</p>
+    </footer>
 
     <script type="text/javascript">
 $(function(){

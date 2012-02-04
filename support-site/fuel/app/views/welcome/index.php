@@ -108,7 +108,7 @@
     <p>
       無駄新聞について、問題や要望・感想などありましたら、下のフォームからお知らせ下さい。
     </p>
-    <form>
+    <form class="form-horizontal">
       <ul data-role="listview" data-inset="true">
         <li data-role="fieldcontain">
           <label for="email">メールアドレス:</label>

@@ -14,8 +14,8 @@ class Controller_Manage extends Controller_Template {
     $this->auto_render = false;
 
     $user = Session::get('user');
-    Log::debug(var_export($user, true));
-    Log::debug($this->request->action);
+//    Log::debug(var_export($user, true));
+    Log::debug($this->request->uri);
     if (!$user && !in_array($this->request->action, $this->NO_AUTH_ACTIONS)) {
       return Response::redirect('manage/login');
     }
@@ -146,16 +146,23 @@ class Controller_Manage extends Controller_Template {
   }
 
   public function action_app_site($app_id) {
+    Log::debug('---------------------------');
+    Log::debug('action_app_site id:' . var_export($app_id, true));
     $user = Session::get('user');
-    $app = Model_App::find('first',
-      array(
-        'id' => $app_id,
-        'user_id' => $user['id'],
+    Log::debug('action_app_site user_id:' . $user['id']);
+    $app = Model_App::find('first', array(
+        'where' => array(
+          'id' => $app_id,
+          'user_id' => $user['id'],
+        )
       )
     );
+//    Log::debug(var_export($app, true));
     if (!$app) {
+      Log::error('no app.');
       return Response::forge(ViewModel::forge('welcome/404'), 404);
     }
+    Log::debug('app exists.');
     $data = array(
       'app' => $app
     );

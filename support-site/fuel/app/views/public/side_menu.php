@@ -1,7 +1,6 @@
-        <div class="well">
           <h5>機能紹介</h5>
           <ul>
-            <li><a href="">サポートサイト</a></li>
+            <li><a href="">サポート機能</a></li>
             <li><a href="">告知機能</a></li>
             <li><a href="">統計</a></li>
           </ul>
@@ -13,4 +12,3 @@
           <ul>
             <li><a href="/manage">ログイン</a></li>
           </ul>
-        </div>

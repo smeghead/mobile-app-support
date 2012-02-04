@@ -36,10 +36,11 @@ class Controller_Api extends Controller_Rest {
     $content = Input::post('content');
 
     $user = Session::get('user');
-    $app = Model_App::find('first',
-      array(
-        'id' => $app_id,
-        'user_id' => $user['id'],
+    $app = Model_App::find('first', array(
+        'where' => array(
+          'id' => $app_id,
+          'user_id' => $user['id'],
+        )
       )
     );
     if (!$app) {
@@ -47,7 +48,7 @@ class Controller_Api extends Controller_Rest {
       return $this->response(array('error' => 'app not found'), 404);
     }
 
-    $app_top_content = Model_Top_Content::find('first', array('app_id' => $app_id));
+    $app_top_content = Model_Top_Content::find('first', array('where' => array('app_id' => $app_id)));
     if (!$app_top_content) {
       Log::error('app_top_content not found');
       return $this->response(array('app_top_content' => array('content' => '<h1>' . $app->name . '</h1>')));
@@ -63,10 +64,11 @@ class Controller_Api extends Controller_Rest {
     $content = Input::post('content');
 
     $user = Session::get('user');
-    $app = Model_App::find('first',
-      array(
-        'id' => $app_id,
-        'user_id' => $user['id'],
+    $app = Model_App::find('first', array(
+        'where' => array(
+          'id' => $app_id,
+          'user_id' => $user['id'],
+        )
       )
     );
     if (!$app) {
@@ -74,7 +76,7 @@ class Controller_Api extends Controller_Rest {
       return $this->response(array('error' => 'app not found'), 404);
     }
 
-    $app_top_content = Model_Top_Content::find('first', array('app_id' => $app_id));
+    $app_top_content = Model_Top_Content::find('first', array('where' => array('app_id' => $app_id)));
     if (!$app_top_content) {
       $app_top_content = new Model_Top_Content();
       $app_top_content->app_id = $app_id;

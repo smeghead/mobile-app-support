@@ -4,8 +4,8 @@
 <script type="text/javascript" src="/assets/js/controls/wysiwyg.image.js"></script>
 <script type="text/javascript" src="/assets/js/controls/wysiwyg.table.js"></script>
 <script type="text/javascript" src="/assets/js/manage/app_site.js"></script>
-<h1>サポートサイト管理</h1>
-<ul class="tabs">
+<h1>サポート機能管理</h1>
+<ul class="nav nav-tabs">
   <li id="tabs_top"><a href="#top">サポートホーム</a></li>
   <li id="tabs_faq"><a href="#faq">FAQ管理</a></li>
   <li id="tabs_inquiry"><a href="#inquiry">問い合わせ管理</a></li>
@@ -25,16 +25,16 @@
 <div id="tab_top">
   <p>サポートサイトのトップページを編集することができます。</p>
 
-  <div class="row">
-    <div class="span6" style="background-color: red;">
+  <div class="row-fluid">
+    <div class="span6">
       <textarea class="xxlarge" id="top_content" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
     </div>
     <div class="span6">
-      <iframe src="/" id="top_content_preview"></iframe>
+      <iframe src="/welcome" id="top_content_preview"></iframe>
     </div>
   </div>
-  <div class="actions">
-    <input id="top_content_save" type="button" class="btn primary" value="登録">
+  <div class="form-actions">
+    <input id="top_content_save" type="button" class="btn btn-primary" value="登録">
   </div>
 </div>
 
@@ -42,18 +42,18 @@
 <div id="tab_faq">
   <p>サポートサイトのFAQを管理することができます。</p>
 
-  <div class="actions">
-    <a class="save_faq btn primary">保存</a>
+  <div class="form-actions">
+    <a class="save_faq btn btn-primary">保存</a>
     <a class="btn open_add_category">新規カテゴリの追加</a>
     <a class="btn add-qa">新規QAの追加</a>
   </div>
-  <div id="faqs" class="row">
+  <div id="faqs" class="row-fluid">
     <div class="span6">
       <ul id="faq-categories span6">
       </ul>
     </div>
     <div class="span6">
-      <form>
+      <form class="form-horizontal">
         <div id="form-category" class="qa-edit-form">
           <h4>カテゴリ名</h4>
           <input class="xlarge" id="category_name" name="category_name" size="20" type="text" value="" />
@@ -67,8 +67,8 @@
       </form>
     </div>
   </div>
-  <div class="actions">
-    <a id="faq_save" class="save_faq btn primary">保存</a>
+  <div class="form-actions">
+    <a id="faq_save" class="save_faq btn btn-primary">保存</a>
     <a class="btn" data-controls-modal="modal_add_qa_category" data-backdrop="false" data-keyboard="true">新規カテゴリの追加</a>
     <a class="btn add-qa">新規QAの追加</a>
   </div>
@@ -97,7 +97,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <a id="btn_add_category" class="btn primary add_qa_category">追加</a>
+      <a id="btn_add_category" class="btn btn-primary add_qa_category">追加</a>
       <a class="btn secondary qa_modal_close">閉じる</a>
     </div>
   </div>
@@ -107,7 +107,7 @@
 <div id="tab_inquiry">
   <p>サポートサイトの問い合わせを管理します。</p>
 
-  <table>
+  <table class="table">
     <tr>
       <th>問い合わせ日時</th>
       <th>状態</th>

@@ -1,7 +1,7 @@
 <script type="text/javascript" src="/assets/js/manage/index.js"></script>
 <h1>アプリ一覧</h1>
 <div id="app_list">
-<table>
+<table class="table">
   <tr>
     <th>アプリ名</th>
     <th>URL</th>
@@ -19,4 +19,4 @@
 
 </table>
 </div>
-<p><a href="/manage/add_app" class="btn primary">アプリを追加する&raquo;</a></p>
+<p><a href="/manage/add_app" class="btn btn-primary">アプリを追加する&raquo;</a></p>

@@ -2,20 +2,20 @@
 <h1>アプリ追加</h1>
 <p>追加するAndroidアプリ情報を入力して、登録ボタンをクリックして下さい。</p>
 
-<form action="/manage/add_app" method="post">
+<form action="/manage/add_app" method="post" class="form-horizontal">
   <fieldset>
-    <div class="clearfix <?php if (isset($errors['name'])) { echo 'error'; } ?>">
-      <label for="name">アプリ名</label>
-      <div class="input">
+    <div class="control-group <?php if (isset($errors['name'])) { echo 'error'; } ?>">
+      <label for="name" class="control-label">アプリ名</label>
+      <div class="controls">
         <input class="xlarge" id="name" name="name" size="30" type="text" value="<?php echo Input::post('name') ?>" />
 <?php if (isset($errors['name'])) { ?>
         <span class="help-inline"><?php echo $errors['name'] ?></span>
 <?php } ?>
       </div>
     </div><!-- /clearfix -->
-    <div class="clearfix <?php if (isset($errors['url'])) { echo 'error'; } ?>">
-      <label for="url">Android Market URL</label>
-      <div class="input">
+    <div class="controls-group <?php if (isset($errors['url'])) { echo 'error'; } ?>">
+      <label for="url" class="control-label">Android Market URL</label>
+      <div class="controls">
         <input class="xlarge" id="url" name="url" size="30" type="url" value="<?php echo Input::post('url') ?>" />
 <?php if (isset($errors['url'])) { ?>
         <span class="help-inline"><?php echo $errors['url'] ?></span>
@@ -25,7 +25,7 @@
     </div><!-- /clearfix -->
   </fieldset>
 
-  <div class="actions">
-    <input type="submit" class="btn primary" value="登録">&nbsp;<button type="reset" class="btn">キャンセル</button>
+  <div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="登録">&nbsp;<button type="reset" class="btn">キャンセル</button>
   </div>
 </form>

@@ -65,3 +65,6 @@ iframe#top_content_preview {
 	width: 320px;
 	height: 320px;
 }
+div#tab_top div.wysiwyg {
+	width: 340px;
+}
