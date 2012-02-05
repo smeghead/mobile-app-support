@@ -126,19 +126,14 @@
       <th>内容</th>
       <th>回答日時</th>
     </tr>
+<?php foreach ($inquiries as $inquiry) { ?>
     <tr>
-      <td>2012-01-01 00:00:00</td>
-      <td>回答済</td>
-      <td>hogehoge@hoge.com</td>
-      <td>こわれました。なぜかわからないけど。。。</td>
-      <td>2011-01-03 00:00:00</td>
+      <td><?php echo date('Y-m-d H:i:s', $inquiry->asked_at); ?></td>
+      <td><?php switch ($inquiry->status) { case 1: echo '未回答'; break; case 2: echo '回答済'; break;} ?></td>
+      <td><?php echo $inquiry->email; ?></td>
+      <td><?php echo $inquiry->content; ?></td>
+      <td><?php if ($inquiry->answered_at > 0) { echo date('Y-m-d H:i:s', $inquiry->answered_at);} ?></td>
     </tr>
-    <tr>
-      <td>2012-01-01 00:00:00</td>
-      <td>未回答</td>
-      <td>hogehoge@hoge.com</td>
-      <td>またこわれました。なぜかわからない。。。</td>
-      <td>&nbsp;</td>
-    </tr>
+<?php } ?>
   </table>
 </div>

@@ -166,8 +166,14 @@ class Controller_Manage extends Controller_Template {
       return Response::forge(ViewModel::forge('welcome/404'), 404);
     }
     Log::debug('app exists.');
+    $inquiries = Model_Inquiry::find('all', array(
+      'where' => array(
+        'app_id' => $app->id
+      )
+    ));
     $data = array(
-      'app' => $app
+      'app' => $app,
+      'inquiries' => $inquiries
     );
     $this->template->content = View::forge('manage/app_site', $data);
     return $this->template;
