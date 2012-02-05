@@ -27,9 +27,10 @@ $(function(){
       },
       error: function(xhr, status, c){
         console.log(xhr.responseText);
-        var data = JSON.parse(xhr.responseText || '{}');
-        $('#error-description').text(data.error);
-        $('#alert-message-error').show();
+        var data = JSON.parse(xhr.responseText || '{error:""}');
+        $('#dialog-header').text('エラー');
+        $('#dialog-content').text(data.error);
+        $("<a href='#dialog' data-rel='dialog'></a>").click().remove();
       }
     });
   });
@@ -52,6 +53,38 @@ $(function(){
 
   //inquiry
   $('#inquiry').live( 'pageinit',function(event){
+    var code = location.pathname.match(/\/([^\/]+)$/)[1];
+    console.log('code' + code);
+    $('#inquiry_form').submit(function(event){
+      console.log('submit', event);
+      $.ajax({
+        type: 'POST',
+        url: '/api/inquiry.json/' + code, 
+        data: {
+          email: $('#email').val(),
+          question: $('#question').val()
+        },
+        success: function(data, status){
+          console.log('success', data);
+          $('#dialog-header').text('お問い合わせ');
+          $('#dialog-content').text('ありがとうございます。お問い合わせを受け付けました。入力されたメールアドレス宛てに回答しますので、しばらくお待ちください。');
+          $("<a href='#dialog' data-rel='dialog'></a>").click().remove();
+          $('#email,#question').val('');
+        },
+        error: function(xhr, status, c){
+          console.log(xhr.responseText);
+          var data = {error:''};
+          console.log('first letter: ' + xhr.responseText.indexOf(0));
+          if (xhr.responseText.substring(0, 1) == '{') {
+            data = JSON.parse(xhr.responseText || '{error:""}');
+          }
+          $('#dialog-header').text('エラー');
+          $('#dialog-content').text('エラーが発生しました。再度エラーが発生する場合、PaRappaサポートまでご連絡下さい。 ERROR: ' + data.error);
+          $("<a href='#dialog' data-rel='dialog'></a>").click().remove();
+        }
+      });
+      return false;
+    });
   });
 });
 // vim: set ts=2 sw=2 sts=2 expandtab fenc=utf-8: 

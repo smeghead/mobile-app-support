@@ -92,32 +92,46 @@
     <p>
       <?php echo $app->name; ?>について、問題や要望・感想などありましたら、下のフォームからお知らせ下さい。
     </p>
-    <form class="form-horizontal">
+    <form class="form-horizontal" id="inquiry_form">
       <ul data-role="listview" data-inset="true">
         <li data-role="fieldcontain">
           <label for="email">メールアドレス:</label>
           <input type="email" name="email" id="email" value=""  />
         </li>
         <li data-role="fieldcontain">
-          <label for="textarea">内容:</label>
-          <textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
+          <label for="question">内容:</label>
+          <textarea cols="40" rows="8" name="textarea" id="question"></textarea>
         </li>
 
         <li class="ui-body ui-body-b">
           <fieldset class="ui-grid-a">
-            <div class="ui-block-a"><button type="submit" data-theme="d">Cancel</button></div>
-            <div class="ui-block-b"><button type="submit" data-theme="a">Submit</button></div>
+            <div class="ui-block-b"><input type="submit" data-theme="a" value="Submit"></div>
           </fieldset>
         </li>
         
       </ul>
     </form>
+<!--
+    <h2>質問履歴</h2>
+    <ul id="inquiry-history" data-role="listview">
+      <li><a href="#">2012-02-02 barbar...</a></li>
+      <li><a href="#">2012-02-02 foofoo...</a></li>
+    </ul>
+-->
   </div>
 
   <div data-role="footer">    
     <h5 style="text-align: right;">Powered by <a href="/" data-ajax="false">PaRappa</a>. Copyright smeghead.</h5>
   </div><!-- /footer -->
 </div><!-- /page -->
+
+<div data-role="page" id="dialog">
+  <div data-role="header"><h1><span id="dialog-header"></span></h1></div>
+  <div data-role="content">
+    <span id="dialog-content"></span>
+    <a href="#faq" data-role="button" data-rel="back" data-theme="c">閉じる</a>
+  </div>
+</div>
 
 </body>
 </html>

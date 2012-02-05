@@ -5,6 +5,7 @@ class Model_Inquiry extends \Orm\Model
 	protected static $_properties = array(
 		'id',
 		'app_id',
+		'email',
 		'answer_to',
 		'content',
 		'status',

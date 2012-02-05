@@ -9,10 +9,10 @@ class Controller_Api extends Controller_Rest {
     $category = Input::post('category');
 
     $user = Session::get('user');
-    $app = Model_App::find('first',
-      array(
-        'id' => $app_id,
-        'user_id' => $user['id'],
+    $app = Model_App::find('first', array('where' => array(
+          'id' => $app_id,
+          'user_id' => $user['id'],
+        )
       )
     );
     if (!$app) {
@@ -143,10 +143,10 @@ class Controller_Api extends Controller_Rest {
     Log::debug(var_export($faqs, true));
 
     $user = Session::get('user');
-    $app = Model_App::find('first',
-      array(
-        'id' => $app_id,
-        'user_id' => $user['id'],
+    $app = Model_App::find('first', array('where' => array(
+          'id' => $app_id,
+          'user_id' => $user['id'],
+        )
       )
     );
     if (!$app) {
@@ -187,5 +187,48 @@ class Controller_Api extends Controller_Rest {
         'error' => $e->getMessage()
       ), 500);
     }
+  }
+
+  public function post_inquiry($code) {
+    Log::debug('post_inquiry called.');
+    Log::debug($code);
+    Log::debug(Input::post('email'));
+    Log::debug(Input::post('question'));
+    $email = Input::post('email');
+    $question = Input::post('question');
+
+    if (!$email) {
+      Log::error('email empty.');
+      return $this->response(array('error' => 'メールアドレスを入力して下さい。'), 500);
+    }
+    if (!$question) {
+      Log::error('question empty.');
+      return $this->response(array('error' => '内容を入力して下さい。'), 500);
+    }
+
+    $app = Model_App::find('first', array('where' => array(
+          'code' => $code
+        )
+      )
+    );
+    if (!$app) {
+      Log::error('app not found');
+      return $this->response(array('error' => 'app not found'), 404);
+    }
+
+    $inquiry = new Model_Inquiry(array(
+      'app_id' => $app->id,
+      'status' => 1,
+      'email' => $email,
+      'content' => $question,
+      'answered_at' => 0,
+      'asked_at' => time()
+    ));
+    $affect_rows = $inquiry->save();
+    Log::debug('affect_rows: ' . $affect_rows);
+    if ($affect_rows != 1) {
+      throw new Exception('affect_rows is not 1.');
+    }
+    $this->response(array('error' => null));
   }
 }

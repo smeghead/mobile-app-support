@@ -9,7 +9,8 @@ class Create_inquiries
 		\DBUtil::create_table('inquiries', array(
 			'id' => array('constraint' => 11, 'type' => 'int', 'auto_increment' => true),
 			'app_id' => array('constraint' => 11, 'type' => 'int'),
-			'answer_to' => array('constraint' => 11, 'type' => 'int'),
+			'email' => array('constraint' => 256, 'type' => 'varchar'),
+			'answer_to' => array('constraint' => 11, 'type' => 'int', 'default' => 0),
 			'content' => array('type' => 'text'),
 			'status' => array('constraint' => 11, 'type' => 'int'),
 			'asked_at' => array('constraint' => 11, 'type' => 'int'),
