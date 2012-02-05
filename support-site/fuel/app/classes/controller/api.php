@@ -91,30 +91,35 @@ class Controller_Api extends Controller_Rest {
     ));
   }
 
-  public function get_faq($app_id) {
+  public function get_faq($app_id = 0) {
     Log::debug('get_faq called.');
-
-    $user = Session::get('user');
-    $app = Model_App::find('first',
-      array(
-        'id' => $app_id,
-        'user_id' => $user['id'],
-      )
-    );
+    $code = Input::get('code');
+    if ($code) {
+      $app = Model_App::find('first', array('where' => array('code' => $code)));
+    } else {
+      $user = Session::get('user');
+      $app = Model_App::find('first', array('where' => array(
+            'id' => $app_id,
+            'user_id' => $user['id'],
+          )
+        )
+      );
+    }
+    Log::debug(var_export($app, true));
     if (!$app) {
       Log::error('app not found');
       return $this->response(array('error' => 'app not found'), 404);
     }
 
     $faqs = array();
-    $categories = DB::select()->from('faq_categories')->where('app_id', $app_id)->execute();
+    $categories = DB::select()->from('faq_categories')->where('app_id', $app->id)->execute();
     foreach ($categories as $category) {
       $faqs[] = array(
         'type' => 'category',
         'id' => 'category' . $category['id'],
         'name' => $category['name']
       );
-      $questions = DB::select()->from('faq_questions')->where('app_id', $app_id)->where('category_id', $category['id'])->execute();
+      $questions = DB::select()->from('faq_questions')->where('app_id', $app->id)->where('category_id', $category['id'])->execute();
       foreach ($questions as $q) {
         $faqs[] = array(
           'type' => 'question',

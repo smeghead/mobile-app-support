@@ -85,7 +85,7 @@
   </div>
   <div id="modal_delete_confirm" class="modal hide fade">
     <div class="modal-header">
-      <a href="#" class="close">×</a>
+      <a href="#" class="close">&times;</a>
       <h3><span class="target"></span>の削除</h3>
     </div>
     <div class="modal-body">
@@ -98,7 +98,7 @@
   </div>
   <div id="modal_add_qa_category" class="modal hide fade">
     <div class="modal-header">
-      <a href="#" class="close">×</a>
+      <a href="#" class="close">&times;</a>
       <h3>新規カテゴリの追加</h3>
     </div>
     <div class="modal-body">

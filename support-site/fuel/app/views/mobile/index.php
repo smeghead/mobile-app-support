@@ -6,9 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"> 
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
   <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+  <script src="/assets/js/mobile/index.js"></script>
   <script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 </head>
 <body>
+
+<!-- ############ home ############ -->
 <div data-role="page" id="home">
 
   <div data-role="header">
@@ -17,7 +20,7 @@
     </h1>
     <div data-role="navbar">
       <ul>
-        <li><a href="#home" data-icon="home">ホーム</a></li>
+        <li><a href="#home" data-direction="reverse" data-icon="home">ホーム</a></li>
         <li><a href="#faq" data-icon="info">FAQ</a></li>
         <li><a href="#inquiry" data-icon="search">問い合わせ</a></li>
       </ul>
@@ -30,19 +33,20 @@
   </div><!-- /content -->
 
   <div data-role="footer">    
-    <h5 style="text-align: right;">Copyright smeghead.</h5>
+    <h5 style="text-align: right;">Powered by <a href="/" data-ajax="false">PaRappa</a>. Copyright smeghead.</h5>
   </div><!-- /footer -->
 </div><!-- /page -->
 
+<!-- ############ faq ############ -->
 <div data-role="page" id="faq">
 
   <div data-role="header">
     <h1>
-      無駄新聞 サポート
+      <?php echo $app->name; ?> サポート
     </h1>
     <div data-role="navbar">
       <ul>
-        <li><a href="#home" data-icon="home">ホーム</a></li>
+        <li><a href="#home" data-direction="reverse" data-icon="home">ホーム</a></li>
         <li><a href="#faq" data-icon="info">FAQ</a></li>
         <li><a href="#inquiry" data-icon="search">問い合わせ</a></li>
       </ul>
@@ -52,16 +56,10 @@
 
   <div data-role="content"> 
       <p>
-      無駄新聞について問題がありましたら、この解決方法をお試し下さい。
+      <?php echo $app->name; ?> について問題がありましたら、この解決方法をお試し下さい。
       解決方法が無かった場合は、<a href="#inquiry" data-role="button" data-inline="true">問い合わせ</a>からご連絡下さい。
       </p>
-      <ul data-role="listview">
-        <li data-role="list-divider">アプリの動作</li>
-        <li><a href="index.html">アプリが起動しない</a></li>
-        <li><a href="index.html">新着通知時に音がうるさい</a></li>
-        <li><a href="index.html">バッテリーを節約したい</a></li>
-        <li data-role="list-divider">その他</li>
-        <li><a href="index.html">無料ですか？</a></li>
+      <ul id="faqs" data-role="listview">
       </ul>
       <p>
       解決しない場合は、<a href="#inquiry" data-role="button" data-inline="true">問い合わせ</a>からご連絡下さい。
@@ -69,20 +67,20 @@
   </div><!-- /content -->
 
   <div data-role="footer">    
-    <h5 style="text-align: right;">Copyright smeghead.</h5>
+    <h5 style="text-align: right;">Powered by <a href="/" data-ajax="false">PaRappa</a>. Copyright smeghead.</h5>
   </div><!-- /footer -->
 </div><!-- /page -->
 
-
+<!-- ############ inquiry ############ -->
 <div data-role="page" id="inquiry">
 
   <div data-role="header">
     <h1>
-      無駄新聞 サポート
+      <?php echo $app->name; ?> サポート
     </h1>
     <div data-role="navbar">
       <ul>
-        <li><a href="#home" data-icon="home">ホーム</a></li>
+        <li><a href="#home" data-direction="reverse" data-icon="home">ホーム</a></li>
         <li><a href="#faq" data-icon="info">FAQ</a></li>
         <li><a href="#inquiry" data-icon="search">問い合わせ</a></li>
       </ul>
@@ -92,7 +90,7 @@
   <div data-role="content"> 
 
     <p>
-      無駄新聞について、問題や要望・感想などありましたら、下のフォームからお知らせ下さい。
+      <?php echo $app->name; ?>について、問題や要望・感想などありましたら、下のフォームからお知らせ下さい。
     </p>
     <form class="form-horizontal">
       <ul data-role="listview" data-inset="true">
@@ -117,7 +115,7 @@
   </div>
 
   <div data-role="footer">    
-    <h5 style="text-align: right;">Copyright smeghead.</h5>
+    <h5 style="text-align: right;">Powered by <a href="/" data-ajax="false">PaRappa</a>. Copyright smeghead.</h5>
   </div><!-- /footer -->
 </div><!-- /page -->
 
