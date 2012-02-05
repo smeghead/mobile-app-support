@@ -17,15 +17,18 @@ class Controller_Mobile extends Controller {
    * @access  public
    * @return  Response
    */
-  public function action_index($app_code) {
+  public function action_index($app_code = null) {
     Log::debug('app_code: ' . $app_code);
+    if (!$app_code) {
+      return Response::forge(ViewModel::forge('public/404'), 404);
+    }
     $app = Model_App::find('first', array('where' => array(
           'code' => $app_code
         )
       )
     );
     if (!$app) {
-      return Response::forge(ViewModel::forge('welcome/404'), 404);
+      return Response::forge(ViewModel::forge('public/404'), 404);
     }
     $top_content = Model_Top_Content::find('first', array('where' => array(
           'app_id' => $app->id
