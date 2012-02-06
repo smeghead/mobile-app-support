@@ -139,7 +139,8 @@ class Controller_Manage extends Controller_Template {
       )
     );
     if (!$app) {
-      return Response::forge(ViewModel::forge('welcome/404'), 404);
+      Log::error('app not found.');
+      return Response::forge(ViewModel::forge('public/404'), 404);
     }
     $data = array(
       'app' => $app
@@ -163,13 +164,14 @@ class Controller_Manage extends Controller_Template {
 //    Log::debug(var_export($app, true));
     if (!$app) {
       Log::error('no app.');
-      return Response::forge(ViewModel::forge('welcome/404'), 404);
+      return Response::forge(ViewModel::forge('public/404'), 404);
     }
     Log::debug('app exists.');
     $inquiries = Model_Inquiry::find('all', array(
       'where' => array(
         'app_id' => $app->id
-      )
+      ),
+      'order_by' => array('asked_at' => 'desc')
     ));
     $data = array(
       'app' => $app,
@@ -188,7 +190,8 @@ class Controller_Manage extends Controller_Template {
       )
     );
     if (!$app) {
-      return Response::forge(ViewModel::forge('welcome/404'), 404);
+      Log::error('app not found.');
+      return Response::forge(ViewModel::forge('public/404'), 404);
     }
     $data = array(
       'app' => $app
@@ -206,12 +209,82 @@ class Controller_Manage extends Controller_Template {
       )
     );
     if (!$app) {
-      return Response::forge(ViewModel::forge('welcome/404'), 404);
+      Log::error('app not found.');
+      return Response::forge(ViewModel::forge('public/404'), 404);
     }
     $data = array(
       'app' => $app
     );
     $this->template->content = View::forge('manage/app_analysis', $data);
+    return $this->template;
+  }
+
+  public function action_inquiry($app_id, $inquiry_id) {
+    $user = Session::get('user');
+    $app = Model_App::find('first', array('where' => array(
+          'id' => $app_id,
+          'user_id' => $user['id'],
+        )
+      )
+    );
+    if (!$app) {
+      Log::error('app not found.');
+      return Response::forge(ViewModel::forge('public/404'), 404);
+    }
+    $inquiry = Model_Inquiry::find('first', array(
+      'where' => array(
+        'id' => $inquiry_id,
+        'app_id' => $app->id
+      )
+    ));
+    if (!$inquiry) {
+      Log::error('inquiry not found.');
+      return Response::forge(ViewModel::forge('public/404'), 404);
+    }
+    $data = array(
+      'app' => $app,
+      'inquiry' => $inquiry
+    );
+    if (Input::method() == 'POST') {
+      Log::debug('try to answer.');
+      $answer = Input::post('answer');
+      Log::debug($answer);
+      $validation = Validation::forge();
+      $validation->add_callable('Appvalidation');
+       
+      $validation->add_field('answer', '回答', 'required');
+       
+      if (!$validation->run()) {
+        Log::debug('validation failed');
+        $data['errors'] = $validation->error();
+        $this->template->content = View::forge('manage/inquiry', $data);
+        return $this->template;
+      }
+
+      $inquiry_value = array(
+        'app_id' => $app->id,
+        'status' => 2,
+        'email' => $user->email,
+        'content' => $answer,
+        'answered_at' => 0,
+        'asked_at' => time()
+      );
+      DB::start_transaction();
+      try {
+        DB::commit_transaction();
+        $inquiry_answer = new Model_Inquiry($inquiry_value);
+        $inquiry_answer->save();
+        $inquiry->status = 2;
+        $inquiry->answered_at = time();
+        $inquiry->save();
+        return Response::redirect('manage/app_site/' . $app->id . '#inquiry');
+      } catch (Exception $e) {
+        Log::debug('error: ' + $e->getMessage());
+        DB::rollback_transaction();
+        throw new Exception('failed to answer.');
+      }
+    }
+    $this->template->content = View::forge('manage/inquiry', $data);
     return $this->template;
   }
 }

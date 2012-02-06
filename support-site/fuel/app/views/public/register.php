@@ -5,7 +5,7 @@
   既にユーザ登録が済んでいる場合は、<a href="/manage">ログイン</a>して下さい。
 </p>
 
-<form action="/public/register" method="post">
+<form action="/public/register" method="post" class="form-horizontal">
   <fieldset>
     <div class="control-group <?php if (isset($errors['user_id'])) { echo 'error'; } ?>">
       <label for="user_id" class="control-label">ユーザID</label>

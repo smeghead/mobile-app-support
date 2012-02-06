@@ -156,7 +156,6 @@ class Controller_Api extends Controller_Rest {
 
     DB::start_transaction();
     try {
-      DB::commit_transaction();
       DB::delete('faq_categories')->where('app_id', $app_id)->execute();
       DB::delete('faq_questions')->where('app_id', $app_id)->execute();
 
@@ -177,6 +176,7 @@ class Controller_Api extends Controller_Rest {
           ))->execute();
         }
       }
+      DB::commit_transaction();
       return $this->response(array(
         'error' => null
       ));

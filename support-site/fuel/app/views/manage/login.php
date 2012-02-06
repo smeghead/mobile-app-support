@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-alert.js"></script>
     <?php echo Asset::css('bootstrap.css'); ?>
     <?php echo Asset::css('bootstrap-responsive.css'); ?>
     <?php echo Asset::css('style.css'); ?>
@@ -44,6 +45,12 @@
     <div class="container-fluid">
       <div class="content">
         <h1>ログイン</h1>
+        <?php if (isset($errors['login_error'])) { ?>
+          <div class="alert alert-error">
+            <a class="close" data-dismiss="alert">&times;</a>
+            <strong>エラー!</strong><?php echo $errors['login_error'] ?>
+          </div>
+        <?php } ?>
         <form method="post" action="/manage/login" class="form-horizontal">
           <fieldset>
             <div class="control-group <?php if (isset($errors['user_id'])) { echo 'error'; } ?>">
@@ -73,7 +80,7 @@
       </div>
     </div>
     <footer>
-      <p>&copy; smeghead 2011</p>
+      <p>&copy; smeghead 2012</p>
     </footer>
 
     <script type="text/javascript">

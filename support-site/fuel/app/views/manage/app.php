@@ -12,15 +12,15 @@
 </ul>
 <h1>アプリ設定</h1>
 <input class="hide" id="id_input" type="hidden" value="<?php echo $app->id; ?>" />
-<div id="alert-message-success" class="alert-message success hide" data-alert="">
-  <a class="close" href="#">×</a>
+<div class="alert alert-success hide">
+  <a class="close" data-dismiss="alert">&times;</a>
   <p>更新しました。</p>
 </div>
-<div id="alert-message-error" class="alert-message error hide" data-alert="">
-  <a class="close" href="#">×</a>
+<div class="alert alert-error hide">
+  <a class="close" data-dismiss="alert">&times;</a>
   <p>更新に失敗しました。<span id="error-description"></span></p>
-  
 </div>
+
 <table class="table">
   <tr>
     <th>アプリ名</th>

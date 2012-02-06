@@ -128,10 +128,10 @@
     </tr>
 <?php foreach ($inquiries as $inquiry) { ?>
     <tr>
-      <td><?php echo date('Y-m-d H:i:s', $inquiry->asked_at); ?></td>
+      <td class="block-link"><a href="/manage/inquiry/<?php echo $app->id; ?>/<?php echo $inquiry->id; ?>"><?php echo date('Y-m-d H:i:s', $inquiry->asked_at); ?></a></td>
       <td><?php switch ($inquiry->status) { case 1: echo '未回答'; break; case 2: echo '回答済'; break;} ?></td>
       <td><?php echo $inquiry->email; ?></td>
-      <td><?php echo $inquiry->content; ?></td>
+      <td class="block-link"><a href="/manage/inquiry/<?php echo $app->id; ?>/<?php echo $inquiry->id; ?>"><?php echo mb_strimwidth($inquiry->content, 0, 30, '...'); ?></a></td>
       <td><?php if ($inquiry->answered_at > 0) { echo date('Y-m-d H:i:s', $inquiry->answered_at);} ?></td>
     </tr>
 <?php } ?>
