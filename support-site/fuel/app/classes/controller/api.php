@@ -197,6 +197,10 @@ class Controller_Api extends Controller_Rest {
     $email = Input::post('email');
     $question = Input::post('question');
 
+    if (!$code) {
+      Log::error('code empty.');
+      return $this->response(array('error' => ' 不正なパラメータです。'), 500);
+    }
     if (!$email) {
       Log::error('email empty.');
       return $this->response(array('error' => 'メールアドレスを入力して下さい。'), 500);
@@ -216,19 +220,30 @@ class Controller_Api extends Controller_Rest {
       return $this->response(array('error' => 'app not found'), 404);
     }
 
-    $inquiry = new Model_Inquiry(array(
-      'app_id' => $app->id,
-      'status' => 1,
-      'email' => $email,
-      'content' => $question,
-      'answered_at' => 0,
-      'asked_at' => time()
-    ));
-    $affect_rows = $inquiry->save();
-    Log::debug('affect_rows: ' . $affect_rows);
-    if ($affect_rows != 1) {
-      throw new Exception('affect_rows is not 1.');
+    DB::start_transaction();
+    try {
+      $inquiry_base = new Model_Inquiry_Base(array(
+        'app_id' => $app->id,
+        'status' => 1,
+        'content' => $question,
+        'answered_at' => 0,
+        'asked_at' => time()
+      ));
+      $inquiry_base->inquiry_messages[] = new Model_Inquiry_Message(array(
+        'email' => $email,
+        'content' => $question
+      ));
+      $inquiry_base->save();
+      DB::commit_transaction();
+      return $this->response(array(
+        'error' => null
+      ));
+    } catch (Exception $e) {
+      Log::debug('error: ' + $e->getMessage());
+      DB::rollback_transaction();
+      return $this->response(array(
+        'error' => $e->getMessage()
+      ), 500);
     }
-    $this->response(array('error' => null));
   }
 }

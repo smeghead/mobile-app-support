@@ -167,16 +167,19 @@ class Controller_Manage extends Controller_Template {
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
     Log::debug('app exists.');
-    $inquiries = Model_Inquiry::find('all', array(
+    $inquiries = Model_Inquiry_Base::find('all', array(
       'where' => array(
         'app_id' => $app->id
       ),
-      'order_by' => array('asked_at' => 'desc')
+      'order_by' => array('asked_at' => 'desc'),
+      'related' => array('inquiry_messages')
     ));
     $data = array(
       'app' => $app,
       'inquiries' => $inquiries
     );
+    Log::debug('inquiry');
+    Log::debug(var_export($inquiries, true));
     $this->template->content = View::forge('manage/app_site', $data);
     return $this->template;
   }
@@ -231,11 +234,12 @@ class Controller_Manage extends Controller_Template {
       Log::error('app not found.');
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
-    $inquiry = Model_Inquiry::find('first', array(
+    $inquiry = Model_Inquiry_Base::find('first', array(
       'where' => array(
         'id' => $inquiry_id,
         'app_id' => $app->id
-      )
+      ),
+      'related' => array('inquiry_messages')
     ));
     if (!$inquiry) {
       Log::error('inquiry not found.');
@@ -261,25 +265,23 @@ class Controller_Manage extends Controller_Template {
         return $this->template;
       }
 
-      $inquiry_value = array(
-        'app_id' => $app->id,
-        'status' => 2,
-        'email' => $user->email,
-        'content' => $answer,
-        'answered_at' => 0,
-        'asked_at' => time()
-      );
       DB::start_transaction();
       try {
-        DB::commit_transaction();
-        $inquiry_answer = new Model_Inquiry($inquiry_value);
-        $inquiry_answer->save();
+        Log::debug('transaction start');
+        $inquiry->inquiry_messages[] = new Model_Inquiry_Message(array(
+          'email' => $user->email,
+          'content' => $answer,
+        ));
+        Log::debug('transaction added message');
         $inquiry->status = 2;
         $inquiry->answered_at = time();
+        Log::debug('transaction save');
         $inquiry->save();
+        Log::debug('transaction commit');
+        DB::commit_transaction();
         return Response::redirect('manage/app_site/' . $app->id . '#inquiry');
       } catch (Exception $e) {
-        Log::debug('error: ' + $e->getMessage());
+        Log::debug('error: ' . $e->getMessage());
         DB::rollback_transaction();
         throw new Exception('failed to answer.');
       }

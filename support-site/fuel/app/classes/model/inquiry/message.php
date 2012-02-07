@@ -1,16 +1,12 @@
 <?php
 
-class Model_Inquiry extends \Orm\Model
+class Model_Inquiry_Message extends \Orm\Model
 {
 	protected static $_properties = array(
 		'id',
-		'app_id',
+		'inquiry_base_id',
 		'email',
-		'answer_to',
 		'content',
-		'status',
-		'asked_at',
-		'answered_at',
 		'created_at',
 		'updated_at'
 	);

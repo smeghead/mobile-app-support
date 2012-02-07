@@ -1,3 +1,4 @@
+<?php $messages = array_values($inquiry->inquiry_messages); ?>
 <script type="text/javascript" src="/assets/js/manage/app.js"></script>
 <ul class="breadcrumb">
   <li>
@@ -10,7 +11,7 @@
     <a href="">お問い合わせ</a> <span class="divider">/</span>
   </li>
   <li class="active">
-    <a href=""><?php echo e(mb_strimwidth($inquiry->content, 0, 20, '...')); ?></a>
+    <a href=""><?php echo e(mb_strimwidth($messages[0]->content, 0, 20, '...')); ?></a>
   </li>
 </ul>
 <h1>お問い合わせ</h1>
@@ -31,15 +32,27 @@
     <div class="control-group">
       <label class="control-label">メールアドレス</label>
       <div class="controls">
-        <span class="xlarge"><?php echo e($inquiry->email); ?></span>
+        <span class="xlarge"><?php echo e($messages[0]->email); ?></span>
       </div>
     </div><!-- /clearfix -->
     <div class="control-group">
       <label class="control-label">質問内容</label>
       <div class="controls">
-        <pre class="input-xlarge" rows="10"><?php echo e($inquiry->content . "\naaa" ); ?></pre>
+        <pre class="input-xlarge" rows="10"><?php echo e($messages[0]->content); ?></pre>
       </div>
     </div><!-- /clearfix -->
+<?php if (count($messages) > 1) { ?>
+<?php   foreach (array_slice($messages, 1) as $m) { ?>
+    <div class="control-group">
+      <label class="control-label">回答履歴</label>
+      <div class="controls">
+        <span class="xlarge"><?php echo e($m->email); ?></span>
+        <span class="xlarge"><?php echo date('Y-m-d H:i:s', $m->created_at); ?></span>
+        <pre class="input-xlarge" rows="10"><?php echo e($m->content); ?></pre>
+      </div>
+    </div><!-- /clearfix -->
+<?php   } ?>
+<?php } ?>
     <div class="control-group <?php if (isset($errors['answer'])) { echo 'error'; } ?>">
       <label for="answer" class="control-label">回答</label>
       <div class="controls">
