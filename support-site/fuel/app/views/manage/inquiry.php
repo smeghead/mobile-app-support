@@ -7,8 +7,8 @@
   <li>
     <a href="/manage/app/<?php echo $app->id; ?>"><?php echo $app->name; ?></a> <span class="divider">/</span>
   </li>
-  <li class="/manage/app_site/<?php echo $app->id; ?>#inquiry">
-    <a href="">お問い合わせ</a> <span class="divider">/</span>
+  <li class="">
+    <a href="/manage/app_site/<?php echo $app->id; ?>#inquiry">お問い合わせ</a> <span class="divider">/</span>
   </li>
   <li class="active">
     <a href=""><?php echo e(mb_strimwidth($messages[0]->content, 0, 20, '...')); ?></a>

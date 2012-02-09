@@ -105,7 +105,7 @@
 
         <li class="ui-body ui-body-b">
           <fieldset class="ui-grid-a">
-            <div class="ui-block-b"><input type="submit" data-theme="a" value="Submit"></div>
+            <div class="ui-block-b"><input type="submit" data-theme="a" value="送信"></div>
           </fieldset>
         </li>
         

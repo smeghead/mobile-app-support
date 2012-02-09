@@ -30,6 +30,22 @@ class Controller_Mobile extends Controller {
     if (!$app) {
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
+
+    $remote_addr = Input::server('HTTP_X_FORWARDED_FOR');
+    if (!$remote_addr) {
+      Log::debug('no value HTTP_X_FORWARDED_FOR.');
+      $remote_addr = Input::server('REMOTE_ADDR');
+    }
+    // record access
+    $access = new Model_Access(array(
+      'app_id' => $app->id,
+      'terminal_id' => Util::get_terminal_id(),
+      'type' => 1,
+      'user_agent' => Input::user_agent(),
+      'remote_addr' => $remote_addr
+    ));
+    $access->save();
+
     $top_content = Model_Top_Content::find('first', array('where' => array(
           'app_id' => $app->id
         )
