@@ -9,6 +9,8 @@
     <?php echo Asset::css('bootstrap-responsive.css'); ?>
     <?php echo Asset::css('style.css'); ?>
 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/public/index.js"></script>
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

@@ -246,4 +246,41 @@ class Controller_Api extends Controller_Rest {
       ), 500);
     }
   }
+
+  public function post_mobile_init($app_code = null) {
+    Log::debug('app_code: ' . $app_code);
+    if (!$app_code) {
+      Log::error('app_code is required.');
+      return $this->response(array('error' => 'app_code is required.'), 500);
+    }
+    $app = Model_App::find('first', array('where' => array(
+          'code' => $app_code
+        )
+      )
+    );
+    if (!$app) {
+      Log::error('no app.');
+      return Response::forge(ViewModel::forge('public/404'), 404);
+    }
+
+    $remote_addr = Input::server('HTTP_X_FORWARDED_FOR');
+    if (!$remote_addr) {
+      Log::debug('no value HTTP_X_FORWARDED_FOR.');
+      $remote_addr = Input::server('REMOTE_ADDR');
+    }
+    // record access
+    $access = new Model_Access(array(
+      'app_id' => $app->id,
+      'terminal_id' => Util::get_terminal_id(),
+      'type' => Model_Access::$TYPE_INIT,
+      'activity' => Input::post('activity'),
+      'user_agent' => Input::user_agent(),
+      'remote_addr' => $remote_addr
+    ));
+    $access->save();
+
+    return $this->response(array(
+      'error' => null
+    ));
+  }
 }
