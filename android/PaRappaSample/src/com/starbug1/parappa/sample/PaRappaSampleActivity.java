@@ -1,19 +1,23 @@
 package com.starbug1.parappa.sample;
 
-import com.starbug1.parappa.sdk.activity.SupportActivity;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.starbug1.parappa.sdk.PaRappa;
+
 public class PaRappaSampleActivity extends Activity {
+	/** PaRappa instance. **/
+	private PaRappa parappa;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        // create PaRappa instance.
+        parappa = new PaRappa(this);
     }
 
     @Override
@@ -28,8 +32,8 @@ public class PaRappaSampleActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
 		case R.id.menu_support:
-			Intent intent = new Intent(this, SupportActivity.class);
-			startActivity(intent);
+			// open PaRappa suport activity feature.
+			parappa.startSupportActivity();
 			break;
 		}
     	return true;

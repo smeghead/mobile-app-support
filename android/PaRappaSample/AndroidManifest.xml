@@ -5,6 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="7" />
+    <!-- PaRappa needs internet access permission. -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     
@@ -20,10 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- PaRappa Support Activity -->
         <activity
             android:name="com.starbug1.parappa.sdk.activity.SupportActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden">
         </activity>
-    	<meta-data android:name="PARAPPA_APP_CODE" android:value="5d7c4647"/>
+        <!-- PaRappa Application Code Setting -->
+       	<meta-data android:name="PARAPPA_APP_CODE" android:value="5d7c4647"/>
     </application>
 </manifest>
