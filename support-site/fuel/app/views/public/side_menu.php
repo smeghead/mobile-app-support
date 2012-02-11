@@ -1,3 +1,4 @@
+          <h5><a href="/">トップ</a></h5>
           <h5>機能紹介</h5>
           <ul>
             <li><a href="/public/support">ユーザサポート機能</a></li>

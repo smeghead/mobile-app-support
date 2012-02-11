@@ -68,12 +68,14 @@
         <div id="form-category" class="qa-edit-form">
           <h4>カテゴリ名</h4>
           <input class="xlarge" id="category_name" name="category_name" size="20" type="text" value="" />
+          <div class="btn-action"><a id="category_ok" class="btn">更新</a></div>
         </div>
         <div id="form-qa" class="qa-edit-form">
           <h4>質問</h4>
           <textarea class="xlarge" id="faq_q" name="top_content" rows="3"></textarea>
           <h4>回答</h4>
           <textarea class="xlarge" id="faq_a" name="top_content" rows="8"></textarea>
+          <div class="btn-action"><a id="faq_ok" class="btn">更新</a></div>
         </div>
       </form>
     </div>
