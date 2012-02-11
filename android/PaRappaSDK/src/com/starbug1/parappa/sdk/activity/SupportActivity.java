@@ -35,7 +35,7 @@ public class SupportActivity extends Activity {
         ws.setPluginsEnabled(true);
         ws.setUseWideViewPort(true);
         ws.setJavaScriptEnabled(true);
-        ws.setCacheMode(WebSettings.LOAD_DEFAULT);
+        ws.setCacheMode(WebSettings.LOAD_NO_CACHE);
         ws.setDomStorageEnabled(true);
         ws.setAppCacheEnabled(true);
         webview.setVerticalScrollbarOverlay(true);

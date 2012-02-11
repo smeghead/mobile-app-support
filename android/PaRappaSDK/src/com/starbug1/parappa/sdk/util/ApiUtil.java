@@ -19,17 +19,19 @@ import android.app.Activity;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class ApiUtil {
 	private static String TAG = ApiUtil.class.getName();
 
-	public static void init(Activity activity) {
+	public static void init(Activity activity, String userAgent) {
         String appCode = MetaDataUtil.getMetaData(activity.getApplicationContext(), "PARAPPA_APP_CODE");
         if (appCode.equals("")) {
         	Log.w(TAG, "PARAPPA_APP_CODE required. define PARAPPA_APP_CODE in AndroidManifest.xml.");
         	return;
         }
-
+        
 		// WebViewで使うcookieの準備
 		CookieSyncManager.createInstance(activity);
 		CookieSyncManager.getInstance().startSync();
@@ -42,18 +44,22 @@ public class ApiUtil {
 		httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
 		httpClient.getParams().setParameter("http.connection.timeout", 5000);
 		httpClient.getParams().setParameter("http.socket.timeout", 3000);
-		HttpPost httppost = new HttpPost("http://parappa.starbug1.com/api/init/" + appCode);
+		httpClient.getParams().setParameter("http.useragent", userAgent);
+		HttpPost httppost = new HttpPost("http://parappa.starbug1.com/api/mobile_init.json/" + appCode);
 		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(3);
 		nameValuePair.add(new BasicNameValuePair("activity", activity.getClass().getName()));
 
-		// ログイン処理
 		try {
+			Log.d(TAG, "post");
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePair));
 			HttpResponse response = httpClient.execute(httppost);
+			Log.d(TAG, "posted");
 			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 			response.getEntity().writeTo(byteArrayOutputStream);
+			Log.d(TAG, byteArrayOutputStream.toString());
 		} catch (Exception e) {
-			// FIXME
+			Log.e(TAG, "http access error. " + e.getMessage());
+			return;
 		}
 
 		// HttpClientで得たCookieの情報をWebViewでも利用できるようにする
@@ -68,13 +74,11 @@ public class ApiUtil {
 			}
 			if (cookie != null) {
 				String cookieString = cookie.getName() + "=" + cookie.getValue() + "; domain=" + cookie.getDomain();
-				CookieManager.getInstance().setCookie( "nicovideo.jp", cookieString);
+				Log.d(TAG, "cookieString: " + cookieString);
+				CookieManager.getInstance().setCookie( "parappa.starbug1.com", cookieString);
 				CookieSyncManager.getInstance().sync();
 			}
 		}
 
-//		// ログイン状態で画面にアクセス
-//		webview.loadUrl("http://www.nicovideo.jp/");
-//		setContentView(webview);
 	}
 }
