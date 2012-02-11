@@ -10,7 +10,7 @@
   <tr>
     <th>アプリ名</th>
     <th>URL</th>
-    <th>サポートサイト編集</th>
+    <th>ユーザサポート編集</th>
     <th>問い合わせ件数</th>
   </tr>
 <?php foreach ($apps as $app) { ?>

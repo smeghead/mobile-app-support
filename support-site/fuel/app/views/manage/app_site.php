@@ -12,12 +12,12 @@
     <a href="/manage/app/<?php echo $app->id; ?>"><?php echo $app->name; ?></a> <span class="divider">/</span>
   </li>
   <li class="active">
-    <a href="">サポート機能管理</a>
+    <a href="">ユーザサポート機能管理</a>
   </li>
 </ul>
 <h1>サポート機能管理</h1>
 <ul class="nav nav-tabs">
-  <li id="tabs_top"><a href="#top">サポートホーム</a></li>
+  <li id="tabs_top"><a href="#top">ユーザサポートホーム</a></li>
   <li id="tabs_faq"><a href="#faq">FAQ管理</a></li>
   <li id="tabs_inquiry"><a href="#inquiry">問い合わせ管理</a></li>
 </ul>
@@ -34,14 +34,14 @@
 
 <!-- ############## top ############## -->
 <div id="tab_top">
-  <p>サポートのトップページを編集することができます。</p>
+  <p>ユーザサポートのトップページを編集することができます。</p>
 
   <div class="row-fluid">
     <div class="span6">
       <textarea class="xxlarge" id="top_content" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
     </div>
     <div class="span6">
-      <iframe src="/mobile/index/<?php echo $app->code; ?>" id="top_content_preview"></iframe>
+      <iframe src="/mobile/index/<?php echo $app->code; ?>/?activity=preview" id="top_content_preview"></iframe>
     </div>
   </div>
   <div class="form-actions">
@@ -51,7 +51,7 @@
 
 <!-- ############## faq ############## -->
 <div id="tab_faq">
-  <p>サポートのFAQを管理することができます。</p>
+  <p>ユーザサポートのFAQを管理することができます。</p>
 
   <div class="form-actions">
     <a class="save_faq btn btn-primary">保存</a>
@@ -68,12 +68,14 @@
         <div id="form-category" class="qa-edit-form">
           <h4>カテゴリ名</h4>
           <input class="xlarge" id="category_name" name="category_name" size="20" type="text" value="" />
+          <div class="btn-action"><a id="category_ok" class="btn">更新</a></div>
         </div>
         <div id="form-qa" class="qa-edit-form">
           <h4>質問</h4>
           <textarea class="xlarge" id="faq_q" name="top_content" rows="3"></textarea>
           <h4>回答</h4>
           <textarea class="xlarge" id="faq_a" name="top_content" rows="8"></textarea>
+          <div class="btn-action"><a id="faq_ok" class="btn">更新</a></div>
         </div>
       </form>
     </div>
@@ -116,7 +118,7 @@
 
 <!-- ############## inquiry ############## -->
 <div id="tab_inquiry">
-  <p>サポートの問い合わせ履歴です。</p>
+  <p>ユーザサポートの問い合わせ履歴です。</p>
 
   <table class="table">
     <tr>

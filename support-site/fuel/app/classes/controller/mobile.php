@@ -12,7 +12,7 @@
 class Controller_Mobile extends Controller {
 
   /**
-   * The basic welcome message
+   * Support site.
    * 
    * @access  public
    * @return  Response
@@ -20,6 +20,7 @@ class Controller_Mobile extends Controller {
   public function action_index($app_code = null) {
     Log::debug('app_code: ' . $app_code);
     if (!$app_code) {
+      Log::error('app_code is required.');
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
     $app = Model_App::find('first', array('where' => array(
@@ -28,8 +29,26 @@ class Controller_Mobile extends Controller {
       )
     );
     if (!$app) {
+      Log::error('no app.');
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
+
+    $remote_addr = Input::server('HTTP_X_FORWARDED_FOR');
+    if (!$remote_addr) {
+      Log::debug('no value HTTP_X_FORWARDED_FOR.');
+      $remote_addr = Input::server('REMOTE_ADDR');
+    }
+    // record access
+    $access = new Model_Access(array(
+      'app_id' => $app->id,
+      'terminal_id' => Util::get_terminal_id(),
+      'type' => Model_Access::$TYPE_SITE_ACCESS,
+      'activity' => Input::get('activity'),
+      'user_agent' => Input::user_agent(),
+      'remote_addr' => $remote_addr
+    ));
+    $access->save();
+
     $top_content = Model_Top_Content::find('first', array('where' => array(
           'app_id' => $app->id
         )

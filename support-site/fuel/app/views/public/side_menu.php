@@ -1,8 +1,9 @@
+          <h5><a href="/">トップ</a></h5>
           <h5>機能紹介</h5>
           <ul>
-            <li><a href="">サポート機能</a></li>
-            <li><a href="">告知機能</a></li>
-            <li><a href="">統計</a></li>
+            <li><a href="/public/support">ユーザサポート機能</a></li>
+            <li><a href="/public/notification">告知機能</a></li>
+            <li><a href="/public/analysis">統計</a></li>
           </ul>
           <h5>ユーザ登録</h5>
           <ul>

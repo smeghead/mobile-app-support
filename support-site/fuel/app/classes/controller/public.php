@@ -18,6 +18,27 @@ class Controller_Public extends Controller_Template {
     $this->template->content = View::forge('public/index', $data);
   }
 
+  public function action_support() {
+    $data = array();
+    $this->template->title = 'Androidアプリサポート PaRappa';
+    $this->template->side_menu = View::forge('public/side_menu', $data);
+    $this->template->content = View::forge('public/support', $data);
+  }
+
+  public function action_notification() {
+    $data = array();
+    $this->template->title = 'Androidアプリサポート PaRappa';
+    $this->template->side_menu = View::forge('public/side_menu', $data);
+    $this->template->content = View::forge('public/notification', $data);
+  }
+
+  public function action_analysis() {
+    $data = array();
+    $this->template->title = 'Androidアプリサポート PaRappa';
+    $this->template->side_menu = View::forge('public/side_menu', $data);
+    $this->template->content = View::forge('public/analysis', $data);
+  }
+
   public function action_register() {
     if (Input::method() == 'POST') {
       Log::debug('posted');
