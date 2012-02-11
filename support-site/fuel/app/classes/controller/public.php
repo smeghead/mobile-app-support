@@ -25,11 +25,11 @@ class Controller_Public extends Controller_Template {
     $this->template->content = View::forge('public/support', $data);
   }
 
-  public function action_notify() {
+  public function action_notification() {
     $data = array();
     $this->template->title = 'Androidアプリサポート PaRappa';
     $this->template->side_menu = View::forge('public/side_menu', $data);
-    $this->template->content = View::forge('public/notify', $data);
+    $this->template->content = View::forge('public/notification', $data);
   }
 
   public function action_analysis() {

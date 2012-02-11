@@ -12,12 +12,12 @@
     <a href="/manage/app/<?php echo $app->id; ?>"><?php echo $app->name; ?></a> <span class="divider">/</span>
   </li>
   <li class="active">
-    <a href="">サポート機能管理</a>
+    <a href="">ユーザサポート機能管理</a>
   </li>
 </ul>
 <h1>サポート機能管理</h1>
 <ul class="nav nav-tabs">
-  <li id="tabs_top"><a href="#top">サポートホーム</a></li>
+  <li id="tabs_top"><a href="#top">ユーザサポートホーム</a></li>
   <li id="tabs_faq"><a href="#faq">FAQ管理</a></li>
   <li id="tabs_inquiry"><a href="#inquiry">問い合わせ管理</a></li>
 </ul>
@@ -34,14 +34,14 @@
 
 <!-- ############## top ############## -->
 <div id="tab_top">
-  <p>サポートのトップページを編集することができます。</p>
+  <p>ユーザサポートのトップページを編集することができます。</p>
 
   <div class="row-fluid">
     <div class="span6">
       <textarea class="xxlarge" id="top_content" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
     </div>
     <div class="span6">
-      <iframe src="/mobile/index/<?php echo $app->code; ?>" id="top_content_preview"></iframe>
+      <iframe src="/mobile/index/<?php echo $app->code; ?>/?activity=preview" id="top_content_preview"></iframe>
     </div>
   </div>
   <div class="form-actions">
@@ -51,7 +51,7 @@
 
 <!-- ############## faq ############## -->
 <div id="tab_faq">
-  <p>サポートのFAQを管理することができます。</p>
+  <p>ユーザサポートのFAQを管理することができます。</p>
 
   <div class="form-actions">
     <a class="save_faq btn btn-primary">保存</a>
@@ -116,7 +116,7 @@
 
 <!-- ############## inquiry ############## -->
 <div id="tab_inquiry">
-  <p>サポートの問い合わせ履歴です。</p>
+  <p>ユーザサポートの問い合わせ履歴です。</p>
 
   <table class="table">
     <tr>

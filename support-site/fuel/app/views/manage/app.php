@@ -66,12 +66,12 @@
 </table>
 <div class="row banner-menu">
   <div class="span3 block">
-    <h4><a href="/manage/app_site/<?php echo $app->id; ?>">サポートサイト管理</a></h4>
-    <div><a href="/manage/app_site/<?php echo $app->id; ?>"><img src="/assets/img/manage-banner.png" alt="サポートサイト管理" /></a></div>
+    <h4><a href="/manage/app_site/<?php echo $app->id; ?>">ユーザサポート管理</a></h4>
+    <div><a href="/manage/app_site/<?php echo $app->id; ?>"><img src="/assets/img/manage-banner.png" alt="ユーザサポート管理" /></a></div>
   </div>
   <div class="span3 block">
-    <h4><a href="/manage/app_notify/<?php echo $app->id; ?>">ステータス通知</a></h4>
-    <div><a href="/manage/app_notify/<?php echo $app->id; ?>"><img src="/assets/img/notify-banner.png" alt="ステータス通知" /></a></div>
+    <h4><a href="/manage/app_notify/<?php echo $app->id; ?>">告知機能</a></h4>
+    <div><a href="/manage/app_notify/<?php echo $app->id; ?>"><img src="/assets/img/notify-banner.png" alt="告知機能" /></a></div>
   </div>
   <div class="span3 block">
     <h4><a href="/manage/app_analysis/<?php echo $app->id; ?>">統計情報</a></h4>
