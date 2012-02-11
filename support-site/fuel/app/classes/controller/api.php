@@ -279,6 +279,25 @@ class Controller_Api extends Controller_Rest {
     ));
     $access->save();
 
+    //record unsaved logs.
+    $logString = Input::post('log');
+    Log::debug($logString);
+    $log = json_decode($logString);
+    foreach ($log as $activity => $count) {
+      Log::debug("$activity: $count");
+      for ($i = 0; $i < $count; $i++) {
+        $access = new Model_Access(array(
+          'app_id' => $app->id,
+          'terminal_id' => Util::get_terminal_id(),
+          'type' => Model_Access::$TYPE_INIT,
+          'activity' => $activity,
+          'user_agent' => Input::user_agent(),
+          'remote_addr' => $remote_addr
+        ));
+        $access->save();
+      }
+    }
+
     return $this->response(array(
       'error' => null
     ));
