@@ -27,4 +27,22 @@ class Model_Access extends \Orm\Model
       'mysql_timestamp' => false,
     ),
   );
+
+  public static function get_accesses($app_id, $begin, $end) {
+    Log::debug('app_id:' . $app_id);
+    if (count(array_filter(array($app_id, $begin, $end), 'is_numeric')) != 3) {
+      die('argument error.');
+    }
+    $app_id = DB::escape($app_id);
+    $begin = DB::escape($begin);
+    $end = DB::escape($end);
+    $sql =<<<EOS
+select from_unixtime(created_at, '%Y-%m-%d') as d, count(*) as count
+from accesses
+where app_id = $app_id and created_at between $begin and $end
+group by d;
+EOS;
+    $result = DB::query($sql)->execute();
+    return $result->as_array();
+  }
 }

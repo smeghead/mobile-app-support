@@ -231,8 +231,10 @@ $(function(){
     li.addClass('editting');
     var category_name = $('span.category_name', li);
     $('#category_name').val(category_name.text())
-      .change(function(){category_name.text($(this).val());})
       .focus();
+    $('#category_ok').click(function(){
+      category_name.text($('#category_name').val());
+    });
   });
   //カテゴリの削除
   var target;
@@ -277,10 +279,12 @@ $(function(){
     li.addClass('editting');
     var qa_name = $('span.qa_name', li);
     $('#faq_q').val(qa_name.text())
-      .change(function(){qa_name.text($(this).val());})
       .focus();
-    $('#faq_a').val(qa_name.data('a'))
-      .change(function(){qa_name.data('a', $(this).val());});
+    $('#faq_a').val(qa_name.data('a'));
+    $('#faq_ok').click(function(){
+      qa_name.text($('#faq_q').val());
+      qa_name.data('a', $('#faq_a').val());
+    });
   });
   //QAの削除
   $('.faq-element .qa-delete').live('click', function(){

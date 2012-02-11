@@ -186,10 +186,11 @@ class Controller_Manage extends Controller_Template {
 
   public function action_app_notify($app_id) {
     $user = Session::get('user');
-    $app = Model_App::find('first',
-      array(
-        'id' => $app_id,
-        'user_id' => $user['id'],
+    $app = Model_App::find('first', array(
+        'where' => array(
+          'id' => $app_id,
+          'user_id' => $user['id'],
+        )
       )
     );
     if (!$app) {
@@ -205,10 +206,11 @@ class Controller_Manage extends Controller_Template {
 
   public function action_app_analysis($app_id) {
     $user = Session::get('user');
-    $app = Model_App::find('first',
-      array(
-        'id' => $app_id,
-        'user_id' => $user['id'],
+    $app = Model_App::find('first', array(
+      'where' => array(
+          'id' => $app_id,
+          'user_id' => $user['id'],
+        )
       )
     );
     if (!$app) {
@@ -218,6 +220,11 @@ class Controller_Manage extends Controller_Template {
     $data = array(
       'app' => $app
     );
+    //TODO enable to change date priod.
+    $end = time();
+    $begin = $end - 60 * 60 * 24 * 30;
+    $data['accesses'] = Model_Access::get_accesses($app->id, $begin, $end);
+
     $this->template->content = View::forge('manage/app_analysis', $data);
     return $this->template;
   }
