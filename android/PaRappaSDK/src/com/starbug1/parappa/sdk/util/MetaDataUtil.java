@@ -9,7 +9,7 @@ import android.util.Log;
 public class MetaDataUtil {
 	private static String TAG = MetaDataUtil.class.getName();
 	
-    public static String getMetaData(Context context, String name) {
+    public static String getMetaData(Context context, String name, String defaultValue) {
         ApplicationInfo info = null;
 		try {
 			info = context.getPackageManager().getApplicationInfo(context.getPackageName(), 
@@ -19,9 +19,13 @@ public class MetaDataUtil {
 		}
 		if (info == null || info.metaData == null) {
 			Log.e(TAG, "PARAPPA_APP_CODE is REQUIRED in AndroidManifest.xml.");
-			return "";
+			return defaultValue;
 		}
-        return info.metaData.getString(name);
+		if (info.metaData.containsKey(name)) {
+	        return info.metaData.getString(name);
+		} else {
+			return defaultValue;
+		}
     }
 
 

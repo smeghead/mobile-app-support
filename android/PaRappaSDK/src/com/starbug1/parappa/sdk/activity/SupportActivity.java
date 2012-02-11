@@ -1,22 +1,29 @@
 package com.starbug1.parappa.sdk.activity;
 
+import android.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.starbug1.parappa.sdk.PaRappa;
 import com.starbug1.parappa.sdk.util.MetaDataUtil;
 
 public class SupportActivity extends Activity {
 	private String TAG = SupportActivity.class.getName();
 	protected WebView webview = null;
-	
-    @Override
+
+	private static final int MENU_BACK = 1;
+	private static final int MENU_RELOAD = 2;
+
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String appCode = MetaDataUtil.getMetaData(this.getApplicationContext(), "PARAPPA_APP_CODE");
+        String appCode = MetaDataUtil.getMetaData(this.getApplicationContext(), "PARAPPA_APP_CODE", "");
         if (appCode.equals("")) {
         	Log.w(TAG, "PARAPPA_APP_CODE required. define PARAPPA_APP_CODE in AndroidManifest.xml.");
         	return;
@@ -27,7 +34,10 @@ public class SupportActivity extends Activity {
         	Log.w(TAG, "activity name unknown.");
         	callingActivityName = "[unknown]";
         }
-        String supportUrl = "http://parappa.starbug1.com/mobile/index/" + appCode + "?activity=" + callingActivityName;
+        String supportUrl = String.format("http://%s/mobile/index/%s?activity=%s",
+        		PaRappa.PARAPPA_DOMAIN,
+        		appCode,
+        		callingActivityName);
         webview = new WebView(this);
         WebSettings ws = webview.getSettings();
         ws.setBuiltInZoomControls(true);
@@ -44,4 +54,25 @@ public class SupportActivity extends Activity {
         setContentView(webview);
     }
     
+    /** メニューの生成イベント */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	super.onCreateOptionsMenu(menu);
+    	menu.add(0, MENU_RELOAD, 0, "リロード").setIcon(R.drawable.ic_menu_rotate);
+    	menu.add(0, MENU_BACK, 0, "閉じる").setIcon(R.drawable.ic_menu_delete);
+    	return true;
+    }
+    /** メニューがクリックされた時のイベント */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch ( item.getItemId() ) {
+    	case MENU_RELOAD:
+    		webview.reload();
+    		break;
+    	case MENU_BACK:
+    		this.finish();
+    		break;
+    	}
+    	return true;
+    }
 }
