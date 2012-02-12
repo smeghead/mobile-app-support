@@ -11,7 +11,7 @@
     
     <application
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name" android:debuggable="true">
         <activity
             android:name=".PaRappaSampleActivity"
             android:label="@string/app_name" >
@@ -27,6 +27,16 @@
             android:label="@string/app_name"
             android:configChanges="orientation|keyboardHidden">
         </activity>
+        <!-- PaRappa Notify Service -->
+        <service android:enabled="true" android:name="com.starbug1.parappa.sdk.service.NotifyService" />
+        <!-- PaRappa Receiver -->
+        <receiver android:name="com.starbug1.parappa.sdk.receiver.StartReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
         <!-- PaRappa Application Code Setting -->
        	<meta-data android:name="PARAPPA_APP_CODE" android:value="5d7c4647"/>
     </application>
