@@ -73,3 +73,9 @@ div.banner-menu div.block {
 	border-radius: 5px;
 	padding: 5px;
 }
+div.btn-action {
+	margin: 10px 0;
+}
+div.graph {
+	margin: 20px 0 50px 0;
+}
