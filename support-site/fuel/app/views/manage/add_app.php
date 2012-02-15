@@ -23,6 +23,22 @@
         <div class="help">例) https://market.android.com/details?id=com.example.app</div>
       </div>
     </div><!-- /clearfix -->
+    <div class="controls-group <?php if (isset($errors['category'])) { echo 'error'; } ?>">
+      <label for="category" class="control-label">Android Market URL</label>
+      <div class="controls">
+        <select id="category" name="category">
+          <option value="0">その他</option>
+<?php foreach ($app_categories as $category) { ?>
+          <option value="<?php echo $category->category_code; ?>" <?php if ($category->category_code == Input::post('category')) {echo 'selected="selected"';} ?>><?php echo $category->name; ?></option>
+<?php } ?>
+        </select>
+<?php if (isset($errors['category'])) { ?>
+        <span class="help-inline"><?php echo $errors['category'] ?></span>
+<?php } ?>
+        <div class="help">例) https://market.android.com/details?id=com.example.app</div>
+      </div>
+    </div><!-- /clearfix -->
+
   </fieldset>
 
   <div class="form-actions">

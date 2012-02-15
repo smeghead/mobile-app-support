@@ -79,3 +79,11 @@ div.btn-action {
 div.graph {
 	margin: 20px 0 50px 0;
 }
+div.loading {
+	height: 50px;
+	margin: 20px auto;
+	background-image: url(/images/loading.gif);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+

@@ -94,7 +94,10 @@ class Controller_Manage extends Controller_Template {
   }
 
   public function action_add_app() {
-    $data = array();
+    $data = array(
+      'app_categories' => Model_App_Category::find('all', array('where' => array('locale' => 'ja'))),
+    );
+    Log::debug(var_export($data['app_categories'], true));
     if (Input::method() == 'POST') {
       Log::debug('try to add_app.');
       $validation = Validation::forge();
@@ -102,6 +105,7 @@ class Controller_Manage extends Controller_Template {
        
       $validation->add_field('name', 'アプリ名', 'required');
       $validation->add_field('url', 'Android Market URL', 'required|valid_url');
+      $validation->add_field('category', 'カテゴリ', 'required|numeric_min[1]|numeric_max[99]');
        
       if (!$validation->run()) {
         Log::debug('validation failed');
@@ -117,6 +121,7 @@ class Controller_Manage extends Controller_Template {
         'user_id' => $user['id'],
         'name' => $validation->validated('name'),
         'url' => $validation->validated('url'),
+        'category' => $validation->validated('category'),
         'code' => $code,
         'deleted' => 0
       );
@@ -143,7 +148,8 @@ class Controller_Manage extends Controller_Template {
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
     $data = array(
-      'app' => $app
+      'app' => $app,
+      'app_categories' => Model_App_Category::find('all', array('where' => array('locale' => 'ja'))),
     );
     $this->template->content = View::forge('manage/app', $data);
     return $this->template;
@@ -197,9 +203,17 @@ class Controller_Manage extends Controller_Template {
       Log::error('app not found.');
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
+    $notifies = Model_Notify_Schedule::find(array(
+      'where' => array(
+        'app_id' => $app->id,
+      ),
+      'related' => array('notify_messages')
+    ));
     $data = array(
-      'app' => $app
+      'app' => $app,
+      'notifies' => $notifies
     );
+
     $this->template->content = View::forge('manage/app_notify', $data);
     return $this->template;
   }

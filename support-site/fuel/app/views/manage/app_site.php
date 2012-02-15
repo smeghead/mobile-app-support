@@ -60,6 +60,7 @@
   </div>
   <div id="faqs" class="row-fluid">
     <div class="span6">
+      <div class="loading">&nbsp;</div>
       <ul id="faq-categories span6">
       </ul>
     </div>

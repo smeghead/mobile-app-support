@@ -185,6 +185,9 @@ $(function(){
       var data = JSON.parse(xhr.responseText || '{}');
       $('#error-description').text(data.error);
       $('#alert-message-error').show();
+    },
+    complete: function(){
+      $('div.loading').remove();
     }
   });
   setup_faq_draggable($('#faqs li'));
