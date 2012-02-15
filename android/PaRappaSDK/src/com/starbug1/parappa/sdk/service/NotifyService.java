@@ -31,7 +31,7 @@ public class NotifyService extends Service {
 				0);
 		GregorianCalendar calendar = new GregorianCalendar();
 		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-				calendar.getTimeInMillis() + 1000 * 60, 1000 * 60 * 15, sender);
+				calendar.getTimeInMillis() + 1000 * 60, 1000 * 60 * 5, sender);
 		super.onCreate();
 	}
 
@@ -50,8 +50,7 @@ public class NotifyService extends Service {
 
 	private void checkNotify() {
 		// TODO PaRappa 通知すべきnotificationがあるかをチェックする。
-		String json = "";
-
+		String json = "{\"notifyUrl\":\"http://parappa.starbug1.com/mobile/notify\", \"activity\":\"com.starbug1.parappa.sample.PaRappaSampleActivity\"}";
 		Log.d(TAG, "checkNotify===============================================");
 		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		Notification notification = new Notification(
