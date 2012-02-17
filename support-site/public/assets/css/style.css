@@ -66,7 +66,7 @@ iframe#top_content_preview {
 	height: 320px;
 }
 div#tab_top div.wysiwyg {
-	width: 340px;
+	width: 340px !important;
 }
 div.banner-menu div.block {
 	border: 2px solid #6666cc;
@@ -86,4 +86,7 @@ div.loading {
 	background-repeat: no-repeat;
 	background-position: center;
 }
-
+/* css for timepicker */
+div#ui-datepicker-div select {
+	width: 60px;
+}

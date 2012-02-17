@@ -53,6 +53,31 @@ function setup_tabs(){
       tab.removeClass('active');
       box.hide();
     }
+    if (anchor == 'top') {
+      $.ajax({
+        type: 'GET',
+        url: '/api/app_top_content.json/' + $('#id_input').val(), 
+        success: function(data, status){
+          console.log('success', data);
+          $('#top_content').text(data.app_top_content.content);
+          $('#top_content').wysiwyg({
+            controls: {
+              html: { visible: true },
+              codesnipet: { visible: false },
+              underline: { visible: false },
+              subscript: { visible: false },
+              superscript: { visible: true }
+            }
+          });
+        },
+        error: function(xhr, status, c){
+          console.log(xhr.responseText);
+          var data = JSON.parse(xhr.responseText || '{}');
+          $('#error-description').text(data.error);
+          $('#alert-message-error').show();
+        }
+      });
+    }
   });
   $('html, body').scrollTop(0);
 }
@@ -118,29 +143,6 @@ $(function(){
   setup_tabs();
 
   //setup editor
-  $.ajax({
-    type: 'GET',
-    url: '/api/app_top_content.json/' + $('#id_input').val(), 
-    success: function(data, status){
-      console.log('success', data);
-      $('#top_content').text(data.app_top_content.content);
-      $('#top_content').wysiwyg({
-        controls: {
-          html: { visible: true },
-          codesnipet: { visible: false },
-          underline: { visible: false },
-          subscript: { visible: false },
-          superscript: { visible: true }
-        }
-      });
-    },
-    error: function(xhr, status, c){
-      console.log(xhr.responseText);
-      var data = JSON.parse(xhr.responseText || '{}');
-      $('#error-description').text(data.error);
-      $('#alert-message-error').show();
-    }
-  });
   // トップコンテンツの保存
   $('#top_content_save').click(function(e){
     console.log($('#top_content').val());

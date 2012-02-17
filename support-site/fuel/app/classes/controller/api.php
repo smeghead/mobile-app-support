@@ -22,7 +22,7 @@ class Controller_Api extends Controller_Rest {
 
     $app->name = $name;
     $app->url = $url;
-//    $app->category = $category;
+    $app->category = $category;
     $app->save();
     Log::debug('app updated.');
     return $this->response(array(

@@ -209,12 +209,42 @@ class Controller_Manage extends Controller_Template {
       ),
       'related' => array('notify_messages')
     ));
+    Log::debug(var_export($notifies, true));
     $data = array(
       'app' => $app,
-      'notifies' => $notifies
+      'notifies' => $notifies ? $notifies : array()
     );
 
     $this->template->content = View::forge('manage/app_notify', $data);
+    return $this->template;
+  }
+
+  public function action_app_notify_edit($app_id = null) {
+    $user = Session::get('user');
+    $app = Model_App::find('first', array(
+        'where' => array(
+          'id' => $app_id,
+          'user_id' => $user['id'],
+        )
+      )
+    );
+    if (!$app) {
+      Log::error('app not found.');
+      return Response::forge(ViewModel::forge('public/404'), 404);
+    }
+    $notifies = Model_Notify_Schedule::find(array(
+      'where' => array(
+        'app_id' => $app->id,
+      ),
+      'related' => array('notify_messages')
+    ));
+    Log::debug(var_export($notifies, true));
+    $data = array(
+      'app' => $app,
+      'notify' => (object)array('id' => null)
+    );
+
+    $this->template->content = View::forge('manage/app_notify_edit', $data);
     return $this->template;
   }
 
