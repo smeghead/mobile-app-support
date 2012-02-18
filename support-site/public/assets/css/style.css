@@ -1,3 +1,22 @@
+div.navbar a.brand {
+	font-family: 'Limelight', serif;
+}
+div.hero-unit {
+	background: url(/images/texture.jpg);
+/*  opacity: 0.8;*/
+}
+div.hero-unit h1 {
+/*  opacity: 1;*/
+}
+div.hero-unit h1 {
+	font-family: 'Limelight', serif;
+	font-size: 70pt;
+	height: 120px;
+}
+.shadow  { position:relative; display:block; color:#333335; }
+.shadow span { position:absolute; display:block; top:0px;  }
+.shadow:before { display:block; padding:2px; content: attr(title); color:#666666;  } 
+
 footer {
 	text-align: right;
 }

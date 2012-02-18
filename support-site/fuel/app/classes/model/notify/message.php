@@ -8,6 +8,7 @@ class Model_Notify_Message extends \Orm\Model
 		'locale',
 		'subject',
 		'content',
+		'activity',
 		'created_at',
 		'updated_at'
 	);

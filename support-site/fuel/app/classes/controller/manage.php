@@ -203,7 +203,7 @@ class Controller_Manage extends Controller_Template {
       Log::error('app not found.');
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
-    $notifies = Model_Notify_Schedule::find(array(
+    $notifies = Model_Notify_Schedule::find('all', array(
       'where' => array(
         'app_id' => $app->id,
       ),
@@ -219,7 +219,7 @@ class Controller_Manage extends Controller_Template {
     return $this->template;
   }
 
-  public function action_app_notify_edit($app_id = null) {
+  public function action_app_notify_edit($app_id, $id = null) {
     $user = Session::get('user');
     $app = Model_App::find('first', array(
         'where' => array(
@@ -232,18 +232,71 @@ class Controller_Manage extends Controller_Template {
       Log::error('app not found.');
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
-    $notifies = Model_Notify_Schedule::find(array(
+    $notify = Model_Notify_Schedule::find('first', array(
       'where' => array(
         'app_id' => $app->id,
+        'id' => $id
       ),
       'related' => array('notify_messages')
     ));
-    Log::debug(var_export($notifies, true));
+    Log::debug('notify:' . var_export($notify, true));
+    if (!$notify) {
+      Log::debug('new notify');
+      $notify = new Model_Notify_Schedule();
+      $notify->notify_at = time() + 60 * 60 * 24;
+      $notify->notify_messages[] = new Model_Notify_Message();
+    }
     $data = array(
       'app' => $app,
-      'notify' => (object)array('id' => null)
+      'notify' => $notify
     );
 
+    if (Input::method() == 'POST') {
+      Log::debug('try to register.');
+
+      $validation = Validation::forge();
+      $validation->add_callable('Appvalidation');
+       
+      $validation->add_field('locale', 'ロケール', 'exact_length[2]');
+      $validation->add_field('subject', 'タイトル', 'required');
+      $validation->add_field('notify_at', '告知予定日時', 'required|match_pattern[#^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$#]');
+      $validation->add_field('content', '告知内容', 'required');
+      $validation->add_field('activity', '移動先Activity', 'required');
+       
+      if (!$validation->run()) {
+        Log::debug('validation failed');
+        $data['errors'] = $validation->error();
+        $this->template->content = View::forge('manage/app_notify_edit', $data);
+        return $this->template;
+      }
+
+      DB::start_transaction();
+      try {
+        Log::debug('transaction start');
+        $notify->app_id = $app->id;
+        $notify->notify_at = date_format(date_create($validation->validated('notify_at')), "U");
+        if (count($notify->notify_messages) > 0) {
+          $messages = array_values($notify->notify_messages);
+          $message = $messages[0];
+        } else {
+          $message = new Model_Notify_Message();
+        }
+        $message->locale = $validation->validated('locale');
+        $message->subject = $validation->validated('subject');
+        $message->content = $validation->validated('content');
+        $message->activity = $validation->validated('activity');
+        $notify->notify_messages[0] = $message;
+        Log::debug('transaction save');
+        $notify->save();
+        Log::debug('transaction commit');
+        DB::commit_transaction();
+        return Response::redirect('manage/app_notify/' . $app->id);
+      } catch (Exception $e) {
+        Log::debug('error: ' . $e->getMessage());
+        DB::rollback_transaction();
+        throw new Exception('failed to answer.');
+      }
+    }
     $this->template->content = View::forge('manage/app_notify_edit', $data);
     return $this->template;
   }
@@ -319,9 +372,11 @@ class Controller_Manage extends Controller_Template {
       DB::start_transaction();
       try {
         Log::debug('transaction start');
-        $inquiry->inquiry_messages[] = new Model_Inquiry_Message(array(
-          'email' => $user->email,
-          'content' => $answer,
+        $inquiry->inquiry_messages[] = new Model_Inquiry_Message('all', array(
+          'where' => array(
+            'email' => $user->email,
+            'content' => $answer,
+          )
         ));
         Log::debug('transaction added message');
         $inquiry->status = 2;

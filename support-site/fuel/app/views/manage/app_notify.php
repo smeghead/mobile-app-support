@@ -35,11 +35,12 @@
           <th>告知日時</th>
           <th>内容</th>
         </tr>
-<?php foreach ($notifies as $inquiry) { ?>
+<?php foreach ($notifies as $notify) { ?>
+<?php  $messages = array_values($notify->notify_messages); ?>
         <tr>
-          <td>タイトル</td>
-          <td>告知日時</td>
-          <td>内容</td>
+          <td><a href="/manage/app_notify_edit/<?php echo $app->id; ?>/<?php echo $notify->id; ?>"><?php echo $messages[0]->subject; ?></a></td>
+          <td><?php echo date('Y-m-d H:i:s', $notify->notify_at); ?></td>
+          <td><?php echo $messages[0]->content; ?></td>
         </tr>
 <?php } ?>
       </table>
