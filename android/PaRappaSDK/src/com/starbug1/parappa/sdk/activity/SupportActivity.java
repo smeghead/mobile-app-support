@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.starbug1.parappa.sdk.PaRappa;
 import com.starbug1.parappa.sdk.util.MetaDataUtil;
 
 public class SupportActivity extends Activity {
@@ -35,7 +34,7 @@ public class SupportActivity extends Activity {
         	callingActivityName = "[unknown]";
         }
         String supportUrl = String.format("http://%s/mobile/index/%s?activity=%s",
-        		PaRappa.PARAPPA_DOMAIN,
+        		MetaDataUtil.getDomain(this),
         		appCode,
         		callingActivityName);
         webview = new WebView(this);

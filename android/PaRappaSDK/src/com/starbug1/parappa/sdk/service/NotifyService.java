@@ -11,9 +11,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
+import android.webkit.WebView;
 
 import com.starbug1.parappa.sdk.activity.NotifyActivity;
 import com.starbug1.parappa.sdk.receiver.StartReceiver;
+import com.starbug1.parappa.sdk.util.ApiUtil;
 
 public class NotifyService extends Service {
 	private static String TAG = NotifyService.class.getName();
@@ -49,12 +51,18 @@ public class NotifyService extends Service {
 	}
 
 	private void checkNotify() {
-		// TODO PaRappa 通知すべきnotificationがあるかをチェックする。
-		String json = "{\"notifyUrl\":\"http://parappa.starbug1.com/mobile/notify\", \"activity\":\"com.starbug1.parappa.sample.PaRappaSampleActivity\"}";
+		// PaRappa 通知すべきnotificationがあるかをチェックする。
+		String userAgent = new WebView(this).getSettings().getUserAgentString();
+		ApiUtil.Notify notify = ApiUtil.getNotify(this, userAgent);
+		if (notify == null) {
+			Log.d(TAG, "no notifies.");
+			return;
+		}
+		String json = "{\"notifyUrl\": \"/mobile/notify/" + notify.appCode + "/" + notify.notifyId + "\", \"activity\":\"" + notify.activity + "\", \"notify_id\": " + notify.notifyId + "}";
 		Log.d(TAG, "checkNotify===============================================");
 		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		Notification notification = new Notification(
-				android.R.drawable.btn_star, "ニュースが入りました",
+				android.R.drawable.btn_star, notify.subject,
 				System.currentTimeMillis());
 
 		Intent intent = new Intent(NotifyService.this, NotifyActivity.class);

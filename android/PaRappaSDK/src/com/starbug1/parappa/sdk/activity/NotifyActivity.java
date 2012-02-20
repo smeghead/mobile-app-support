@@ -14,6 +14,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.starbug1.parappa.sdk.util.MetaDataUtil;
 import com.starbug1.parappa.sdk.util.ReflectionUtil;
 
 public class NotifyActivity extends Activity {
@@ -56,7 +57,7 @@ public class NotifyActivity extends Activity {
         ws.setAppCacheEnabled(true);
         webview.setVerticalScrollbarOverlay(true);
 
-        webview.loadUrl(notify.get("notifyUrl"));
+        webview.loadUrl(MetaDataUtil.getDomain(this) + notify.get("notifyUrl"));
         setContentView(webview);
 		
 		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

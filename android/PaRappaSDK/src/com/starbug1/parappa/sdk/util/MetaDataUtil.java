@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 
+import com.starbug1.parappa.sdk.PaRappa;
+
 public class MetaDataUtil {
 	private static String TAG = MetaDataUtil.class.getName();
 	
@@ -28,5 +30,8 @@ public class MetaDataUtil {
 		}
     }
 
+    public static String getDomain(Context context) {
+        return MetaDataUtil.getMetaData(context, "PARAPPA_DOMAIN", PaRappa.PARAPPA_DOMAIN);
+    }
 
 }
