@@ -37,10 +37,10 @@
   <p>ユーザサポートのトップページを編集することができます。</p>
 
   <div class="row-fluid">
-    <div class="span6">
+    <div class="span5">
       <textarea class="xxlarge" id="top_content" name="top_content" rows="3"><?php echo Input::post('top_content') ?></textarea>
     </div>
-    <div class="span6">
+    <div class="span5">
       <iframe src="/mobile/index/<?php echo $app->code; ?>/?activity=preview" id="top_content_preview"></iframe>
     </div>
   </div>
@@ -60,6 +60,7 @@
   </div>
   <div id="faqs" class="row-fluid">
     <div class="span6">
+      <div class="loading">&nbsp;</div>
       <ul id="faq-categories span6">
       </ul>
     </div>

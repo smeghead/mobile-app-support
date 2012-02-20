@@ -68,6 +68,62 @@ class Controller_Mobile extends Controller {
     return Response::forge(View::forge('mobile/index', $data));
   }
 
+  public function action_notify($app_code, $notify_id) {
+    Log::debug('app_code: ' . $app_code);
+    Log::debug('notify_id: ' . $notify_id);
+    if (!$app_code) {
+      Log::error('app_code is required.');
+      return Response::forge(ViewModel::forge('public/404'), 404);
+    }
+    $app = Model_App::find('first', array('where' => array(
+          'code' => $app_code
+        )
+      )
+    );
+    if (!$app) {
+      Log::error('no app.');
+      return Response::forge(ViewModel::forge('public/404'), 404);
+    }
+    if (!$notify_id) {
+      Log::error('notify_id is required.');
+      return Response::forge(ViewModel::forge('public/404'), 404);
+    }
+    $notify = Model_Notify_Schedule::find('first', array('where' => array(
+          'id' => $notify_id
+        )
+      )
+    );
+    if (!$notify) {
+      Log::error('no notify.');
+      return Response::forge(ViewModel::forge('public/404'), 404);
+    }
+
+    $remote_addr = Input::server('HTTP_X_FORWARDED_FOR');
+    if (!$remote_addr) {
+      Log::debug('no value HTTP_X_FORWARDED_FOR.');
+      $remote_addr = Input::server('REMOTE_ADDR');
+    }
+    // record access
+    $access = new Model_Access(array(
+      'app_id' => $app->id,
+      'terminal_id' => Util::get_terminal_id(),
+      'type' => Model_Access::$TYPE_SITE_ACCESS_NOTIFY,
+      'activity' => Input::get('activity'),
+      'user_agent' => Input::user_agent(),
+      'remote_addr' => $remote_addr
+    ));
+    $access->save();
+
+    $data = array(
+      'app' => $app,
+      'notify' => $notify
+    );
+    Log::debug(var_export($data, true));
+    // content の表示はHTMLを表示するため、auto_filter_outputをfalseにする
+    \Config::set('security.auto_filter_output', false);
+    return Response::forge(View::forge('mobile/notify', $data));
+  }
+
   /**
    * The 404 action for the application.
    * 

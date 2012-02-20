@@ -20,3 +20,31 @@
   <a class="close" href="#">×</a>
   <p>更新に失敗しました。<span id="error-description"></span></p>
 </div>
+
+<div id="notify">
+  <p>告知の管理することができます。</p>
+
+  <div class="form-actions">
+    <a href="/manage/app_notify_edit/<?php echo $app->id; ?>" class="btn open_add_notify">新規告知の追加</a>
+  </div>
+  <div id="faqs" class="row-fluid">
+    <div class="">
+      <table class="table">
+        <tr>
+          <th>タイトル</th>
+          <th>告知日時</th>
+          <th>内容</th>
+        </tr>
+<?php foreach ($notifies as $notify) { ?>
+<?php  $messages = array_values($notify->notify_messages); ?>
+        <tr>
+          <td><a href="/manage/app_notify_edit/<?php echo $app->id; ?>/<?php echo $notify->id; ?>"><?php echo $messages[0]->subject; ?></a></td>
+          <td><?php echo date('Y-m-d H:i:s', $notify->notify_at); ?></td>
+          <td><?php echo $messages[0]->content; ?></td>
+        </tr>
+<?php } ?>
+      </table>
+
+    </div>
+  </div>
+</div>

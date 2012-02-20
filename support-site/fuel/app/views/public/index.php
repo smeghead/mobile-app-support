@@ -1,6 +1,6 @@
         <!-- Main hero unit for a primary marketing message or call to action -->
         <div class="hero-unit">
-          <h1>PaRappa</h1>
+          <h1 class="shadow" title="PaRappa"><span>PaRappa</span></h1>
           <p>Androidアプリサポート パラッパは、Androidアプリ開発における面倒な仕事を助けます。</p>
           <p><a href="/public/register" class="btn btn-primary large">いますぐ登録する &raquo;</a></p>
         </div>

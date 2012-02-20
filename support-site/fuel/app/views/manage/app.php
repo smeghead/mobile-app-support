@@ -12,11 +12,11 @@
 </ul>
 <h1>アプリ設定</h1>
 <input class="hide" id="id_input" type="hidden" value="<?php echo $app->id; ?>" />
-<div class="alert alert-success hide">
+<div id="alert-message-success" class="alert alert-success hide">
   <a class="close" data-dismiss="alert">&times;</a>
   <p>更新しました。</p>
 </div>
-<div class="alert alert-error hide">
+<div id="alert-message-error" class="alert alert-error hide">
   <a class="close" data-dismiss="alert">&times;</a>
   <p>更新に失敗しました。<span id="error-description"></span></p>
 </div>
@@ -42,16 +42,10 @@
     <th>カテゴリ</th>
     <td>
       <select id="category_input" class="hide">
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
+        <option value="0">その他</option>
+<?php foreach ($app_categories as $category) { ?>
+          <option value="<?php echo $category->category_code; ?>" <?php if ($category->category_code == $app->category) {echo 'selected="selected"';} ?>><?php echo $category->name; ?></option>
+<?php } ?>
       </select>
       <span id="category" class="text"></span>
       <span class="right category-edit edit-icon" title="編集">&nbsp;</span>

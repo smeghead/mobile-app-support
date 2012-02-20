@@ -4,6 +4,7 @@ class Model_Access extends \Orm\Model
 {
   public static $TYPE_INIT = 1;
   public static $TYPE_SITE_ACCESS = 2;
+  public static $TYPE_SITE_ACCESS_NOTIFY = 3;
 
   protected static $_properties = array(
     'id',
