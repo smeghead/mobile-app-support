@@ -23,7 +23,7 @@ return array(
 	 *
 	 * Set this to null to have it automatically detected.
 	 */
-	'base_url'  => 'http://parappa.starbug1.com/',
+	'base_url'  => null,
 
 	/**
 	 * url_suffix - Any suffix that needs to be added to
