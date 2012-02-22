@@ -336,7 +336,7 @@ class Controller_Api extends Controller_Rest {
     $access->save();
 
     //check notify.
-    $notify = Model_Notify_Schedule::find('first', array(
+    $notifies = Model_Notify_Schedule::find('all', array(
       'where' => array(
         array('app_id', '=', $app->id),
         array('notify_at', '>', time() - 60 * 60 * 24),
@@ -345,6 +345,22 @@ class Controller_Api extends Controller_Rest {
       'order_by' => array('notify_at' => 'asc'),
       'related' => array('notify_messages'),
     ));
+    $notify = null;
+    foreach ($notifies as $n) {
+      if (Model_Notify_Log::find()
+        ->where('notify_schedule_id', $n->id)
+        ->where('terminal_id', Util::get_terminal_id())
+        ->count() == 0) {
+          //未告知のものを探す。
+          $notify = $n;
+      }
+    }
+    if ($notify == null) {
+      return $this->response(array(
+        'error' => null,
+        'notify' => null,
+      ));
+    }
     $messages = array_values($notify->notify_messages);
     Log::debug(var_export($messages, true));
     $message = $messages[0];

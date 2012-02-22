@@ -20,9 +20,9 @@
     </h1>
     <div data-role="navbar">
       <ul>
-        <li><a href="#home" data-direction="reverse" data-icon="home">ホーム</a></li>
-        <li><a href="#faq" data-icon="info">FAQ</a></li>
-        <li><a href="#inquiry" data-icon="search">問い合わせ</a></li>
+      <li><a href="/mobile/index/<?php echo $app->code; ?>#home" data-direction="reverse" data-icon="home">ホーム</a></li>
+        <li><a href="/mobile/index/<?php echo $app->code; ?>#faq" data-icon="info">FAQ</a></li>
+        <li><a href="/mobile/index/<?php echo $app->code; ?>#inquiry" data-icon="search">問い合わせ</a></li>
       </ul>
     </div><!-- /navbar -->
   </div><!-- /header -->
@@ -34,6 +34,9 @@ $message = $messages[0];
 ?>
   <div data-role="content"> 
     <?php echo $message->content; ?>
+    <div>
+      <a id="jump-to-activity" data-role="button">OK</a>
+    </div>
   </div><!-- /content -->
 
   <div data-role="footer">    
