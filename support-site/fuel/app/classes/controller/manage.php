@@ -185,7 +185,6 @@ class Controller_Manage extends Controller_Template {
       'inquiries' => $inquiries
     );
     Log::debug('inquiry');
-    Log::debug(var_export($inquiries, true));
     $this->template->content = View::forge('manage/app_site', $data);
     return $this->template;
   }
@@ -209,7 +208,6 @@ class Controller_Manage extends Controller_Template {
       ),
       'related' => array('notify_messages')
     ));
-    Log::debug(var_export($notifies, true));
     $data = array(
       'app' => $app,
       'notifies' => $notifies ? $notifies : array()
@@ -372,12 +370,11 @@ class Controller_Manage extends Controller_Template {
       DB::start_transaction();
       try {
         Log::debug('transaction start');
-        $inquiry->inquiry_messages[] = new Model_Inquiry_Message('all', array(
-          'where' => array(
+        $inquiry->inquiry_messages[] = new Model_Inquiry_Message(array(
             'email' => $user->email,
             'content' => $answer,
           )
-        ));
+        );
         Log::debug('transaction added message');
         $inquiry->status = 2;
         $inquiry->answered_at = time();

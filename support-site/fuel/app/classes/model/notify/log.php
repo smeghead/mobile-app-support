@@ -7,6 +7,7 @@ class Model_Notify_Log extends \Orm\Model
 		'app_id',
 		'notify_schedule_id',
 		'locale',
+		'terminal_id',
 		'notified_at',
 		'created_at',
 		'updated_at'

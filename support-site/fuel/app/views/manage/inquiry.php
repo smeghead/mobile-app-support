@@ -65,6 +65,6 @@
   </fieldset>
 
   <div class="form-actions">
-    <input type="submit" class="btn btn-primary" value="回答">&nbsp;<button type="reset" class="btn">キャンセル</button>
+  <input type="submit" class="btn btn-primary" value="回答">&nbsp;<a href="/manage/app_site/<?php echo $app->id; ?>#inquiry" class="btn">キャンセル</a>
   </div>
 </form>

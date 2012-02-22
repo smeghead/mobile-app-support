@@ -8,7 +8,8 @@ $(function(){
 
   //faq
   $('#faq').live( 'pageinit',function(event){
-    var code = location.pathname.match(/\/([^\/]+)$/)[1];
+    console.log('pathname: ', location.pathname);
+    var code = location.pathname.match(/\/([^\/]+)\/?$/)[1];
     $.ajax({
       type: 'GET',
       url: '/api/faq.json/?code=' + code, 

@@ -97,6 +97,8 @@ class Controller_Mobile extends Controller {
       Log::error('no notify.');
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
+    $messages = array_values($notify->notify_messages);
+    $message = $messages[0];
 
     $remote_addr = Input::server('HTTP_X_FORWARDED_FOR');
     if (!$remote_addr) {
@@ -113,6 +115,16 @@ class Controller_Mobile extends Controller {
       'remote_addr' => $remote_addr
     ));
     $access->save();
+
+    //notify log
+    $notify_log = new Model_Notify_Log(array(
+      'app_id' => $app->id,
+      'notify_schedule_id' => $notify->id,
+      'locale' => $message->locale,
+      'terminal_id' => Util::get_terminal_id(),
+      'notified_at' => time(),
+    ));
+    $notify_log->save();
 
     $data = array(
       'app' => $app,

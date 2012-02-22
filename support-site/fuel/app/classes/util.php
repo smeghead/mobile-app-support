@@ -1,6 +1,8 @@
 <?php
 function h($str) {
+  return htmlspecialchars($str, ENT_QUOTES);
 }
+
 class Util {
   public static function get_terminal_id() {
     $terminal_id = Cookie::get('_PARAPPA_ID', '');

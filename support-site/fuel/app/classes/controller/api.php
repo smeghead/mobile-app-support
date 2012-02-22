@@ -302,4 +302,60 @@ class Controller_Api extends Controller_Rest {
       'error' => null
     ));
   }
+
+  public function get_notify($app_code = null) {
+    Log::debug('get_notify app_code: ' . $app_code);
+    if (!$app_code) {
+      Log::error('app_code is required.');
+      return $this->response(array('error' => 'app_code is required.'), 500);
+    }
+    $app = Model_App::find('first', array('where' => array(
+          'code' => $app_code
+        )
+      )
+    );
+    if (!$app) {
+      Log::error('no app.');
+      return Response::forge(ViewModel::forge('public/404'), 404);
+    }
+
+    $remote_addr = Input::server('HTTP_X_FORWARDED_FOR');
+    if (!$remote_addr) {
+      Log::debug('no value HTTP_X_FORWARDED_FOR.');
+      $remote_addr = Input::server('REMOTE_ADDR');
+    }
+    // record access
+    $access = new Model_Access(array(
+      'app_id' => $app->id,
+      'terminal_id' => Util::get_terminal_id(),
+      'type' => Model_Access::$TYPE_NOTIFY_CHECK,
+      'activity' => Input::get('activity'),
+      'user_agent' => Input::user_agent(),
+      'remote_addr' => $remote_addr
+    ));
+    $access->save();
+
+    //check notify.
+    $notify = Model_Notify_Schedule::find('first', array(
+      'where' => array(
+        array('app_id', '=', $app->id),
+        array('notify_at', '>', time() - 60 * 60 * 24),
+        array('notify_at', '<', time()),
+      ),
+      'order_by' => array('notify_at' => 'asc'),
+      'related' => array('notify_messages'),
+    ));
+    $messages = array_values($notify->notify_messages);
+    Log::debug(var_export($messages, true));
+    $message = $messages[0];
+
+    return $this->response(array(
+      'error' => null,
+      'notify' => array(
+        'notify_id' => $notify->id,
+        'subject' => $message->subject,
+        'activity' => $message->activity,
+      )
+    ));
+  }
 }

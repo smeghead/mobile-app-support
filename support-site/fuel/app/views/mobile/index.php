@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title><?php echo $app->name; ?> ユーザサポート</title>
+  <title><?php echo h($app->name); ?> ユーザサポート</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"> 
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
   <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
@@ -16,7 +16,7 @@
 
   <div data-role="header">
     <h1>
-      <?php echo $app->name; ?> ユーザサポート
+      <?php echo h($app->name); ?> ユーザサポート
     </h1>
     <div data-role="navbar">
       <ul>
@@ -29,7 +29,7 @@
 
 
   <div data-role="content"> 
-    <?php print $content; ?>
+    <?php echo $content; ?>
   </div><!-- /content -->
 
   <div data-role="footer">    
@@ -42,7 +42,7 @@
 
   <div data-role="header">
     <h1>
-      <?php echo $app->name; ?> ユーザサポート
+      <?php echo h($app->name); ?> ユーザサポート
     </h1>
     <div data-role="navbar">
       <ul>
@@ -56,7 +56,7 @@
 
   <div data-role="content"> 
       <p>
-      <?php echo $app->name; ?> について問題がありましたら、この解決方法をお試し下さい。
+      <?php echo h($app->name); ?> について問題がありましたら、この解決方法をお試し下さい。
       解決方法が無かった場合は、<a href="#inquiry" data-role="button" data-inline="true">問い合わせ</a>からご連絡下さい。
       </p>
       <ul id="faqs" data-role="listview">
@@ -76,7 +76,7 @@
 
   <div data-role="header">
     <h1>
-      <?php echo $app->name; ?> ユーザサポート
+      <?php echo h($app->name); ?> ユーザサポート
     </h1>
     <div data-role="navbar">
       <ul>
@@ -90,7 +90,7 @@
   <div data-role="content"> 
 
     <p>
-      <?php echo $app->name; ?>について、問題や要望・感想などありましたら、下のフォームからお知らせ下さい。
+      <?php echo h($app->name); ?>について、問題や要望・感想などありましたら、下のフォームからお知らせ下さい。
     </p>
     <form class="form-horizontal" id="inquiry_form">
       <ul data-role="listview" data-inset="true">
