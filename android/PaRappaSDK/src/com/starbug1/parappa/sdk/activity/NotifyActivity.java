@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebSettings;
@@ -38,12 +39,6 @@ public class NotifyActivity extends Activity {
 			this.finish();
 			return;
 		}
-		final Class<Activity> clazz = ReflectionUtil.getClass(notify
-				.get("activity"));
-		if (clazz == null) {
-			Log.e(TAG, "Activity class name is invalid.");
-			return;
-		}
 
 		WebView webview = new WebView(this);
         webview = new WebView(this);
@@ -57,6 +52,7 @@ public class NotifyActivity extends Activity {
         ws.setDomStorageEnabled(true);
         ws.setAppCacheEnabled(true);
         webview.setVerticalScrollbarOverlay(true);
+		webview.addJavascriptInterface(new JsObj(), "___android___");
 
         String url = String.format(
         		"http://%s%s?activity=%s",
@@ -69,5 +65,18 @@ public class NotifyActivity extends Activity {
 		
 		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		manager.cancelAll();
+	}
+	
+	public class JsObj {
+		public void jump(String activityName) {
+			Log.d(TAG, "activityName: " + activityName);
+			final Class<Activity> activity = ReflectionUtil.getClass(activityName);
+			if (activity == null) {
+				Log.e(TAG, "Activity class name is invalid.");
+				return;
+			}
+			Intent intent = new Intent(NotifyActivity.this, activity);
+			NotifyActivity.this.startActivity(intent);
+		}
 	}
 }
