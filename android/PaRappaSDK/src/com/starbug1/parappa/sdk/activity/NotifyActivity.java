@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebSettings;
@@ -31,16 +32,11 @@ public class NotifyActivity extends Activity {
 			JSONObject n = new JSONObject(notifyJson);
 			notify.put("notifyUrl", n.getString("notifyUrl"));
 			notify.put("activity", n.getString("activity"));
+			Log.d(TAG, notify.toString());
 		} catch (JSONException e) {
 			Log.e(TAG, e.getMessage());
 			Toast.makeText(this, "告知の表示に失敗しました。", Toast.LENGTH_LONG).show();
 			this.finish();
-			return;
-		}
-		final Class<Activity> clazz = ReflectionUtil.getClass(notify
-				.get("activity"));
-		if (clazz == null) {
-			Log.e(TAG, "Activity class name is invalid.");
 			return;
 		}
 
@@ -56,11 +52,31 @@ public class NotifyActivity extends Activity {
         ws.setDomStorageEnabled(true);
         ws.setAppCacheEnabled(true);
         webview.setVerticalScrollbarOverlay(true);
+		webview.addJavascriptInterface(new JsObj(), "___android___");
 
-        webview.loadUrl(MetaDataUtil.getDomain(this) + notify.get("notifyUrl"));
+        String url = String.format(
+        		"http://%s%s?activity=%s",
+        		MetaDataUtil.getDomain(this),
+        		notify.get("notifyUrl"),
+        		notify.get("activity"));
+        Log.d(TAG, url);
+        webview.loadUrl(url);
         setContentView(webview);
 		
 		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		manager.cancelAll();
+	}
+	
+	public class JsObj {
+		public void jump(String activityName) {
+			Log.d(TAG, "activityName: " + activityName);
+			final Class<Activity> activity = ReflectionUtil.getClass(activityName);
+			if (activity == null) {
+				Log.e(TAG, "Activity class name is invalid.");
+				return;
+			}
+			Intent intent = new Intent(NotifyActivity.this, activity);
+			NotifyActivity.this.startActivity(intent);
+		}
 	}
 }

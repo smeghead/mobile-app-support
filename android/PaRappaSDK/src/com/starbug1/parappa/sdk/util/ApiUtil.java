@@ -89,11 +89,12 @@ public class ApiUtil {
 				Log.d(TAG, result.getString("error"));
 				return null;
 			}
+			JSONObject notifyJsono = result.getJSONObject("notify");
 			notify = new Notify(
-					result.getString("subject"), 
-					result.getString("activity"), 
-					appCode, 
-					result.getInt("notify_id"));
+					notifyJsono.getString("subject"), 
+					notifyJsono.getString("activity"), 
+					appCode,
+					notifyJsono.getInt("notify_id"));
 			postRequest(domain, httpClient);
 			return notify;
 		} catch (Exception e) {
