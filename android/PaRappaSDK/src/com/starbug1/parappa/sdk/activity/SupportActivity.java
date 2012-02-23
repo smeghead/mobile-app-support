@@ -3,13 +3,17 @@ package com.starbug1.parappa.sdk.activity;
 import android.R;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.starbug1.parappa.sdk.PaRappa;
 import com.starbug1.parappa.sdk.util.MetaDataUtil;
 
 public class SupportActivity extends Activity {
@@ -37,6 +41,18 @@ public class SupportActivity extends Activity {
         		MetaDataUtil.getDomain(this),
         		appCode,
         		callingActivityName);
+		final SharedPreferences settings = this
+				.getSharedPreferences(PaRappa.PARAPPA_DOMAIN, 0);
+		final String parappaId = settings.getString(PaRappa.PARAPPA_ID_NAME, "");
+        final String domain = MetaDataUtil.getDomain(this);
+		String cookieString = String.format(
+				"%s=%s ;domain=%s",
+				PaRappa.PARAPPA_ID_NAME,
+				parappaId,
+				domain);
+		CookieManager.getInstance().setCookie(domain, cookieString);
+		CookieSyncManager.getInstance().sync();
+		
         webview = new WebView(this);
         WebSettings ws = webview.getSettings();
         ws.setBuiltInZoomControls(true);
@@ -61,6 +77,7 @@ public class SupportActivity extends Activity {
     	menu.add(0, MENU_BACK, 0, "閉じる").setIcon(R.drawable.ic_menu_delete);
     	return true;
     }
+    
     /** メニューがクリックされた時のイベント */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
