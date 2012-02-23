@@ -263,6 +263,7 @@ class Controller_Api extends Controller_Rest {
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
 
+    $terminal_id = Util::get_terminal_id();
     $remote_addr = Input::server('HTTP_X_FORWARDED_FOR');
     if (!$remote_addr) {
       Log::debug('no value HTTP_X_FORWARDED_FOR.');
@@ -271,7 +272,7 @@ class Controller_Api extends Controller_Rest {
     // record access
     $access = new Model_Access(array(
       'app_id' => $app->id,
-      'terminal_id' => Util::get_terminal_id(),
+      'terminal_id' => $terminal_id,
       'type' => Model_Access::$TYPE_INIT,
       'activity' => Input::post('activity'),
       'user_agent' => Input::user_agent(),
@@ -288,7 +289,7 @@ class Controller_Api extends Controller_Rest {
       for ($i = 0; $i < $count; $i++) {
         $access = new Model_Access(array(
           'app_id' => $app->id,
-          'terminal_id' => Util::get_terminal_id(),
+          'terminal_id' => $terminal_id,
           'type' => Model_Access::$TYPE_INIT,
           'activity' => $activity,
           'user_agent' => Input::user_agent(),
@@ -327,7 +328,7 @@ class Controller_Api extends Controller_Rest {
     // record access
     $access = new Model_Access(array(
       'app_id' => $app->id,
-      'terminal_id' => Util::get_terminal_id(),
+      'terminal_id' => $terminal_id,
       'type' => Model_Access::$TYPE_NOTIFY_CHECK,
       'activity' => Input::get('activity'),
       'user_agent' => Input::user_agent(),
@@ -349,7 +350,7 @@ class Controller_Api extends Controller_Rest {
     foreach ($notifies as $n) {
       if (Model_Notify_Log::find()
         ->where('notify_schedule_id', $n->id)
-        ->where('terminal_id', Util::get_terminal_id())
+        ->where('terminal_id', $terminal_id)
         ->count() == 0) {
           //未告知のものを探す。
           $notify = $n;

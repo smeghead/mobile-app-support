@@ -53,12 +53,12 @@
         <?php } ?>
         <form method="post" action="/manage/login" class="form-horizontal">
           <fieldset>
-            <div class="control-group <?php if (isset($errors['user_id'])) { echo 'error'; } ?>">
-              <label for="user_id" class="control-label">ユーザID</label>
+            <div class="control-group <?php if (isset($errors['email'])) { echo 'error'; } ?>">
+              <label for="email" class="control-label">メールアドレス</label>
               <div class="controls">
-                <input class="xlarge" id="user_id" name="user_id" size="30" type="text" value="<?php echo Input::post('user_id') ?>" />
-        <?php if (isset($errors['user_id'])) { ?>
-                <span class="help-inline"><?php echo $errors['user_id'] ?></span>
+                <input class="xlarge" id="email" name="email" size="30" type="text" value="<?php echo Input::post('email') ?>" />
+        <?php if (isset($errors['email'])) { ?>
+                <span class="help-inline"><?php echo $errors['email'] ?></span>
         <?php } ?>
               </div>
             </div><!-- /clearfix -->

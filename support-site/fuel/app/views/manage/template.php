@@ -5,13 +5,6 @@
     <title><?php echo $title; ?></title>
     <meta name="description" content="">
     <meta name="author" content="">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery.dimensions.js"></script>
-    <script type="text/javascript" src="/assets/js/ui.mouse.js"></script>
-    <script type="text/javascript" src="/assets/js/ui.draggable.js"></script>
-    <script type="text/javascript" src="/assets/js/ui.draggable.ext.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap-alert.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap-modal.js"></script>
     <?php echo Asset::css('bootstrap.css'); ?>
     <style type="text/css">
       body {
@@ -57,7 +50,7 @@
             <li><a href="/manage/settings">設定</a></li>
           </ul>
           <p class="navbar-text pull-right">
-            <a href="/manage"><?php echo $user_name; ?></a> さんとしてログインしています。
+            <a href="/manage"><?php echo $email; ?></a> さんとしてログインしています。
             <a href="/manage/logout">ログアウトする</a>
           </p>
         </div>
@@ -83,5 +76,12 @@
       <p>&copy; smeghead 2012</p>
     </footer>
 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.dimensions.js"></script>
+    <script type="text/javascript" src="/assets/js/ui.mouse.js"></script>
+    <script type="text/javascript" src="/assets/js/ui.draggable.js"></script>
+    <script type="text/javascript" src="/assets/js/ui.draggable.ext.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-alert.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-modal.js"></script>
   </body>
 </html>

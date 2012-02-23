@@ -33,6 +33,7 @@ class Controller_Mobile extends Controller {
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
 
+    $terminal_id = Util::get_terminal_id();
     $remote_addr = Input::server('HTTP_X_FORWARDED_FOR');
     if (!$remote_addr) {
       Log::debug('no value HTTP_X_FORWARDED_FOR.');
@@ -41,7 +42,7 @@ class Controller_Mobile extends Controller {
     // record access
     $access = new Model_Access(array(
       'app_id' => $app->id,
-      'terminal_id' => Util::get_terminal_id(),
+      'terminal_id' => $terminal_id,
       'type' => Model_Access::$TYPE_SITE_ACCESS,
       'activity' => Input::get('activity'),
       'user_agent' => Input::user_agent(),
@@ -108,7 +109,7 @@ class Controller_Mobile extends Controller {
     // record access
     $access = new Model_Access(array(
       'app_id' => $app->id,
-      'terminal_id' => Util::get_terminal_id(),
+      'terminal_id' => $terminal_id,
       'type' => Model_Access::$TYPE_SITE_ACCESS_NOTIFY,
       'activity' => Input::get('activity'),
       'user_agent' => Input::user_agent(),
@@ -121,7 +122,7 @@ class Controller_Mobile extends Controller {
       'app_id' => $app->id,
       'notify_schedule_id' => $notify->id,
       'locale' => $message->locale,
-      'terminal_id' => Util::get_terminal_id(),
+      'terminal_id' => $terminal_id,
       'notified_at' => time(),
     ));
     $notify_log->save();
