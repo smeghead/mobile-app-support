@@ -14,11 +14,13 @@ import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -36,9 +38,9 @@ public class ApiUtil {
         	Log.w(TAG, "PARAPPA_APP_CODE required. define PARAPPA_APP_CODE in AndroidManifest.xml.");
         	return false;
         }
-        final String domain = MetaDataUtil.getMetaData(activity, "PARAPPA_DOMAIN", PaRappa.PARAPPA_DOMAIN);
+        final String domain = MetaDataUtil.getDomain(activity);
 
-        DefaultHttpClient httpClient = preRequest(activity, userAgent);
+        DefaultHttpClient httpClient = preRequest(activity, userAgent, domain);
 		HttpPost httppost = new HttpPost("http://" + domain + "/api/mobile_init.json/" + appCode);
 		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(3);
 		nameValuePair.add(new BasicNameValuePair("activity", activity.getClass().getName()));
@@ -57,7 +59,7 @@ public class ApiUtil {
 				Log.d(TAG, result.getString("error"));
 				return false;
 			}
-			postRequest(domain, httpClient);
+			postRequest(activity, domain, httpClient);
 			return true;
 		} catch (Exception e) {
 			Log.e(TAG, "http access error. " + e.getMessage());
@@ -71,9 +73,9 @@ public class ApiUtil {
         	Log.w(TAG, "PARAPPA_APP_CODE required. define PARAPPA_APP_CODE in AndroidManifest.xml.");
         	return null;
         }
-        final String domain = MetaDataUtil.getMetaData(context, "PARAPPA_DOMAIN", PaRappa.PARAPPA_DOMAIN);
+        final String domain = MetaDataUtil.getDomain(context);
 
-        DefaultHttpClient httpClient = preRequest(context, userAgent);
+        DefaultHttpClient httpClient = preRequest(context, userAgent, domain);
 		HttpGet get = new HttpGet("http://" + domain + "/api/notify.json/" + appCode + "?activity=" + context.getClass().getName());
 
 		Notify notify;
@@ -95,7 +97,7 @@ public class ApiUtil {
 					notifyJsono.getString("activity"), 
 					appCode,
 					notifyJsono.getInt("notify_id"));
-			postRequest(domain, httpClient);
+			postRequest(context, domain, httpClient);
 			return notify;
 		} catch (Exception e) {
 			Log.e(TAG, "http access error. " + e.getMessage());
@@ -103,7 +105,7 @@ public class ApiUtil {
 		}
 	}
 
-	private static void postRequest(final String domain,
+	private static void postRequest(Context context, final String domain,
 			DefaultHttpClient httpClient) {
 		// HttpClientで得たCookieの情報をWebViewでも利用できるようにする
 		CookieStore cookieStr = httpClient.getCookieStore();
@@ -113,8 +115,18 @@ public class ApiUtil {
 			if (!cookies.isEmpty()) {
 				for (int i = 0; i < cookies.size(); i++) {
 					cookie = cookies.get(i);
+					Log.d(TAG, "cookie: " + cookie.getName() + " " + cookie.getValue());
+					if (cookie.getName().equals(PaRappa.PARAPPA_ID_NAME) && cookie.getValue().length() > 0) {
+						SharedPreferences settings = context
+								.getSharedPreferences(PaRappa.PARAPPA_DOMAIN, 0);
+						SharedPreferences.Editor editor = settings.edit();
+						editor.putString(PaRappa.PARAPPA_ID_NAME, cookie.getValue());
+						Log.d(TAG, "***********************GOT " + cookie.getName() + " " + cookie.getValue());
+						editor.commit();
+					}
 				}
 			}
+			//FIXME 最後のCookieの値だけしかCookieManagerに保存してない
 			if (cookie != null) {
 				String cookieString = cookie.getName() + "=" + cookie.getValue() + "; domain=" + cookie.getDomain();
 				Log.d(TAG, "cookieString: " + cookieString);
@@ -125,7 +137,17 @@ public class ApiUtil {
 	}
 
 	private static DefaultHttpClient preRequest(Context context,
-			String userAgent) {
+			String userAgent, String domain) {
+		final SharedPreferences settings = context
+				.getSharedPreferences(PaRappa.PARAPPA_DOMAIN, 0);
+		final String parappaId = settings.getString(PaRappa.PARAPPA_ID_NAME, "");
+		
+		BasicClientCookie parappaIdCookie = new BasicClientCookie(
+				PaRappa.PARAPPA_ID_NAME, parappaId);
+		parappaIdCookie.setDomain(domain);
+		parappaIdCookie.setPath("/");
+		Log.d(TAG, "***********************STORED " + parappaIdCookie.getName() + " " + parappaIdCookie.getValue());
+
 		// WebViewで使うcookieの準備
 		CookieSyncManager.createInstance(context);
 		CookieSyncManager.getInstance().startSync();
@@ -139,6 +161,9 @@ public class ApiUtil {
 		httpClient.getParams().setParameter("http.connection.timeout", 5000);
 		httpClient.getParams().setParameter("http.socket.timeout", 3000);
 		httpClient.getParams().setParameter("http.useragent", userAgent);
+		CookieStore store = httpClient.getCookieStore();
+		store.clear();
+		store.addCookie(parappaIdCookie);
 		return httpClient;
 	}
 	public static class Notify {

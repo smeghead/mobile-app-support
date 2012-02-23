@@ -13,6 +13,7 @@ import com.starbug1.parappa.sdk.util.PreferenceUtil;
 
 public class PaRappa {
 	public static final String PARAPPA_DOMAIN = "parappa.starbug1.com";
+	public static final String PARAPPA_ID_NAME = "_PARAPPA_ID";
 	private String TAG = PaRappa.class.getSimpleName();
 	private Activity parent;
 	private String userAgent = "";

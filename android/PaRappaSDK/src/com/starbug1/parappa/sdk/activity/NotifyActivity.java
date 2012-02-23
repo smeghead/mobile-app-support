@@ -6,21 +6,32 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.starbug1.parappa.sdk.PaRappa;
 import com.starbug1.parappa.sdk.util.MetaDataUtil;
 import com.starbug1.parappa.sdk.util.ReflectionUtil;
 
 public class NotifyActivity extends Activity {
 	private String TAG = NotifyActivity.class.getName();
 
+	private static final int MENU_BACK = 1;
+	private static final int MENU_RELOAD = 2;
+	WebView webview;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,8 +50,18 @@ public class NotifyActivity extends Activity {
 			this.finish();
 			return;
 		}
+		final SharedPreferences settings = this
+				.getSharedPreferences(PaRappa.PARAPPA_DOMAIN, 0);
+		final String parappaId = settings.getString(PaRappa.PARAPPA_ID_NAME, "");
+        final String domain = MetaDataUtil.getDomain(this);
+		String cookieString = String.format(
+				"%s=%s ;domain=%s",
+				PaRappa.PARAPPA_ID_NAME,
+				parappaId,
+				domain);
+		CookieManager.getInstance().setCookie(domain, cookieString);
+		CookieSyncManager.getInstance().sync();
 
-		WebView webview = new WebView(this);
         webview = new WebView(this);
         WebSettings ws = webview.getSettings();
         ws.setBuiltInZoomControls(true);
@@ -79,4 +100,27 @@ public class NotifyActivity extends Activity {
 			NotifyActivity.this.startActivity(intent);
 		}
 	}
+	
+    /** メニューの生成イベント */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	super.onCreateOptionsMenu(menu);
+    	menu.add(0, MENU_RELOAD, 0, "リロード").setIcon(R.drawable.ic_menu_rotate);
+    	menu.add(0, MENU_BACK, 0, "閉じる").setIcon(R.drawable.ic_menu_delete);
+    	return true;
+    }
+    
+    /** メニューがクリックされた時のイベント */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch ( item.getItemId() ) {
+    	case MENU_RELOAD:
+    		webview.reload();
+    		break;
+    	case MENU_BACK:
+    		this.finish();
+    		break;
+    	}
+    	return true;
+    }
 }
