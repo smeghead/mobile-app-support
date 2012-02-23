@@ -5,14 +5,14 @@ $register_mail_body = <<<EOD
 Androidサポート Parappaへの登録ありがとうございます。
 
 以下のサイトにてログインして、PaRappaをを利用下さい。
-http://mudanews.starbug1.com/manage
+http://parappa.me/manage
 
 EOD;
 
 return array(
   'basic' => array(
     'bcc' => 'smeghead7@gmial.com',
-    'from' => 'support@starbug1.com'
+    'from' => 'support@parappa.me'
   ),
   'register_mail' => array(
     'subject' => '[Parappa] ユーザ登録完了のお知らせ',

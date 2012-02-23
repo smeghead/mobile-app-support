@@ -45,7 +45,6 @@ class Controller_Public extends Controller_Template {
       $validation = Validation::forge();
       $validation->add_callable('Appvalidation');
        
-      $validation->add_field('user_id', 'ユーザID', 'required|valid_string[alpha,numeric,punctuation,dashes]|min_length[4]|max_length[24]|unique[users.user_id]');
       $validation->add_field('passwd', 'パスワード', 'required|min_length[8]|max_length[24]');
       $validation->add_field('email', 'メールアドレス', 'required|valid_email|unique[users.email]');
        
@@ -62,7 +61,6 @@ class Controller_Public extends Controller_Template {
       Log::debug('validation ok');
 
       $user_values = array(
-        'user_id' => $validation->validated('user_id'),
         'passwd' => hash('ripemd160', $validation->validated('passwd')),
         'email' => $validation->validated('email'),
         'deleted' => 0
@@ -75,7 +73,7 @@ class Controller_Public extends Controller_Template {
       $header = 'From: ' . $mail_config['basic']['from'] . "\n" .
         'Bcc: ' . $mail_config['basic']['bcc'] . "\n";
       $body = $mail_config['register_mail']['body'];
-      $body = str_replace('#user_id', $validation->validated('user_id'), $body);
+      $body = str_replace('#email', $validation->validated('email'), $body);
       Log::debug('to: ' . $validation->validated('email'));
       Log::debug('subject: ' . $mail_config['register_mail']['subject']);
       Log::debug('additional header: ' . $header);

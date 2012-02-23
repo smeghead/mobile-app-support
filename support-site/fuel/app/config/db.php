@@ -13,7 +13,7 @@ return array(
     'connection'     => array(
       'hostname'       => 'localhost',
       'port'           => '3306',
-      'database'       => 'parappa',
+      'database'       => 'parappa_dev',
       'username'       => 'rapper',
       'password'       => 'fugafuga',
       'persistent'     => false,
