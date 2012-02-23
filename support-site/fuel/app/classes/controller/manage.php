@@ -21,7 +21,7 @@ class Controller_Manage extends Controller_Template {
     }
     $user = Session::get('user');
     $this->template->title = 'Androidアプリサポート PaRappa';
-    $this->template->user_name = $user ? $user->user_id : '';
+    $this->template->email = $user ? $user->email : '';
     $apps = Model_App::find(
       'all',
       array(
@@ -62,7 +62,7 @@ class Controller_Manage extends Controller_Template {
       $validation = Validation::forge();
       $validation->add_callable('Appvalidation');
        
-      $validation->add_field('user_id', 'ユーザID', 'required|match_pattern[#^[A-Za-z0-9_]+$#]');
+      $validation->add_field('email', 'メールアドレス', 'required|valid_email');
       $validation->add_field('passwd', 'パスワード', 'required');
        
       if (!$validation->run()) {
@@ -72,12 +72,12 @@ class Controller_Manage extends Controller_Template {
       }
       $user = Model_User::find('first', array(
         'where' => array(
-          'user_id' => $validation->validated('user_id'),
+          'email' => $validation->validated('email'),
           'passwd' => hash('ripemd160', $validation->validated('passwd'))
         )
       ));
       if (!$user) {
-        $data['errors'] = array('login_error' => 'ユーザIDまたはパスワードが違っています。');
+        $data['errors'] = array('login_error' => 'メールアドレスまたはパスワードが違っています。');
         return View::forge('manage/login', $data); 
       }
       Log::debug(var_export($user, true));
