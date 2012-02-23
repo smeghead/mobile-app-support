@@ -6,7 +6,7 @@
 return array(
   'active' => 'production',
 
-  'default' => array(
+  'production' => array(
     'type'           => 'mysqli',
     'connection'  => array(
       'hostname'       => 'localhost',
