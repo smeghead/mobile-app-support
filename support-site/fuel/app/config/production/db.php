@@ -4,6 +4,8 @@
  */
 
 return array(
+  'active' => 'production',
+
   'default' => array(
     'type'           => 'mysqli',
     'connection'  => array(

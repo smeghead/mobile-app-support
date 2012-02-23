@@ -5,7 +5,7 @@ $register_mail_body = <<<EOD
 Androidサポート Parappaへの登録ありがとうございます。
 
 以下のサイトにてログインして、PaRappaをを利用下さい。
-http://mudanews.starbug1.com/manage
+http://parappa.starbug1.com/manage
 
 EOD;
 
