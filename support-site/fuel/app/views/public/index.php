@@ -1,12 +1,17 @@
         <!-- Main hero unit for a primary marketing message or call to action -->
-        <div class="hero-unit">
+        <div class="hero-unit" id="hero-unit">
+        </div>
+        <div class="hero-unit" id="hero-unit-inner">
           <h1 class="shadow" title="PaRappa"><span>PaRappa</span></h1>
-          <p>Androidアプリサポート パラッパは、Androidアプリ開発における面倒な仕事を助けます。</p>
+          <p>
+            Androidアプリサポート パラッパは、Androidアプリのユーザに便利な機能を簡単に提供できるようにすることで、
+            Androidアプリ開発者の仕事を助けます。
+          </p>
           <p><a href="/public/register" class="btn btn-primary large">いますぐ登録する &raquo;</a></p>
         </div>
 
         <!-- Example row of columns -->
-        <div class="row-fluid">
+        <div id="features" class="row-fluid">
           <div class="span4">
             <h2>ユーザサポート</h2>
             <p>
