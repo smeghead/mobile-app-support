@@ -1,4 +1,8 @@
-package com.starbug1.parappa.sdk;
+package me.parappa.sdk;
+
+import me.parappa.sdk.activity.SupportActivity;
+import me.parappa.sdk.util.ApiUtil;
+import me.parappa.sdk.util.PreferenceUtil;
 
 import org.json.JSONObject;
 
@@ -7,9 +11,6 @@ import android.content.Intent;
 import android.util.Log;
 import android.webkit.WebView;
 
-import com.starbug1.parappa.sdk.activity.SupportActivity;
-import com.starbug1.parappa.sdk.util.ApiUtil;
-import com.starbug1.parappa.sdk.util.PreferenceUtil;
 
 public class PaRappa {
 	public static final String PARAPPA_DOMAIN = "parappa.starbug1.com";

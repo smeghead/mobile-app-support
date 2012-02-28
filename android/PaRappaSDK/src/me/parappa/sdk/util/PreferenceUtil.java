@@ -1,4 +1,4 @@
-package com.starbug1.parappa.sdk.util;
+package me.parappa.sdk.util;
 
 import org.json.JSONException;
 import org.json.JSONObject;

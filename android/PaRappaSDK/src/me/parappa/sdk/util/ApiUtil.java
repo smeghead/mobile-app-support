@@ -1,8 +1,10 @@
-package com.starbug1.parappa.sdk.util;
+package me.parappa.sdk.util;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import me.parappa.sdk.PaRappa;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -27,7 +29,6 @@ import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
-import com.starbug1.parappa.sdk.PaRappa;
 
 public class ApiUtil {
 	private static String TAG = ApiUtil.class.getName();

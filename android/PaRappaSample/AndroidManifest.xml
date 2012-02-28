@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.starbug1.parappa.sample"
+    package="me.parappa.sample"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -23,19 +23,19 @@
         </activity>
         <!-- PaRappa Support Activity -->
         <activity
-            android:name="com.starbug1.parappa.sdk.activity.SupportActivity"
+            android:name="me.parappa.sdk.activity.SupportActivity"
             android:label="@string/app_name"
             android:configChanges="orientation|keyboardHidden">
         </activity>
         <!-- PaRappa Notify Activity -->
         <activity
-            android:name="com.starbug1.parappa.sdk.activity.NotifyActivity"
+            android:name="me.parappa.sdk.activity.NotifyActivity"
             android:label="@string/app_name"
             android:configChanges="orientation|keyboardHidden" />
         <!-- PaRappa Notify Service -->
-        <service android:name="com.starbug1.parappa.sdk.service.NotifyService" />
+        <service android:name="me.parappa.sdk.service.NotifyService" />
         <!-- PaRappa Receiver -->
-        <receiver android:name="com.starbug1.parappa.sdk.receiver.StartReceiver">
+        <receiver android:name="me.parappa.sdk.receiver.StartReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />

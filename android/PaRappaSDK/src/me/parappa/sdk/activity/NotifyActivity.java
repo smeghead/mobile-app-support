@@ -1,7 +1,11 @@
-package com.starbug1.parappa.sdk.activity;
+package me.parappa.sdk.activity;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import me.parappa.sdk.PaRappa;
+import me.parappa.sdk.util.MetaDataUtil;
+import me.parappa.sdk.util.ReflectionUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,9 +25,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-import com.starbug1.parappa.sdk.PaRappa;
-import com.starbug1.parappa.sdk.util.MetaDataUtil;
-import com.starbug1.parappa.sdk.util.ReflectionUtil;
 
 public class NotifyActivity extends Activity {
 	private String TAG = NotifyActivity.class.getName();

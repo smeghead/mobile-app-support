@@ -1,4 +1,4 @@
-package com.starbug1.parappa.sdk.exception;
+package me.parappa.sdk.exception;
 
 public class PaRappaException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
