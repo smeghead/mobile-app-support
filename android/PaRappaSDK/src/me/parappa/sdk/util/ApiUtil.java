@@ -89,7 +89,7 @@ public class ApiUtil {
 			Log.d(TAG, byteArrayOutputStream.toString());
 			JSONObject result = new JSONObject(byteArrayOutputStream.toString());
 			if (!result.has("error") || !JSONObject.NULL.equals(result.get("error"))) {
-				Log.d(TAG, result.getString("error"));
+				Log.d(TAG, "error: " + result.getString("error"));
 				return null;
 			}
 			JSONObject notifyJsono = result.getJSONObject("notify");
@@ -100,6 +100,40 @@ public class ApiUtil {
 					notifyJsono.getInt("notify_id"));
 			postRequest(context, domain, httpClient);
 			return notify;
+		} catch (Exception e) {
+			Log.e(TAG, "http access error. " + e.getMessage());
+			return null;
+		}
+	}
+
+	public static App getApp(Context context, String userAgent) {
+        String appCode = MetaDataUtil.getMetaData(context.getApplicationContext(), "PARAPPA_APP_CODE", "");
+        if (appCode.equals("")) {
+        	Log.w(TAG, "PARAPPA_APP_CODE required. define PARAPPA_APP_CODE in AndroidManifest.xml.");
+        	return null;
+        }
+        final String domain = MetaDataUtil.getDomain(context);
+
+        DefaultHttpClient httpClient = preRequest(context, userAgent, domain);
+		HttpGet get = new HttpGet("http://" + domain + "/api/app.json/" + appCode + "?activity=" + context.getClass().getName());
+
+		App app;
+		try {
+			Log.d(TAG, "get");
+			HttpResponse response = httpClient.execute(get);
+			Log.d(TAG, "got");
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			response.getEntity().writeTo(byteArrayOutputStream);
+			Log.d(TAG, byteArrayOutputStream.toString());
+			JSONObject result = new JSONObject(byteArrayOutputStream.toString());
+			if (!result.has("error") || !JSONObject.NULL.equals(result.get("error"))) {
+				Log.d(TAG, "error: " + result.getString("error"));
+				return null;
+			}
+			JSONObject appJsono = result.getJSONObject("app");
+			app = new App(appJsono.getString("package"));
+			postRequest(context, domain, httpClient);
+			return app;
 		} catch (Exception e) {
 			Log.e(TAG, "http access error. " + e.getMessage());
 			return null;
@@ -177,6 +211,12 @@ public class ApiUtil {
 			this.subject = subject;
 			this.appCode = appCode;
 			this.notifyId = notifyId;
+		}
+	}
+	public static class App {
+		public String packageName;
+		public App(String packageName) {
+			this.packageName = packageName;
 		}
 	}
 

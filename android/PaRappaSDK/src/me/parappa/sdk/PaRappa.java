@@ -8,12 +8,13 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.webkit.WebView;
 
 
 public class PaRappa {
-	public static final String PARAPPA_DOMAIN = "parappa.starbug1.com";
+	public static final String PARAPPA_DOMAIN = "parappa.me";
 	public static final String PARAPPA_ID_NAME = "_PARAPPA_ID";
 	private String TAG = PaRappa.class.getSimpleName();
 	private Activity parent;
@@ -49,5 +50,24 @@ public class PaRappa {
 		intent.putExtra("parentActivity", parent.getClass().getName());
 		this.parent.startActivity(intent);
 	}
+
+	public void shareString(String shareString) {
+		this.shareString(shareString, "共有");
+	}
 	
+	public void shareString(String shareString, String caption) {
+		Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+	    intent.setType("text/plain");
+	    intent.putExtra(Intent.EXTRA_TEXT, shareString);
+	    this.parent.startActivity(Intent.createChooser(intent, caption));
+	}
+
+	public void gotoMarket() {
+		final String userAgent = new WebView(this.parent).getSettings().getUserAgentString();
+		ApiUtil.App app = ApiUtil.getApp(this.parent, userAgent);
+		Intent intent = new Intent(
+				android.content.Intent.ACTION_VIEW,
+				Uri.parse("market://details?id=" + app.packageName));
+	    this.parent.startActivity(Intent.createChooser(intent, "紹介"));
+	}
 }
