@@ -147,3 +147,9 @@ div#ui-datepicker-div select {
 .menu-detail {
 	display: none;
 }
+div#introduction {
+	margin: 30px;
+}
+div#introduction p {
+	font-size: 130%;
+}
