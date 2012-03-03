@@ -5,7 +5,7 @@
   </li>
 </ul>
 <h1>アプリ一覧</h1>
-<?php if (count($apps) == 0) { ?>
+<?php if (count($apps) > 0) { ?>
 <div id="app_list">
 <table class="table">
   <tr>
