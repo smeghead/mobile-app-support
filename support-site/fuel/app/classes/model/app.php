@@ -25,6 +25,12 @@ class Model_App extends \Orm\Model
     ),
   );
 
+  protected static $_has_many = array(
+    'inquiry_bases' => array(
+      'model_to' => 'Model_Inquiry_Base',
+    )
+  );
+
   public static function get_uniq_code() {
     $code = substr(md5(date("YmdD His")), 0, 8); 
     $query = Model_App::find('all', array('where' => array('code' => $code)));

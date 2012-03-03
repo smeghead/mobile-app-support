@@ -153,3 +153,10 @@ div#introduction {
 div#introduction p {
 	font-size: 130%;
 }
+td.exists-inquiry {
+	background-color: #ffcccc;
+}
+td.exists-inquiry a {
+	color: #ff3333;
+	font-weight: bold;
+}

@@ -43,7 +43,8 @@ class Controller_Manage extends Controller_Template {
         'where' => array(
           'user_id' => $user['id'],
           'deleted' => 0,
-        )
+        ),
+        'related' => array('inquiry_bases'),
       )
     );
     $data = array(
@@ -382,6 +383,35 @@ class Controller_Manage extends Controller_Template {
         $inquiry->save();
         Log::debug('transaction commit');
         DB::commit_transaction();
+
+        //send answer mail.
+        $messages = array_values($inquiry->inquiry_messages);
+        $content = <<<EOM
+【質問内容】
+{$messages[0]->content}
+
+【回答】
+$answer
+EOM;
+        $inquirier = $messages[0]->email;
+        $mail_config = \Config::load('mail');
+        $header = 'From: ' . $mail_config['basic']['from'] . "\n" .
+          'Bcc: ' . $mail_config['basic']['bcc'] . ',' . $user->email . "\n";
+        $body = $mail_config['inquiry_answer_mail']['body'];
+        $body = str_replace('#email#', $inquirier, $body);
+        $body = str_replace('#content#', $content, $body);
+        Log::debug('to: ' . $validation->validated('email'));
+        Log::debug('subject: ' . $mail_config['inquiry_answer_mail']['subject']);
+        Log::debug('additional header: ' . $header);
+        Log::debug('body: ' . $body);
+        if (!mb_send_mail(
+            $inquirier,
+            $mail_config['inquiry_answer_mail']['subject'],
+            $body,
+            $header)) {
+          Log::error('failed to send inquiry_answer_mail mail.');
+          die('failed to send mail.');
+        }
         return Response::redirect('manage/app_site/' . $app->id . '#inquiry');
       } catch (Exception $e) {
         Log::debug('error: ' . $e->getMessage());

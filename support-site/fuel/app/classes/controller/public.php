@@ -73,7 +73,7 @@ class Controller_Public extends Controller_Template {
       $header = 'From: ' . $mail_config['basic']['from'] . "\n" .
         'Bcc: ' . $mail_config['basic']['bcc'] . "\n";
       $body = $mail_config['register_mail']['body'];
-      $body = str_replace('#email', $validation->validated('email'), $body);
+      $body = str_replace('#email#', $validation->validated('email'), $body);
       Log::debug('to: ' . $validation->validated('email'));
       Log::debug('subject: ' . $mail_config['register_mail']['subject']);
       Log::debug('additional header: ' . $header);

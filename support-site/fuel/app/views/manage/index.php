@@ -19,7 +19,16 @@
     <td class="block-link"><a href="/manage/app/<?php echo $app['id'] ?>"><?php echo $app['name'] ?></a></td>
     <td class="block-link"><a href="/manage/app/<?php echo $app['id'] ?>"><?php echo $app['url'] ?></a></td>
     <td><a href="/manage/app_site/<?php echo $app['id'] ?>" class="btn">編集</a></td>
-    <td class="block-link"><a href="/manage/app_site/<?php echo $app['id'] ?>#inquiry">3(10)</a></td>
+<?php
+$inquiries = array_values($app->inquiry_bases);
+$not_answered = 0;
+foreach ($inquiries as $i) {
+  if ($i->status == 1) $not_answered++;
+}
+?>
+  <td class="block-link<?php if ($not_answered > 0) {echo ' exists-inquiry';} ?>">
+  <a href="/manage/app_site/<?php echo $app['id'] ?>#inquiry"><?php echo $not_answered; ?>(<?php echo count($inquiries); ?>)</a>
+    </td>
   </tr>
 <?php } ?>
 
