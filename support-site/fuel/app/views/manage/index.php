@@ -5,6 +5,7 @@
   </li>
 </ul>
 <h1>アプリ一覧</h1>
+<?php if (count($apps) == 0) { ?>
 <div id="app_list">
 <table class="table">
   <tr>
@@ -24,4 +25,13 @@
 
 </table>
 </div>
+<?php } else { ?>
+<div id="introduction">
+  <p>
+    ユーザ登録ありがとうございます。まず最初に、下のボタンからアプリを登録して下さい。
+    その後の作業については、<a href="/manage/document" target="_blank">ドキュメント</a>を参考にして下さい。
+    ドキュメントは、いつでも左のメニューから参照できます。
+  </p>
+</div>
+<?php } ?>
 <p><a href="/manage/add_app" class="btn btn-primary">アプリを追加する&raquo;</a></p>
