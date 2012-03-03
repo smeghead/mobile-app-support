@@ -255,7 +255,7 @@ $.fn.visualize = function(options, container){
 					else if(i== xLabels.length-1){ leftOffset = -label.width(); }
 					label
 						.css('margin-left', leftOffset)
-						.addClass('label');
+						.addClass('vlabel');
 				});
 
 				//write Y labels
@@ -277,7 +277,7 @@ $.fn.visualize = function(options, container){
 					else if(i== yLabels.length-1){ topOffset = 0; }
 					label
 						.css('margin-top', topOffset)
-						.addClass('label');
+						.addClass('vlabel');
 				});
 
 				//start from the bottom left

@@ -29,7 +29,16 @@
   </head>
 
   <body>
-
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=249204121787574";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -38,7 +47,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/public"><?php echo $title; ?></a>
+          <a class="brand" href="/manage"><?php echo \Config::get('app_name'); ?></a>
           <ul class="nav">
             <li class="<?php if (Uri::segment(2) != 'register') {echo 'active';} ?>"><a href="/public">Home</a></li>
             <li class="<?php if (Uri::segment(2) == 'register') {echo 'active';} ?>"><a href="/public/register">ユーザ登録</a></li>
@@ -54,6 +63,7 @@
           <div class="well sidebar-nav">
             <?php echo $side_menu; ?>
           </div>
+          <div class="fb-like-box" data-href="http://www.facebook.com/pages/Android-PaRappa/297569713643833" data-width="257" data-show-faces="true" data-stream="false" data-header="true"></div>
         </div>
 
         <div class="span9">

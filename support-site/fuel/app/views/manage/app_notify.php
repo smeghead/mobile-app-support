@@ -40,7 +40,7 @@
         <tr>
           <td><a href="/manage/app_notify_edit/<?php echo $app->id; ?>/<?php echo $notify->id; ?>"><?php echo $messages[0]->subject; ?></a></td>
           <td><?php echo date('Y-m-d H:i:s', $notify->notify_at); ?></td>
-          <td><?php echo $messages[0]->content; ?></td>
+          <td><?php echo mb_strimwidth($messages[0]->content, 0, 50, '...'); ?></td>
         </tr>
 <?php } ?>
       </table>

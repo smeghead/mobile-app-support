@@ -5,8 +5,6 @@
     <title><?php echo $title; ?></title>
     <meta name="description" content="">
     <meta name="author" content="">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap-alert.js"></script>
     <?php echo Asset::css('bootstrap.css'); ?>
     <?php echo Asset::css('bootstrap-responsive.css'); ?>
     <?php echo Asset::css('style.css'); ?>
@@ -22,6 +20,7 @@
         padding-top: 60px;
       }
     </style>
+    <link href='http://fonts.googleapis.com/css?family=Limelight' rel='stylesheet' type='text/css'>
 
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="/favicon.ico">
@@ -88,5 +87,8 @@ $(function(){
   $('#user_id').focus();
 });
     </script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-alert.js"></script>
+    <script type="text/javascript" src="/assets/js/manage/login.js"></script>
   </body>
 </html>

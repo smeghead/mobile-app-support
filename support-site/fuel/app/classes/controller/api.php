@@ -91,6 +91,29 @@ class Controller_Api extends Controller_Rest {
     ));
   }
 
+  public function get_app($app_id = 0) {
+    Log::debug('get_app called.');
+    $code = Input::get('code');
+    if ($code) {
+      $app = Model_App::find('first', array('where' => array('code' => $code)));
+    } else {
+      $user = Session::get('user');
+      $app = Model_App::find('first', array('where' => array(
+            'id' => $app_id,
+            'user_id' => $user['id'],
+          )
+        )
+      );
+    }
+    Log::debug(var_export($app, true));
+    if (!$app) {
+      Log::error('app not found');
+      return $this->response(array('error' => 'app not found'), 404);
+    }
+
+    $this->response(array('app' => $app, 'error' => null));
+  }
+
   public function get_faq($app_id = 0) {
     Log::debug('get_faq called.');
     $code = Input::get('code');

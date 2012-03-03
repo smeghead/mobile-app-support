@@ -1,5 +1,16 @@
 <link href="/assets/css/jquery.wysiwyg.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="/assets/css/themes/base/jquery.ui.all.css" />
+<ul class="breadcrumb">
+  <li>
+    <a href="/manage/">アプリ一覧</a> <span class="divider">/</span>
+  </li>
+  <li>
+    <a href="/manage/app/<?php echo $app->id; ?>"><?php echo $app->name; ?></a> <span class="divider">/</span>
+  </li>
+  <li class="active">
+    <a href="">告知設定</a>
+  </li>
+</ul>
 <h1>告知の追加</h1>
 <p>告知情報を入力して、登録ボタンをクリックして下さい。</p>
 

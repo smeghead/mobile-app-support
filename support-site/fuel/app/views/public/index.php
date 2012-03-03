@@ -1,11 +1,11 @@
         <!-- Main hero unit for a primary marketing message or call to action -->
-        <div class="hero-unit" id="hero-unit">
+        <div class="hero-unit effect7" id="hero-unit">
         </div>
         <div class="hero-unit" id="hero-unit-inner">
           <h1 class="shadow" title="PaRappa"><span>PaRappa</span></h1>
           <p>
             Androidアプリサポート パラッパは、Androidアプリのユーザに便利な機能を簡単に提供できるようにすることで、
-            Androidアプリ開発者の仕事を助けます。
+            Androidアプリ開発者を助けます。
           </p>
           <p><a href="/public/register" class="btn btn-primary large">いますぐ登録する &raquo;</a></p>
         </div>
@@ -31,3 +31,4 @@
             <p><a class="btn" href="/public/analysis">View details &raquo;</a></p>
           </div>
         </div>
+        <style>footer {position: relative; top: -350px;}</style>

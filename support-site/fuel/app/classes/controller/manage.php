@@ -20,7 +20,7 @@ class Controller_Manage extends Controller_Template {
       return Response::redirect('manage/login');
     }
     $user = Session::get('user');
-    $this->template->title = 'Androidアプリサポート PaRappa';
+    $this->template->title = \Config::get('app_name') . " 管理";
     $this->template->email = $user ? $user->email : '';
     $apps = Model_App::find(
       'all',
@@ -55,7 +55,7 @@ class Controller_Manage extends Controller_Template {
 
   public function action_login() {
     $data = array(
-      'title' => 'Androidアプリサポート PaRappa'
+      'title' => \Config::get('app_name'),
     );
     if (Input::method() == 'POST') {
       Log::debug('try to login.');
@@ -392,5 +392,26 @@ class Controller_Manage extends Controller_Template {
     $this->template->content = View::forge('manage/inquiry', $data);
     return $this->template;
   }
+
+  public function action_settings() {
+    $user = Session::get('user');
+    if (!$user) {
+      Log::error('user not found.');
+      return Response::forge(ViewModel::forge('public/login'), 200);
+    }
+    $data = array(
+      'user' => $user
+    );
+
+    $this->template->content = View::forge('manage/settings', $data);
+    return $this->template;
+  }
+
+  public function action_document() {
+    $user = Session::get('user');
+    $this->template->content = View::forge('manage/document', array());
+    return $this->template;
+  }
+
 }
 ?>

@@ -1,5 +1,19 @@
 <link href="/assets/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="/assets/js/google-code-prettify/prettify.js"></script>
+<ul class="breadcrumb">
+  <li>
+    <a href="/manage/">アプリ一覧</a> <span class="divider">/</span>
+  </li>
+  <li>
+    <a href="/">トップ</a> <span class="divider">/</span>
+  </li>
+  <li>
+    <a href="/">機能説明</a> <span class="divider">/</span>
+  </li>
+  <li class="active">
+    <a href="/public/notification">告知機能</a>
+  </li>
+</ul>
 
         <!-- Main hero unit for a primary marketing message or call to action -->
         <!-- Example row of columns -->

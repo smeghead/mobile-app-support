@@ -12,6 +12,7 @@
 
 return array(
 
+  'app_name' => 'Androidアプリサポート PaRappa',
 	/**
 	 * base_url - The base URL of the application.
 	 * MUST contain a trailing slash (/)
