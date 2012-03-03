@@ -1,6 +1,10 @@
-package com.starbug1.parappa.sdk.service;
+package me.parappa.sdk.service;
 
 import java.util.GregorianCalendar;
+
+import me.parappa.sdk.activity.NotifyActivity;
+import me.parappa.sdk.receiver.StartReceiver;
+import me.parappa.sdk.util.ApiUtil;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -14,9 +18,6 @@ import android.os.IBinder;
 import android.util.Log;
 import android.webkit.WebView;
 
-import com.starbug1.parappa.sdk.activity.NotifyActivity;
-import com.starbug1.parappa.sdk.receiver.StartReceiver;
-import com.starbug1.parappa.sdk.util.ApiUtil;
 
 public class NotifyService extends Service {
 	private static String TAG = NotifyService.class.getName();

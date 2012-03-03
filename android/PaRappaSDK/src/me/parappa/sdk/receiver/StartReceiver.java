@@ -1,6 +1,6 @@
-package com.starbug1.parappa.sdk.receiver;
+package me.parappa.sdk.receiver;
 
-import com.starbug1.parappa.sdk.service.NotifyService;
+import me.parappa.sdk.service.NotifyService;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

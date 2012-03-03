@@ -1,11 +1,11 @@
-package com.starbug1.parappa.sample;
+package me.parappa.sample;
 
+import me.parappa.sdk.PaRappa;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.starbug1.parappa.sdk.PaRappa;
 
 public class PaRappaSampleActivity extends Activity {
 	/** PaRappa instance. **/
@@ -33,7 +33,8 @@ public class PaRappaSampleActivity extends Activity {
     	switch (item.getItemId()) {
 		case R.id.menu_support:
 			// open PaRappa suport activity feature.
-			parappa.startSupportActivity();
+//			parappa.startSupportActivity();
+			parappa.gotoMarket();
 			break;
 		}
     	return true;

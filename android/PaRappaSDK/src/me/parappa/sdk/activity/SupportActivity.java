@@ -1,5 +1,7 @@
-package com.starbug1.parappa.sdk.activity;
+package me.parappa.sdk.activity;
 
+import me.parappa.sdk.PaRappa;
+import me.parappa.sdk.util.MetaDataUtil;
 import android.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -13,8 +15,6 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.starbug1.parappa.sdk.PaRappa;
-import com.starbug1.parappa.sdk.util.MetaDataUtil;
 
 public class SupportActivity extends Activity {
 	private String TAG = SupportActivity.class.getName();
