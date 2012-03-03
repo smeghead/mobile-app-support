@@ -27,7 +27,7 @@
       <label for="category" class="control-label">カテゴリ</label>
       <div class="controls">
         <select id="category" name="category">
-          <option value="0">その他</option>
+          <option value="">選択してください。</option>
 <?php foreach ($app_categories as $category) { ?>
           <option value="<?php echo $category->category_code; ?>" <?php if ($category->category_code == Input::post('category')) {echo 'selected="selected"';} ?>><?php echo $category->name; ?></option>
 <?php } ?>
@@ -41,6 +41,6 @@
   </fieldset>
 
   <div class="form-actions">
-    <input type="submit" class="btn btn-primary" value="登録">&nbsp;<button type="reset" class="btn">キャンセル</button>
+    <input type="submit" class="btn btn-primary" value="登録">&nbsp;<a href="/manage/index" class="btn">キャンセル</a>
   </div>
 </form>

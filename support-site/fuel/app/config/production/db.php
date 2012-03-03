@@ -16,5 +16,9 @@ return array(
       'password'       => 'fugafuga',
       'persistent'     => false,
     ),
+    'table_prefix'   => '',
+    'charset'        => 'utf8',
+    'caching'        => false,
+    'profiling'      => false,
   ),
 );

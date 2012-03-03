@@ -105,7 +105,7 @@ class Controller_Manage extends Controller_Template {
        
       $validation->add_field('name', 'アプリ名', 'required');
       $validation->add_field('url', 'Android Market URL', 'required|valid_url');
-      $validation->add_field('category', 'カテゴリ', 'required|numeric_min[1]|numeric_max[99]');
+      $validation->add_field('category', 'カテゴリ', 'required');
        
       if (!$validation->run()) {
         Log::debug('validation failed');
