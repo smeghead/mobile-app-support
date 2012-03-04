@@ -52,7 +52,7 @@ public class NotifyActivity extends Activity {
 			return;
 		}
 		final SharedPreferences settings = this
-				.getSharedPreferences(PaRappa.PARAPPA_DOMAIN, 0);
+				.getSharedPreferences(PaRappa.PARAPPA_DEFAULT_DOMAIN, 0);
 		final String parappaId = settings.getString(PaRappa.PARAPPA_ID_NAME, "");
         final String domain = MetaDataUtil.getDomain(this);
 		String cookieString = String.format(

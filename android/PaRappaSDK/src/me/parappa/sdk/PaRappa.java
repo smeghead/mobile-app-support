@@ -14,7 +14,8 @@ import android.webkit.WebView;
 
 
 public class PaRappa {
-	public static final String PARAPPA_DOMAIN = "parappa.me";
+	public static final String PARAPPA_VERSION = "0.0.1";
+	public static final String PARAPPA_DEFAULT_DOMAIN = "parappa.me";
 	public static final String PARAPPA_ID_NAME = "_PARAPPA_ID";
 	private String TAG = PaRappa.class.getSimpleName();
 	private Activity parent;
@@ -65,9 +66,14 @@ public class PaRappa {
 	public void gotoMarket() {
 		final String userAgent = new WebView(this.parent).getSettings().getUserAgentString();
 		ApiUtil.App app = ApiUtil.getApp(this.parent, userAgent);
+		if (app == null) {
+			Log.e(TAG, "failed to open market.");
+			return;
+		}
+		String marketUrl = ApiUtil.getNativeMarketUrl(app.url);
 		Intent intent = new Intent(
 				android.content.Intent.ACTION_VIEW,
-				Uri.parse("market://details?id=" + app.packageName));
+				Uri.parse(marketUrl));
 	    this.parent.startActivity(Intent.createChooser(intent, "紹介"));
 	}
 }

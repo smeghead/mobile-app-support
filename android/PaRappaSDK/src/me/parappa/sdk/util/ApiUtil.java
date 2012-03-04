@@ -3,6 +3,8 @@ package me.parappa.sdk.util;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import me.parappa.sdk.PaRappa;
 
@@ -46,6 +48,7 @@ public class ApiUtil {
 		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(3);
 		nameValuePair.add(new BasicNameValuePair("activity", activity.getClass().getName()));
 		nameValuePair.add(new BasicNameValuePair("log", jsonLog));
+		nameValuePair.add(new BasicNameValuePair("version", PaRappa.PARAPPA_VERSION));
 
 		try {
 			Log.d(TAG, "post");
@@ -77,7 +80,12 @@ public class ApiUtil {
         final String domain = MetaDataUtil.getDomain(context);
 
         DefaultHttpClient httpClient = preRequest(context, userAgent, domain);
-		HttpGet get = new HttpGet("http://" + domain + "/api/notify.json/" + appCode + "?activity=" + context.getClass().getName());
+		HttpGet get = new HttpGet(
+				String.format("http://%s/api/notify.json/%s?activity=%s&version=%s",
+						domain, 
+						appCode,
+						context.getClass().getName(),
+						PaRappa.PARAPPA_VERSION));
 
 		Notify notify;
 		try {
@@ -115,7 +123,12 @@ public class ApiUtil {
         final String domain = MetaDataUtil.getDomain(context);
 
         DefaultHttpClient httpClient = preRequest(context, userAgent, domain);
-		HttpGet get = new HttpGet("http://" + domain + "/api/app.json/" + appCode + "?activity=" + context.getClass().getName());
+		HttpGet get = new HttpGet(
+				String.format("http://%s/api/app.json?code=%s&activity=%s&version=%s",
+						domain, 
+						appCode,
+						context.getClass().getName(),
+						PaRappa.PARAPPA_VERSION));
 
 		App app;
 		try {
@@ -131,7 +144,7 @@ public class ApiUtil {
 				return null;
 			}
 			JSONObject appJsono = result.getJSONObject("app");
-			app = new App(appJsono.getString("package"));
+			app = new App(appJsono.getString("url"));
 			postRequest(context, domain, httpClient);
 			return app;
 		} catch (Exception e) {
@@ -153,7 +166,7 @@ public class ApiUtil {
 					Log.d(TAG, "cookie: " + cookie.getName() + " " + cookie.getValue());
 					if (cookie.getName().equals(PaRappa.PARAPPA_ID_NAME) && cookie.getValue().length() > 0) {
 						SharedPreferences settings = context
-								.getSharedPreferences(PaRappa.PARAPPA_DOMAIN, 0);
+								.getSharedPreferences(PaRappa.PARAPPA_DEFAULT_DOMAIN, 0);
 						SharedPreferences.Editor editor = settings.edit();
 						editor.putString(PaRappa.PARAPPA_ID_NAME, cookie.getValue());
 						Log.d(TAG, "***********************GOT " + cookie.getName() + " " + cookie.getValue());
@@ -174,7 +187,7 @@ public class ApiUtil {
 	private static DefaultHttpClient preRequest(Context context,
 			String userAgent, String domain) {
 		final SharedPreferences settings = context
-				.getSharedPreferences(PaRappa.PARAPPA_DOMAIN, 0);
+				.getSharedPreferences(PaRappa.PARAPPA_DEFAULT_DOMAIN, 0);
 		final String parappaId = settings.getString(PaRappa.PARAPPA_ID_NAME, "");
 		
 		BasicClientCookie parappaIdCookie = new BasicClientCookie(
@@ -214,9 +227,9 @@ public class ApiUtil {
 		}
 	}
 	public static class App {
-		public String packageName;
-		public App(String packageName) {
-			this.packageName = packageName;
+		public String url;
+		public App(String url) {
+			this.url = url;
 		}
 	}
 
@@ -224,5 +237,15 @@ public class ApiUtil {
 		  ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		  final NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
 		  return (networkInfo != null && networkInfo.isConnected());
+	}
+	
+	private static final Pattern packageName_ = Pattern.compile("[\\?&]id=([^&]+)");
+	public static String getNativeMarketUrl(String url) {
+		Matcher m = packageName_.matcher(url);
+		if (!m.find()) {
+			return url;
+		}
+		Log.d(TAG, m.group(1));
+		return String.format("market://details?id=%s", m.group(1));
 	}
 }

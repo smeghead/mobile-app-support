@@ -31,7 +31,7 @@ public class MetaDataUtil {
     }
 
     public static String getDomain(Context context) {
-        return MetaDataUtil.getMetaData(context, "PARAPPA_DOMAIN", PaRappa.PARAPPA_DOMAIN);
+        return MetaDataUtil.getMetaData(context, "PARAPPA_DOMAIN", PaRappa.PARAPPA_DEFAULT_DOMAIN);
     }
 
 }

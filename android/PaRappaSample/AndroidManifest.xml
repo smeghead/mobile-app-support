@@ -44,7 +44,7 @@
         </receiver>
         <!-- PaRappa Application Code Setting -->
        	<meta-data android:name="PARAPPA_APP_CODE" android:value="5d7c4647"/>
-       	<meta-data android:name="PARAPPA_DOMAIN" android:value="com.starbug1.parappa"/>
+       	<meta-data android:name="PARAPPA_DOMAIN" android:value="parappa.starbug1.com"/>
        		
     </application>
 </manifest>
