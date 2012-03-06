@@ -28,8 +28,10 @@ $(function(){
           $('#alert-message-success').show();
         },
         error: function(xhr, status, c){
-          var data = JSON.parse(xhr.responseText);
-          $('#error-description').text(data.error);
+          try {
+            var data = JSON.parse(xhr.responseText);
+            $('#error-description').text(data.error);
+          } catch (e) {}
           $('#alert-message-error').show();
         }
       });
@@ -69,8 +71,10 @@ $(function(){
           $('#alert-message-success').show();
         },
         error: function(xhr, status, c){
-          var data = JSON.parse(xhr.responseText);
-          $('#error-description').text(data.error);
+          try {
+            var data = JSON.parse(xhr.responseText);
+            $('#error-description').text(data.error);
+          } catch (e) {}
           $('#alert-message-error').show();
         }
       });
@@ -110,8 +114,10 @@ $(function(){
           $('#alert-message-success').show();
         },
         error: function(xhr, status, c){
-          var data = JSON.parse(xhr.responseText);
-          $('#error-description').text(data.error);
+          try {
+            var data = JSON.parse(xhr.responseText);
+            $('#error-description').text(data.error);
+          } catch (e) {}
           $('#alert-message-error').show();
         }
       });

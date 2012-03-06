@@ -79,7 +79,7 @@
       </div>
     </div>
     <footer>
-      <p>&copy; smeghead 2012</p>
+      <p><?php echo \Config::get('copyright'); ?></p>
     </footer>
 
     <script type="text/javascript">

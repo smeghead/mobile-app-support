@@ -12,6 +12,9 @@ class Controller_Public extends Controller_Template {
   }
 
   public function action_index() {
+    for ($i = 0; $i < 30; $i++) {
+      Log::debug('code: ' . Model_App::get_uniq_code());
+    }
     $data = array();
     $this->template->title = \Config::get('app_name');
     $this->template->side_menu = View::forge('public/side_menu', $data);

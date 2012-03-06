@@ -299,7 +299,8 @@ class Controller_Api extends Controller_Rest {
       'type' => Model_Access::$TYPE_INIT,
       'activity' => Input::post('activity'),
       'user_agent' => Input::user_agent(),
-      'remote_addr' => $remote_addr
+      'remote_addr' => $remote_addr,
+      'version' => Input::post('version'),
     ));
     $access->save();
 
@@ -355,7 +356,8 @@ class Controller_Api extends Controller_Rest {
       'type' => Model_Access::$TYPE_NOTIFY_CHECK,
       'activity' => Input::get('activity'),
       'user_agent' => Input::user_agent(),
-      'remote_addr' => $remote_addr
+      'remote_addr' => $remote_addr,
+      'version' => Input::get('version'),
     ));
     $access->save();
 
