@@ -7,7 +7,7 @@ class Util {
   public static function get_terminal_id() {
     $terminal_id = Cookie::get('_PARAPPA_ID', '');
     if (!$terminal_id) {
-      $terminal_id = get_random_string(16);
+      $terminal_id = Util::get_random_string(16);
       Log::info('create _PARAPPA_ID: ' . $terminal_id);
     }
     Cookie::set('_PARAPPA_ID', $terminal_id, 60 * 60 * 24 * 365);
