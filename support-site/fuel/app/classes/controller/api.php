@@ -344,6 +344,7 @@ class Controller_Api extends Controller_Rest {
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
 
+    $terminal_id = Util::get_terminal_id();
     $remote_addr = Input::server('HTTP_X_FORWARDED_FOR');
     if (!$remote_addr) {
       Log::debug('no value HTTP_X_FORWARDED_FOR.');
