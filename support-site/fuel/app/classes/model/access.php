@@ -2,10 +2,10 @@
 
 class Model_Access extends \Orm\Model
 {
-  public static $TYPE_INIT = 1;
-  public static $TYPE_SITE_ACCESS = 2;
-  public static $TYPE_SITE_ACCESS_NOTIFY = 3;
-  public static $TYPE_NOTIFY_CHECK = 4;
+  public static $TYPE_INIT = 1;               //SDKによる初期化
+  public static $TYPE_SITE_ACCESS = 2;        //サポートサイトアクセス
+  public static $TYPE_SITE_ACCESS_NOTIFY = 3; //通知表示からの通知内容表示
+  public static $TYPE_NOTIFY_CHECK = 4;       //SDKからの通知存在確認アクセス
 
   protected static $_properties = array(
     'id',
@@ -41,7 +41,10 @@ class Model_Access extends \Orm\Model
     $sql =<<<EOS
 select from_unixtime(created_at, '%Y-%m-%d') as d, count(*) as count
 from accesses
-where app_id = $app_id and created_at between $begin and $end
+where
+  app_id = $app_id
+  and type in (1)
+  and created_at between $begin and $end
 group by d;
 EOS;
     $result = DB::query($sql)->execute();
