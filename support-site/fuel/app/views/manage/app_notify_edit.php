@@ -86,6 +86,17 @@ $ACTION_TYPES = array(
 <?php } ?>
       </div>
     </div><!-- /clearfix -->
+    <div class="control-group <?php if (isset($errors['target_version'])) { echo 'error'; } ?>">
+      <label for="target_version" class="control-label">ターゲットバージョン</label>
+      <div class="controls">
+        <input class="xlarge" id="target_version" name="target_version" size="30" type="text" value="<?php if (Input::method() == 'GET') {echo $messages[0]->target_version; } else {echo Input::post('target_version'); } ?>" />
+        以下
+        <div class="help">例) 100 (1.0.0 ではなく数値のバージョン番号で指定してください)</div>
+<?php if (isset($errors['target_version'])) { ?>
+        <span class="help-inline"><?php echo $errors['target_version'] ?></span>
+<?php } ?>
+      </div>
+    </div><!-- /clearfix -->
 
   </fieldset>
 

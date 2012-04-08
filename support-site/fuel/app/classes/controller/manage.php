@@ -266,6 +266,7 @@ class Controller_Manage extends Controller_Template {
         $validation->add_field('activity', '移動先Activity', 'required');
       }
       $validation->add_field('action_type', 'アクションタイプ', 'required');
+      $validation->add_field('target_version', 'ターゲットバージョン', 'valid_string[numeric]');
        
       if (!$validation->run()) {
         Log::debug('validation failed');
@@ -289,6 +290,7 @@ class Controller_Manage extends Controller_Template {
         $message->subject = $validation->validated('subject');
         $message->content = $validation->validated('content');
         $message->action_type = $validation->validated('action_type');
+        $message->target_version = $validation->validated('target_version');
         if (Input::post('action_type') == '1') {
           $message->activity = $validation->validated('activity');
         }
@@ -301,7 +303,7 @@ class Controller_Manage extends Controller_Template {
       } catch (Exception $e) {
         Log::debug('error: ' . $e->getMessage());
         DB::rollback_transaction();
-        throw new Exception('failed to answer.');
+        throw new Exception('failed to update notify setting.');
       }
     }
     $this->template->content = View::forge('manage/app_notify_edit', $data);

@@ -19,5 +19,10 @@ $(function(){
       ___android___.jump(activity);
     }
   });
+  $('#jump-to-market').click(function(){
+    if (typeof(___android___) != undefined) {
+      ___android___.jumpToMarket();
+    }
+  });
 });
 // vim: set ts=2 sw=2 sts=2 expandtab fenc=utf-8: 

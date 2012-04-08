@@ -15,6 +15,8 @@ class Model_Access extends \Orm\Model
     'terminal_id',
     'user_agent',
     'remote_addr',
+    'version',
+    'app_version',
     'created_at',
     'updated_at'
   );
