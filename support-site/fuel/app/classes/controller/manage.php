@@ -20,7 +20,7 @@ class Controller_Manage extends Controller_Template {
       return Response::redirect('manage/login');
     }
     $user = Session::get('user');
-    $this->template->title = 'Androidアプリサポート PaRappa';
+    $this->template->title = \Config::get('app_name') . " 管理";
     $this->template->email = $user ? $user->email : '';
     $apps = Model_App::find(
       'all',
@@ -43,7 +43,8 @@ class Controller_Manage extends Controller_Template {
         'where' => array(
           'user_id' => $user['id'],
           'deleted' => 0,
-        )
+        ),
+        'related' => array('inquiry_bases'),
       )
     );
     $data = array(
@@ -55,7 +56,7 @@ class Controller_Manage extends Controller_Template {
 
   public function action_login() {
     $data = array(
-      'title' => 'Androidアプリサポート PaRappa'
+      'title' => \Config::get('app_name'),
     );
     if (Input::method() == 'POST') {
       Log::debug('try to login.');
@@ -105,7 +106,7 @@ class Controller_Manage extends Controller_Template {
        
       $validation->add_field('name', 'アプリ名', 'required');
       $validation->add_field('url', 'Android Market URL', 'required|valid_url');
-      $validation->add_field('category', 'カテゴリ', 'required|numeric_min[1]|numeric_max[99]');
+      $validation->add_field('category', 'カテゴリ', 'required');
        
       if (!$validation->run()) {
         Log::debug('validation failed');
@@ -382,6 +383,35 @@ class Controller_Manage extends Controller_Template {
         $inquiry->save();
         Log::debug('transaction commit');
         DB::commit_transaction();
+
+        //send answer mail.
+        $messages = array_values($inquiry->inquiry_messages);
+        $content = <<<EOM
+【質問内容】
+{$messages[0]->content}
+
+【回答】
+$answer
+EOM;
+        $inquirier = $messages[0]->email;
+        $mail_config = \Config::load('mail');
+        $header = 'From: ' . $mail_config['basic']['from'] . "\n" .
+          'Bcc: ' . $mail_config['basic']['bcc'] . ',' . $user->email . "\n";
+        $body = $mail_config['inquiry_answer_mail']['body'];
+        $body = str_replace('#email#', $inquirier, $body);
+        $body = str_replace('#content#', $content, $body);
+        Log::debug('to: ' . $validation->validated('email'));
+        Log::debug('subject: ' . $mail_config['inquiry_answer_mail']['subject']);
+        Log::debug('additional header: ' . $header);
+        Log::debug('body: ' . $body);
+        if (!mb_send_mail(
+            $inquirier,
+            $mail_config['inquiry_answer_mail']['subject'],
+            $body,
+            $header)) {
+          Log::error('failed to send inquiry_answer_mail mail.');
+          die('failed to send mail.');
+        }
         return Response::redirect('manage/app_site/' . $app->id . '#inquiry');
       } catch (Exception $e) {
         Log::debug('error: ' . $e->getMessage());
@@ -392,5 +422,26 @@ class Controller_Manage extends Controller_Template {
     $this->template->content = View::forge('manage/inquiry', $data);
     return $this->template;
   }
+
+  public function action_settings() {
+    $user = Session::get('user');
+    if (!$user) {
+      Log::error('user not found.');
+      return Response::forge(ViewModel::forge('public/login'), 200);
+    }
+    $data = array(
+      'user' => $user
+    );
+
+    $this->template->content = View::forge('manage/settings', $data);
+    return $this->template;
+  }
+
+  public function action_document() {
+    $user = Session::get('user');
+    $this->template->content = View::forge('manage/document', array());
+    return $this->template;
+  }
+
 }
 ?>

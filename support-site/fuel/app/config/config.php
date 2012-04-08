@@ -12,6 +12,8 @@
 
 return array(
 
+  'app_name' => 'Androidアプリサポート PaRappa アルファ版',
+  'copyright' => '&copy; Stay Focused Manufacture.',
 	/**
 	 * base_url - The base URL of the application.
 	 * MUST contain a trailing slash (/)

@@ -12,29 +12,32 @@ class Controller_Public extends Controller_Template {
   }
 
   public function action_index() {
+    for ($i = 0; $i < 30; $i++) {
+      Log::debug('code: ' . Model_App::get_uniq_code());
+    }
     $data = array();
-    $this->template->title = 'Androidアプリサポート PaRappa';
+    $this->template->title = \Config::get('app_name');
     $this->template->side_menu = View::forge('public/side_menu', $data);
     $this->template->content = View::forge('public/index', $data);
   }
 
   public function action_support() {
     $data = array();
-    $this->template->title = 'Androidアプリサポート PaRappa';
+    $this->template->title = \Config::get('app_name');
     $this->template->side_menu = View::forge('public/side_menu', $data);
     $this->template->content = View::forge('public/support', $data);
   }
 
   public function action_notification() {
     $data = array();
-    $this->template->title = 'Androidアプリサポート PaRappa';
+    $this->template->title = \Config::get('app_name');
     $this->template->side_menu = View::forge('public/side_menu', $data);
     $this->template->content = View::forge('public/notification', $data);
   }
 
   public function action_analysis() {
     $data = array();
-    $this->template->title = 'Androidアプリサポート PaRappa';
+    $this->template->title = \Config::get('app_name');
     $this->template->side_menu = View::forge('public/side_menu', $data);
     $this->template->content = View::forge('public/analysis', $data);
   }
@@ -53,7 +56,7 @@ class Controller_Public extends Controller_Template {
         $data = array(
           'errors' => $validation->error()
         );
-        $this->template->title = 'Androidアプリサポート PaRappa';
+        $this->template->title = \Config::get('app_name');
         $this->template->side_menu = View::forge('public/side_menu', $data);
         $this->template->content = View::forge('public/register', $data);
         return;
@@ -73,7 +76,7 @@ class Controller_Public extends Controller_Template {
       $header = 'From: ' . $mail_config['basic']['from'] . "\n" .
         'Bcc: ' . $mail_config['basic']['bcc'] . "\n";
       $body = $mail_config['register_mail']['body'];
-      $body = str_replace('#email', $validation->validated('email'), $body);
+      $body = str_replace('#email#', $validation->validated('email'), $body);
       Log::debug('to: ' . $validation->validated('email'));
       Log::debug('subject: ' . $mail_config['register_mail']['subject']);
       Log::debug('additional header: ' . $header);
@@ -89,14 +92,14 @@ class Controller_Public extends Controller_Template {
       return Response::redirect('public/complete');
     }
     $data = array();
-    $this->template->title = 'Androidアプリサポート PaRappa';
+    $this->template->title = \Config::get('app_name');
     $this->template->side_menu = View::forge('public/side_menu', $data);
     $this->template->content = View::forge('public/register', $data);
   }
 
   public function action_complete() {
     $data = array();
-    $this->template->title = 'Androidアプリサポート PaRappa';
+    $this->template->title = \Config::get('app_name');
     $this->template->side_menu = View::forge('public/side_menu', $data);
     $this->template->content = View::forge('public/complete', $data);
   }

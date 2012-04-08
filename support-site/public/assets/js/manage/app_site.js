@@ -53,33 +53,7 @@ function setup_tabs(){
       tab.removeClass('active');
       box.hide();
     }
-    if (anchor == 'top') {
-      $.ajax({
-        type: 'GET',
-        url: '/api/app_top_content.json/' + $('#id_input').val(), 
-        success: function(data, status){
-          console.log('success', data);
-          $('#top_content').text(data.app_top_content.content);
-          $('#top_content').wysiwyg({
-            controls: {
-              html: { visible: true },
-              codesnipet: { visible: false },
-              underline: { visible: false },
-              subscript: { visible: false },
-              superscript: { visible: true }
-            }
-          });
-        },
-        error: function(xhr, status, c){
-          console.log(xhr.responseText);
-          var data = JSON.parse(xhr.responseText || '{}');
-          $('#error-description').text(data.error);
-          $('#alert-message-error').show();
-        }
-      });
-    }
   });
-  $('html, body').scrollTop(0);
 }
 function setup_faq_draggable(elements) {
   elements.draggable({
@@ -141,6 +115,31 @@ $(function(){
     .add(/\#faq/, setup_tabs)
     .add(/\#inquiry/, setup_tabs);
   setup_tabs();
+  console.log('ajax');
+  $.ajax({
+    type: 'GET',
+    url: '/api/app_top_content.json/' + $('#id_input').val(), 
+    success: function(data, status){
+      console.log('success', data);
+      $('#top_content').text(data.app_top_content.content);
+      $('#top_content').wysiwyg({
+        controls: {
+          html: { visible: true },
+          codesnipet: { visible: false },
+          underline: { visible: false },
+          subscript: { visible: false },
+          superscript: { visible: true }
+        }
+      });
+    },
+    error: function(xhr, status, c){
+      console.log(xhr.responseText);
+      var data = JSON.parse(xhr.responseText || '{}');
+      $('#error-description').text(data.error);
+      $('#alert-message-error').show();
+    }
+  });
+  $('html, body').scrollTop(0);
 
   //setup editor
   // トップコンテンツの保存
@@ -174,7 +173,6 @@ $(function(){
       console.log('success', data);
       var faqs = $('#faqs ul');
       $(data.faqs).each(function(){
-        console.log(this);
         if (this.type == 'category') {
           faqs.append(setup_faq_draggable(create_category(this.id, this.name)));
         } else {

@@ -91,6 +91,29 @@ class Controller_Api extends Controller_Rest {
     ));
   }
 
+  public function get_app($app_id = 0) {
+    Log::debug('get_app called.');
+    $code = Input::get('code');
+    if ($code) {
+      $app = Model_App::find('first', array('where' => array('code' => $code)));
+    } else {
+      $user = Session::get('user');
+      $app = Model_App::find('first', array('where' => array(
+            'id' => $app_id,
+            'user_id' => $user['id'],
+          )
+        )
+      );
+    }
+    Log::debug(var_export($app, true));
+    if (!$app) {
+      Log::error('app not found');
+      return $this->response(array('error' => 'app not found'), 404);
+    }
+
+    $this->response(array('app' => $app, 'error' => null));
+  }
+
   public function get_faq($app_id = 0) {
     Log::debug('get_faq called.');
     $code = Input::get('code');
@@ -276,7 +299,8 @@ class Controller_Api extends Controller_Rest {
       'type' => Model_Access::$TYPE_INIT,
       'activity' => Input::post('activity'),
       'user_agent' => Input::user_agent(),
-      'remote_addr' => $remote_addr
+      'remote_addr' => $remote_addr,
+      'version' => Input::post('version'),
     ));
     $access->save();
 
@@ -320,6 +344,7 @@ class Controller_Api extends Controller_Rest {
       return Response::forge(ViewModel::forge('public/404'), 404);
     }
 
+    $terminal_id = Util::get_terminal_id();
     $remote_addr = Input::server('HTTP_X_FORWARDED_FOR');
     if (!$remote_addr) {
       Log::debug('no value HTTP_X_FORWARDED_FOR.');
@@ -332,7 +357,8 @@ class Controller_Api extends Controller_Rest {
       'type' => Model_Access::$TYPE_NOTIFY_CHECK,
       'activity' => Input::get('activity'),
       'user_agent' => Input::user_agent(),
-      'remote_addr' => $remote_addr
+      'remote_addr' => $remote_addr,
+      'version' => Input::get('version'),
     ));
     $access->save();
 

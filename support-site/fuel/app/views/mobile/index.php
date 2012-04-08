@@ -33,7 +33,7 @@
   </div><!-- /content -->
 
   <div data-role="footer">    
-    <h5 style="text-align: right;">Powered by <a href="/" data-ajax="false">PaRappa</a>. Copyright smeghead.</h5>
+    <h5 style="text-align: right;">Powered by <a href="/" data-ajax="false">PaRappa</a>. <?php echo \Config::get('copyright'); ?></h5>
   </div><!-- /footer -->
 </div><!-- /page -->
 
@@ -67,7 +67,7 @@
   </div><!-- /content -->
 
   <div data-role="footer">    
-    <h5 style="text-align: right;">Powered by <a href="/" data-ajax="false">PaRappa</a>. Copyright smeghead.</h5>
+    <h5 style="text-align: right;">Powered by <a href="/" data-ajax="false">PaRappa</a>. <?php echo \Config::get('copyright'); ?></h5>
   </div><!-- /footer -->
 </div><!-- /page -->
 
@@ -121,7 +121,7 @@
   </div>
 
   <div data-role="footer">    
-    <h5 style="text-align: right;">Powered by <a href="/" data-ajax="false">PaRappa</a>. Copyright smeghead.</h5>
+    <h5 style="text-align: right;">Powered by <a href="/" data-ajax="false">PaRappa</a>. <?php echo \Config::get('copyright'); ?></h5>
   </div><!-- /footer -->
 </div><!-- /page -->
 

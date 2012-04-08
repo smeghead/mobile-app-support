@@ -17,6 +17,7 @@
     </style>
     <?php echo Asset::css('bootstrap-responsive.css'); ?>
     <?php echo Asset::css('style.css'); ?>
+    <link href='http://fonts.googleapis.com/css?family=Limelight' rel='stylesheet' type='text/css'>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -32,6 +33,7 @@
 
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="/favicon.ico">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   </head>
 
   <body>
@@ -44,7 +46,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/manage"><?php echo $title; ?></a>
+          <a class="brand" href="/manage"><?php echo \Config::get('app_name'); ?></a>
           <ul class="nav">
             <li class="active"><a href="/manage">アプリ一覧</a></li>
             <li><a href="/manage/settings">設定</a></li>
@@ -73,10 +75,9 @@
       </div>
     </div>
     <footer>
-      <p>&copy; smeghead 2012</p>
+      <p><?php echo \Config::get('copyright'); ?></p>
     </footer>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.dimensions.js"></script>
     <script type="text/javascript" src="/assets/js/ui.mouse.js"></script>
     <script type="text/javascript" src="/assets/js/ui.draggable.js"></script>
