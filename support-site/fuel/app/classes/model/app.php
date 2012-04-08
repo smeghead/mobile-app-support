@@ -7,6 +7,7 @@ class Model_App extends \Orm\Model
     'user_id',
     'name',
     'url',
+    'package_name',
     'category',
     'code',
     'deleted',

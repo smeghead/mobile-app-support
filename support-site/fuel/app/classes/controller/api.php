@@ -7,6 +7,7 @@ class Controller_Api extends Controller_Rest {
     $name = Input::post('name');
     $url = Input::post('url');
     $category = Input::post('category');
+    $package_name = Input::post('package_name');
 
     $user = Session::get('user');
     $app = Model_App::find('first', array('where' => array(
@@ -23,6 +24,7 @@ class Controller_Api extends Controller_Rest {
     $app->name = $name;
     $app->url = $url;
     $app->category = $category;
+    $app->package_name = $package_name;
     $app->save();
     Log::debug('app updated.');
     return $this->response(array(
@@ -224,14 +226,27 @@ class Controller_Api extends Controller_Rest {
       Log::error('code empty.');
       return $this->response(array('error' => ' 不正なパラメータです。'), 500);
     }
-    if (!$email) {
-      Log::error('email empty.');
+
+    $validation = Validation::forge();
+    $validation->add_callable('Appvalidation');
+     
+    $validation->add_field('email', 'メールアドレス', 'required|valid_email');
+    $validation->add_field('question', '質問', 'required');
+     
+    if (!$validation->run()) {
+      Log::debug('validation failed');
+      $errors = $validation->error();
       return $this->response(array('error' => 'メールアドレスを入力して下さい。'), 500);
     }
-    if (!$question) {
-      Log::error('question empty.');
-      return $this->response(array('error' => '内容を入力して下さい。'), 500);
-    }
+
+//    if (!$email) {
+//      Log::error('email empty.');
+//      return $this->response(array('error' => 'メールアドレスを入力して下さい。'), 500);
+//    }
+//    if (!$question) {
+//      Log::error('question empty.');
+//      return $this->response(array('error' => '内容を入力して下さい。'), 500);
+//    }
 
     $app = Model_App::find('first', array('where' => array(
           'code' => $code

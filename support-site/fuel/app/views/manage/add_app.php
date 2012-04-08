@@ -23,6 +23,16 @@
         <div class="help">例) https://market.android.com/details?id=com.example.app</div>
       </div>
     </div><!-- /clearfix -->
+    <div class="control-group <?php if (isset($errors['package_name'])) { echo 'error'; } ?>">
+      <label for="package_name" class="control-label">パッケージ名</label>
+      <div class="controls">
+        <input class="xlarge" id="package_name" name="package_name" size="30" type="text" value="<?php echo Input::post('package_name') ?>" />
+<?php if (isset($errors['package_name'])) { ?>
+        <span class="help-inline"><?php echo $errors['package_name'] ?></span>
+<?php } ?>
+        <div class="help">例) com.example.app</div>
+      </div>
+    </div><!-- /clearfix -->
     <div class="control-group <?php if (isset($errors['category'])) { echo 'error'; } ?>">
       <label for="category" class="control-label">カテゴリ</label>
       <div class="controls">
