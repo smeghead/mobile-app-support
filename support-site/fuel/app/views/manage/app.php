@@ -39,6 +39,14 @@
     </td>
   </tr>
   <tr>
+    <th>パッケージ名</th>
+    <td>
+      <input class="xlarge hide" id="package_name_input" size="20" type="text" value="" />
+      <span id="package_name" class="text"><?php echo $app->package_name; ?></span>
+      <span class="right package_name-edit edit-icon" title="編集">&nbsp;</span>
+    </td>
+  </tr>
+  <tr>
     <th>カテゴリ</th>
     <td>
       <select id="category_input" class="hide">

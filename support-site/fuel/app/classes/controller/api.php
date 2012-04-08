@@ -7,6 +7,7 @@ class Controller_Api extends Controller_Rest {
     $name = Input::post('name');
     $url = Input::post('url');
     $category = Input::post('category');
+    $package_name = Input::post('package_name');
 
     $user = Session::get('user');
     $app = Model_App::find('first', array('where' => array(
@@ -23,6 +24,7 @@ class Controller_Api extends Controller_Rest {
     $app->name = $name;
     $app->url = $url;
     $app->category = $category;
+    $app->package_name = $package_name;
     $app->save();
     Log::debug('app updated.');
     return $this->response(array(
@@ -224,14 +226,27 @@ class Controller_Api extends Controller_Rest {
       Log::error('code empty.');
       return $this->response(array('error' => ' 不正なパラメータです。'), 500);
     }
-    if (!$email) {
-      Log::error('email empty.');
+
+    $validation = Validation::forge();
+    $validation->add_callable('Appvalidation');
+     
+    $validation->add_field('email', 'メールアドレス', 'required|valid_email');
+    $validation->add_field('question', '質問', 'required');
+     
+    if (!$validation->run()) {
+      Log::debug('validation failed');
+      $errors = $validation->error();
       return $this->response(array('error' => 'メールアドレスを入力して下さい。'), 500);
     }
-    if (!$question) {
-      Log::error('question empty.');
-      return $this->response(array('error' => '内容を入力して下さい。'), 500);
-    }
+
+//    if (!$email) {
+//      Log::error('email empty.');
+//      return $this->response(array('error' => 'メールアドレスを入力して下さい。'), 500);
+//    }
+//    if (!$question) {
+//      Log::error('question empty.');
+//      return $this->response(array('error' => '内容を入力して下さい。'), 500);
+//    }
 
     $app = Model_App::find('first', array('where' => array(
           'code' => $code
@@ -301,6 +316,7 @@ class Controller_Api extends Controller_Rest {
       'user_agent' => Input::user_agent(),
       'remote_addr' => $remote_addr,
       'version' => Input::post('version'),
+      'app_version' => Input::post('app_version'),
     ));
     $access->save();
 
@@ -346,6 +362,7 @@ class Controller_Api extends Controller_Rest {
 
     $terminal_id = Util::get_terminal_id();
     $remote_addr = Input::server('HTTP_X_FORWARDED_FOR');
+    $app_version = Input::get('app_version');
     if (!$remote_addr) {
       Log::debug('no value HTTP_X_FORWARDED_FOR.');
       $remote_addr = Input::server('REMOTE_ADDR');
@@ -359,6 +376,7 @@ class Controller_Api extends Controller_Rest {
       'user_agent' => Input::user_agent(),
       'remote_addr' => $remote_addr,
       'version' => Input::get('version'),
+      'app_version' => $app_version,
     ));
     $access->save();
 
@@ -374,12 +392,21 @@ class Controller_Api extends Controller_Rest {
     ));
     $notify = null;
     foreach ($notifies as $n) {
+      $ms = array_values($n->notify_messages);
+      if (count($ms) == 0) {
+        continue;
+      }
+      Log::debug('taget version: ' . $ms[0]->target_version . ' app_version: ' . $app_version);
+      if ($ms[0]->target_version > 0 && $app_version > $ms[0]->target_version) {
+        continue;
+      } 
       if (Model_Notify_Log::find()
         ->where('notify_schedule_id', $n->id)
         ->where('terminal_id', $terminal_id)
         ->count() == 0) {
           //未告知のものを探す。
           $notify = $n;
+          break;
       }
     }
     if ($notify == null) {
@@ -389,6 +416,12 @@ class Controller_Api extends Controller_Rest {
       ));
     }
     $messages = array_values($notify->notify_messages);
+    if (count($messages) == 0) {
+      return $this->response(array(
+        'error' => null,
+        'notify' => null,
+      ));
+    }
     Log::debug(var_export($messages, true));
     $message = $messages[0];
 
@@ -397,6 +430,7 @@ class Controller_Api extends Controller_Rest {
       'notify' => array(
         'notify_id' => $notify->id,
         'subject' => $message->subject,
+        'appName' => $app->name,
         'activity' => $message->activity,
       )
     ));

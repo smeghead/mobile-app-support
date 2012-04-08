@@ -74,13 +74,14 @@ $(function(){
         },
         error: function(xhr, status, c){
           console.log(xhr.responseText);
-          var data = {error:''};
+          var data = {errors:[]};
           console.log('first letter: ' + xhr.responseText.indexOf(0));
           if (xhr.responseText.substring(0, 1) == '{') {
-            data = JSON.parse(xhr.responseText || '{error:""}');
+            data = JSON.parse(xhr.responseText || '{errors:[]}');
           }
+          var error_string = '<ul>' + data.errors.map(function(x){return '<li>' + x + '</li>';}).join("\n") + '</ul>';
           $('#dialog-header').text('エラー');
-          $('#dialog-content').text('エラーが発生しました。再度エラーが発生する場合、PaRappaサポートまでご連絡下さい。 ERROR: ' + data.error);
+          $('#dialog-content').text('エラーが発生しました。再度エラーが発生する場合、PaRappaサポートまでご連絡下さい。 ERROR: ' + error_string);
           $("<a href='#dialog' data-rel='dialog'></a>").click().remove();
         }
       });

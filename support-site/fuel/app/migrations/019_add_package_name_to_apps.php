@@ -2,12 +2,12 @@
 
 namespace Fuel\Migrations;
 
-class Add_version_to_apps
+class Add_package_name_to_apps
 {
 	public function up()
 	{
     \DBUtil::add_fields('apps', array(
-						'version' => array('constraint' => 16, 'type' => 'varchar'),
+						'package_name' => array('constraint' => 1024, 'type' => 'varchar'),
 
     ));	
 	}
@@ -15,7 +15,7 @@ class Add_version_to_apps
 	public function down()
 	{
     \DBUtil::drop_fields('apps', array(
-			'version'    
+			'package_name'    
     ));
 	}
 }

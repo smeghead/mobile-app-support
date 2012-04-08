@@ -2,12 +2,12 @@
 
 namespace Fuel\Migrations;
 
-class Add_activity_to_notify_messages
+class Add_action_type_to_notify_messages
 {
 	public function up()
 	{
     \DBUtil::add_fields('notify_messages', array(
-						'activity' => array('constraint' => 1024, 'type' => 'varchar', 'null' => true),
+						'action_type' => array('constraint' => 1, 'type' => 'int'),
 
     ));	
 	}
@@ -15,7 +15,7 @@ class Add_activity_to_notify_messages
 	public function down()
 	{
     \DBUtil::drop_fields('notify_messages', array(
-			'activity'    
+			'action_type'    
     ));
 	}
 }

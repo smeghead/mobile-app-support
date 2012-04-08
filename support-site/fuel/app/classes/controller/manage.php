@@ -106,6 +106,7 @@ class Controller_Manage extends Controller_Template {
        
       $validation->add_field('name', 'アプリ名', 'required');
       $validation->add_field('url', 'Android Market URL', 'required|valid_url');
+      $validation->add_field('package_name', 'パッケージ名', 'required');
       $validation->add_field('category', 'カテゴリ', 'required');
        
       if (!$validation->run()) {
@@ -122,6 +123,7 @@ class Controller_Manage extends Controller_Template {
         'user_id' => $user['id'],
         'name' => $validation->validated('name'),
         'url' => $validation->validated('url'),
+        'package_name' => $validation->validated('package_name'),
         'category' => $validation->validated('category'),
         'code' => $code,
         'deleted' => 0
@@ -260,7 +262,11 @@ class Controller_Manage extends Controller_Template {
       $validation->add_field('subject', 'タイトル', 'required');
       $validation->add_field('notify_at', '告知予定日時', 'required|match_pattern[#^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$#]');
       $validation->add_field('content', '告知内容', 'required');
-      $validation->add_field('activity', '移動先Activity', 'required');
+      if (Input::post('action_type') == '1') {
+        $validation->add_field('activity', '移動先Activity', 'required');
+      }
+      $validation->add_field('action_type', 'アクションタイプ', 'required');
+      $validation->add_field('target_version', 'ターゲットバージョン', 'valid_string[numeric]');
        
       if (!$validation->run()) {
         Log::debug('validation failed');
@@ -283,7 +289,11 @@ class Controller_Manage extends Controller_Template {
         $message->locale = $validation->validated('locale');
         $message->subject = $validation->validated('subject');
         $message->content = $validation->validated('content');
-        $message->activity = $validation->validated('activity');
+        $message->action_type = $validation->validated('action_type');
+        $message->target_version = $validation->validated('target_version');
+        if (Input::post('action_type') == '1') {
+          $message->activity = $validation->validated('activity');
+        }
         $notify->notify_messages[0] = $message;
         Log::debug('transaction save');
         $notify->save();
@@ -293,7 +303,7 @@ class Controller_Manage extends Controller_Template {
       } catch (Exception $e) {
         Log::debug('error: ' . $e->getMessage());
         DB::rollback_transaction();
-        throw new Exception('failed to answer.');
+        throw new Exception('failed to update notify setting.');
       }
     }
     $this->template->content = View::forge('manage/app_notify_edit', $data);

@@ -37,6 +37,7 @@
         </tr>
 <?php foreach ($notifies as $notify) { ?>
 <?php  $messages = array_values($notify->notify_messages); ?>
+<?php  if (count($messages) == 0) continue; ?>
         <tr>
           <td><a href="/manage/app_notify_edit/<?php echo $app->id; ?>/<?php echo $notify->id; ?>"><?php echo $messages[0]->subject; ?></a></td>
           <td><?php echo date('Y-m-d H:i:s', $notify->notify_at); ?></td>

@@ -57,12 +57,43 @@
 <?php } ?>
       </div>
     </div><!-- /clearfix -->
+    <div class="control-group <?php if (isset($errors['action_type'])) { echo 'error'; } ?>">
+      <label for="action_type" class="control-label">アクションタイプ</label>
+<?php 
+$ACTION_TYPES = array(
+  '1' => '指定activityの実行',
+  '2' => 'marketへの移動',
+  '3' => 'なし',
+);
+?>
+      <div class="controls">
+        <select id="action_type" name="action_type">
+<?php foreach ($ACTION_TYPES as $type => $name) { ?>
+            <option value="<?php echo $type; ?>" <?php if ($type == $messages[0]->action_type) {echo 'selected="selected"';} ?>><?php echo $name; ?></option>
+<?php } ?>
+        </select>
+<?php if (isset($errors['action_type'])) { ?>
+        <span class="help-inline"><?php echo $errors['action_type'] ?></span>
+<?php } ?>
+      </div>
+    </div><!-- /clearfix -->
     <div class="control-group <?php if (isset($errors['activity'])) { echo 'error'; } ?>">
       <label for="activity" class="control-label">移動先Activity</label>
       <div class="controls">
         <input class="xlarge" id="activity" name="activity" size="30" type="text" value="<?php if (Input::method() == 'GET') {echo $messages[0]->activity; } else {echo Input::post('activity'); } ?>" />
 <?php if (isset($errors['activity'])) { ?>
         <span class="help-inline"><?php echo $errors['activity'] ?></span>
+<?php } ?>
+      </div>
+    </div><!-- /clearfix -->
+    <div class="control-group <?php if (isset($errors['target_version'])) { echo 'error'; } ?>">
+      <label for="target_version" class="control-label">ターゲットバージョン</label>
+      <div class="controls">
+        <input class="xlarge" id="target_version" name="target_version" size="30" type="text" value="<?php if (Input::method() == 'GET') {echo $messages[0]->target_version; } else {echo Input::post('target_version'); } ?>" />
+        以下
+        <div class="help">例) 100 (1.0.0 ではなく数値のバージョン番号で指定してください)</div>
+<?php if (isset($errors['target_version'])) { ?>
+        <span class="help-inline"><?php echo $errors['target_version'] ?></span>
 <?php } ?>
       </div>
     </div><!-- /clearfix -->

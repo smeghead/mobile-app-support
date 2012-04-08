@@ -35,7 +35,11 @@ $message = $messages[0];
   <div data-role="content"> 
     <?php echo $message->content; ?>
     <div>
+<?php if ($message->action_type == 1) { ?>
       <a id="jump-to-activity" data-role="button">OK</a>
+<?php } else { ?>
+      <a id="jump-to-market" data-role="button">Android Marketへ</a>
+<?php } ?>
     </div>
   </div><!-- /content -->
 

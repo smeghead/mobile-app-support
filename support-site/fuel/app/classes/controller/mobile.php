@@ -106,6 +106,9 @@ class Controller_Mobile extends Controller {
       Log::debug('no value HTTP_X_FORWARDED_FOR.');
       $remote_addr = Input::server('REMOTE_ADDR');
     }
+
+    $terminal_id = Util::get_terminal_id();
+
     // record access
     $access = new Model_Access(array(
       'app_id' => $app->id,
@@ -113,7 +116,9 @@ class Controller_Mobile extends Controller {
       'type' => Model_Access::$TYPE_SITE_ACCESS_NOTIFY,
       'activity' => Input::get('activity'),
       'user_agent' => Input::user_agent(),
-      'remote_addr' => $remote_addr
+      'remote_addr' => $remote_addr,
+      'version' => Input::get('version'),
+      'app_version' => Input::get('app_version'),
     ));
     $access->save();
 

@@ -10,7 +10,22 @@ $(function(){
     }
   });
 
-  アプリ名
+  console.log('hogehoge');
+  var update_action_type = function(elm){
+    var action_type = $(elm).val();
+    console.log('action_type:' + action_type);
+    if (action_type == '1') {
+      $('#activity').removeAttr('disabled');
+    } else {
+      $('#activity').attr('disabled', 'disabled');
+    }
+  };
+  $('#action_type').change(function(){
+    update_action_type(this);
+  });
+  update_action_type($('#action_type'));
+
+////  アプリ名
 //  $('.name-edit').click(function(e){
 //    $('.alert-message').hide();
 //    var that = $(this);
@@ -52,7 +67,7 @@ $(function(){
 //    });
 //  });
 
-  url
+////  url
 //  $('.url-edit').click(function(e){
 //    $('.alert-message').hide();
 //    var that = $(this);
