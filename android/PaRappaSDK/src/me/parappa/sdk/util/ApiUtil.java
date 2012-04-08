@@ -49,6 +49,7 @@ public class ApiUtil {
 		nameValuePair.add(new BasicNameValuePair("activity", activity.getClass().getName()));
 		nameValuePair.add(new BasicNameValuePair("log", jsonLog));
 		nameValuePair.add(new BasicNameValuePair("version", PaRappa.PARAPPA_VERSION));
+		nameValuePair.add(new BasicNameValuePair("app_version", String.valueOf(MetaDataUtil.getVersionCode(activity))));
 
 		try {
 			Log.d(TAG, "post");
@@ -81,11 +82,12 @@ public class ApiUtil {
 
         DefaultHttpClient httpClient = preRequest(context, userAgent, domain);
 		HttpGet get = new HttpGet(
-				String.format("http://%s/api/notify.json/%s?activity=%s&version=%s",
+				String.format("http://%s/api/notify.json/%s?activity=%s&version=%s&app_version=%d",
 						domain, 
 						appCode,
 						context.getClass().getName(),
-						PaRappa.PARAPPA_VERSION));
+						PaRappa.PARAPPA_VERSION,
+						MetaDataUtil.getVersionCode(context)));
 
 		Notify notify;
 		try {
@@ -99,8 +101,8 @@ public class ApiUtil {
 			if (!result.has("error") || !JSONObject.NULL.equals(result.get("error"))) {
 				Log.d(TAG, "error: " + result.getString("error"));
 				return null;
-			} else if (JSONObject.NULL.equals(result.get("notify"))) {
-				Log.d(TAG, "notify: " + result.getString("notify"));
+			} else if (!result.has("notify") || JSONObject.NULL.equals(result.get("notify"))) {
+				Log.d(TAG, "notify dose not exist");
 				return null;
 			}
 			JSONObject notifyJsono = result.getJSONObject("notify");
@@ -128,11 +130,12 @@ public class ApiUtil {
 
         DefaultHttpClient httpClient = preRequest(context, userAgent, domain);
 		HttpGet get = new HttpGet(
-				String.format("http://%s/api/app.json?code=%s&activity=%s&version=%s",
+				String.format("http://%s/api/app.json?code=%s&activity=%s&version=%s&app_version=%s",
 						domain, 
 						appCode,
 						context.getClass().getName(),
-						PaRappa.PARAPPA_VERSION));
+						PaRappa.PARAPPA_VERSION,
+						MetaDataUtil.getVersionCode(context)));
 
 		App app;
 		try {

@@ -41,7 +41,7 @@ public class NotifyService extends Service {
 	}
 
 	public void onStart(Intent intent, int startId) {
-		Log.d(TAG, "onStart");
+		Log.d(TAG, "******** parapaa notify service onStart");
 
 		new Thread(new Runnable() {
 			@Override
@@ -58,7 +58,7 @@ public class NotifyService extends Service {
 		handler_.post(new Runnable() {
 			@Override
 			public void run() {
-				Log.d(TAG, "check notifies.");
+				Log.d(TAG, "******** check notifies.");
 				//WebViewアクセスだけは、UIスレッドでおこなう。
 				final String userAgent = new WebView(NotifyService.this).getSettings().getUserAgentString();
 				//その後は、別スレッドで。

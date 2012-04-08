@@ -3,6 +3,7 @@ package me.parappa.sdk.util;
 import me.parappa.sdk.PaRappa;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
@@ -34,4 +35,14 @@ public class MetaDataUtil {
         return MetaDataUtil.getMetaData(context, "PARAPPA_DOMAIN", PaRappa.PARAPPA_DEFAULT_DOMAIN);
     }
 
+    public static int getVersionCode(Context context) {
+    	try {
+    		String packageName = context.getPackageName();
+    		PackageInfo packageInfo = context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_META_DATA);
+    		return packageInfo.versionCode;
+    	} catch (NameNotFoundException e) {
+    		Log.e(TAG, "failed to get version code.");
+    		return 0;
+    	}
+    }
 }
