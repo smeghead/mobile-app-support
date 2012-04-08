@@ -14,7 +14,7 @@ import android.webkit.WebView;
 
 
 public class PaRappa {
-	public static final String PARAPPA_VERSION = "0.0.1";
+	public static final String PARAPPA_VERSION = "0.0.2";
 	public static final String PARAPPA_DEFAULT_DOMAIN = "parappa.me";
 	public static final String PARAPPA_ID_NAME = "_PARAPPA_ID";
 	private String TAG = PaRappa.class.getSimpleName();

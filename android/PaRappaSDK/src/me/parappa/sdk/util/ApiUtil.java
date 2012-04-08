@@ -99,12 +99,16 @@ public class ApiUtil {
 			if (!result.has("error") || !JSONObject.NULL.equals(result.get("error"))) {
 				Log.d(TAG, "error: " + result.getString("error"));
 				return null;
+			} else if (JSONObject.NULL.equals(result.get("notify"))) {
+				Log.d(TAG, "notify: " + result.getString("notify"));
+				return null;
 			}
 			JSONObject notifyJsono = result.getJSONObject("notify");
 			notify = new Notify(
 					notifyJsono.getString("subject"), 
 					notifyJsono.getString("activity"), 
 					appCode,
+					notifyJsono.getString("appName"),
 					notifyJsono.getInt("notify_id"));
 			postRequest(context, domain, httpClient);
 			return notify;
@@ -217,12 +221,14 @@ public class ApiUtil {
 	public static class Notify {
 		public String activity;
 		public String subject;
+		public String appName;
 		public String appCode;
 		public int notifyId;
-		public Notify(String subject, String activity, String appCode, int notifyId) {
+		public Notify(String subject, String activity, String appCode, String appName, int notifyId) {
 			this.activity = activity;
 			this.subject = subject;
 			this.appCode = appCode;
+			this.appName = appName;
 			this.notifyId = notifyId;
 		}
 	}

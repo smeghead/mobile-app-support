@@ -36,7 +36,7 @@ public class NotifyService extends Service {
 				0);
 		GregorianCalendar calendar = new GregorianCalendar();
 		alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-				calendar.getTimeInMillis() + 1000 * 60, 1000 * 60 * 5, sender);
+				calendar.getTimeInMillis() + 1000 * 60, 1000 * 60 * 5 /*60*/, sender);
 		super.onCreate();
 	}
 
@@ -58,6 +58,7 @@ public class NotifyService extends Service {
 		handler_.post(new Runnable() {
 			@Override
 			public void run() {
+				Log.d(TAG, "check notifies.");
 				//WebViewアクセスだけは、UIスレッドでおこなう。
 				final String userAgent = new WebView(NotifyService.this).getSettings().getUserAgentString();
 				//その後は、別スレッドで。
@@ -80,7 +81,7 @@ public class NotifyService extends Service {
 						intent.putExtra("notifyJson", json);
 						PendingIntent contentIntent = PendingIntent.getActivity(
 								NotifyService.this, 0, intent, 0);
-						notification.setLatestEventInfo(getApplicationContext(), "parappa",
+						notification.setLatestEventInfo(getApplicationContext(), notify.appName,
 								notify.subject, contentIntent);
 						manager.notify(9999, notification); // FIXME
 					}

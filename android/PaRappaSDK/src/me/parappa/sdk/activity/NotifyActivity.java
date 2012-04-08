@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.parappa.sdk.PaRappa;
+import me.parappa.sdk.util.ApiUtil;
 import me.parappa.sdk.util.MetaDataUtil;
 import me.parappa.sdk.util.ReflectionUtil;
 
@@ -15,6 +16,7 @@ import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -99,6 +101,20 @@ public class NotifyActivity extends Activity {
 			}
 			Intent intent = new Intent(NotifyActivity.this, activity);
 			NotifyActivity.this.startActivity(intent);
+		}
+		public void jumpToMarket() {
+			Log.d(TAG, "jumpToMarket");
+			final String userAgent = new WebView(NotifyActivity.this).getSettings().getUserAgentString();
+			ApiUtil.App app = ApiUtil.getApp(NotifyActivity.this, userAgent);
+			if (app == null) {
+				Log.e(TAG, "failed to open market.");
+				return;
+			}
+			String marketUrl = ApiUtil.getNativeMarketUrl(app.url);
+			Intent intent = new Intent(
+					android.content.Intent.ACTION_VIEW,
+					Uri.parse(marketUrl));
+		    NotifyActivity.this.startActivity(Intent.createChooser(intent, "マーケット"));
 		}
 	}
 	

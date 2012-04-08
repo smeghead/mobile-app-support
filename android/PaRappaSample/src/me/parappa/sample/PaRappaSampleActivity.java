@@ -33,8 +33,7 @@ public class PaRappaSampleActivity extends Activity {
     	switch (item.getItemId()) {
 		case R.id.menu_support:
 			// open PaRappa suport activity feature.
-//			parappa.startSupportActivity();
-			parappa.gotoMarket();
+			parappa.startSupportActivity();
 			break;
 		}
     	return true;
